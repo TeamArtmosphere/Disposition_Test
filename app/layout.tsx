@@ -15,18 +15,7 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
   return (
     <html lang='ko'>
       <ThemeProvider theme={theme}>
-        <body className={inter.className}>
-          <Container
-            sx={{
-              display: 'flex',
-              flexDirection: 'column',
-              justifyContent: 'center',
-              alignItems: 'center',
-            }}
-          >
-            {children}
-          </Container>
-        </body>
+        <body className={inter.className}>{children}</body>
       </ThemeProvider>
     </html>
   );
