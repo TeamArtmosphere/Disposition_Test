@@ -1,9 +1,18 @@
+'use client';
+
 import DefaultButton from '@/components/common/DefaultButton';
 import { Box, Container, Paper, Typography } from '@mui/material';
 import Image from 'next/image';
 import logo from '../public/imgs/logo.png';
+import { useRouter } from 'next/navigation';
 
 export default function Home() {
+  const router = useRouter();
+
+  const onClickStartTest = () => {
+    router.push('/question/q1');
+  };
+
   return (
     <Container
       sx={{
@@ -31,7 +40,7 @@ export default function Home() {
             유저 성향 테스트
           </Typography>
         </Box>
-        <DefaultButton name='테스트 시작하기' />
+        <DefaultButton name='테스트 시작하기' onClick={onClickStartTest} />
       </Paper>
     </Container>
   );
