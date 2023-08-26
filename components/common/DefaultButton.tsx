@@ -4,7 +4,7 @@ import { Button } from '@mui/material';
 type ButtonProps = {
   name: string;
   size?: string;
-  onClick: () => void;
+  onClick?: () => void;
 };
 
 const DefaultButton = ({ name, size, onClick }: ButtonProps) => {
