@@ -23,18 +23,38 @@ const QuestionLayout = ({ children }: { children: React.ReactNode }) => {
   };
 
   return (
-    <Box sx={{ display: 'flex', justifyContent: 'center', position: 'relative', width: '100%' }}>
+    <Box
+      sx={{
+        display: 'flex',
+        flexDirection: 'column',
+        justifyContent: 'center',
+        alignItems: 'center',
+        width: '390px',
+        height: '844px',
+        position: 'relative',
+      }}
+    >
       {children}
       <Box
         sx={{
           display: 'flex',
-          justifyContent: 'space-between',
-          width: '100%',
+          width: '390px',
           position: 'absolute',
+          bottom: -16,
+          //   left: '50%',
+          //   transform: 'translate(-50%, -50%)',
         }}
       >
-        <PrevButton onClick={handlePrevPage} />
-        <NextButton onClick={handleNextPage} />
+        <Box
+          sx={{ display: 'flex', width: '50%', border: '1px solid #ccc', justifyContent: 'center' }}
+        >
+          <PrevButton onClick={handlePrevPage} />
+        </Box>
+        <Box
+          sx={{ display: 'flex', width: '50%', border: '1px solid #ccc', justifyContent: 'center' }}
+        >
+          <NextButton onClick={handleNextPage} />
+        </Box>
       </Box>
     </Box>
   );
