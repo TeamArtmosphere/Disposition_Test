@@ -16,6 +16,9 @@ const QuestionLayout = ({ children }: { children: React.ReactNode }) => {
 
   const handleNextPage = () => {
     router.push(`q${+params + 1}`);
+    if (+params + 1 === 10) {
+      router.push('/result');
+    }
   };
 
   const handlePrevPage = () => {
