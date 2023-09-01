@@ -4,12 +4,13 @@ import { Button } from '@mui/material';
 type ButtonProps = {
   name: string;
   size?: string;
-  onClick?: () => void;
+  onClick?: (e?: any) => void;
 };
 
 const DefaultButton = ({ name, size, onClick }: ButtonProps) => {
   return (
     <Button
+      name={name}
       color='primary'
       variant='contained'
       onClick={onClick}
