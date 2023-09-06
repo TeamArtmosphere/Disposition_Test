@@ -3,7 +3,7 @@
 import NextButton from '@/components/common/NextButton';
 import PrevButton from '@/components/common/PrevButton';
 import { Box } from '@mui/material';
-import { useParams, usePathname, useRouter } from 'next/navigation';
+import { usePathname, useRouter } from 'next/navigation';
 import React from 'react';
 
 const QuestionLayout = ({ children }: { children: React.ReactNode }) => {
@@ -48,14 +48,10 @@ const QuestionLayout = ({ children }: { children: React.ReactNode }) => {
           //   transform: 'translate(-50%, -50%)',
         }}
       >
-        <Box
-          sx={{ display: 'flex', width: '50%', border: '1px solid #ccc', justifyContent: 'center' }}
-        >
+        <Box sx={{ display: 'flex', width: '50%', border: '1px solid #ccc', justifyContent: 'center' }}>
           <PrevButton onClick={handlePrevPage} />
         </Box>
-        <Box
-          sx={{ display: 'flex', width: '50%', border: '1px solid #ccc', justifyContent: 'center' }}
-        >
+        <Box sx={{ display: 'flex', width: '50%', border: '1px solid #ccc', justifyContent: 'center' }}>
           <NextButton onClick={handleNextPage} />
         </Box>
       </Box>
