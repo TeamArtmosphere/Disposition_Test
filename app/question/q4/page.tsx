@@ -4,7 +4,7 @@ import Image from 'next/image';
 import React from 'react';
 import logo from '../../../public/imgs/logo.png';
 
-const page = () => {
+const Page = () => {
   return (
     <Box>
       <Typography variant='h4' mb={'30px'}>
@@ -40,4 +40,4 @@ const page = () => {
   );
 };
 
-export default page;
+export default Page;

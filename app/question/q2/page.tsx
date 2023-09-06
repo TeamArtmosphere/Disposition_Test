@@ -10,7 +10,7 @@ const Page = () => {
   const [answer, setAnswer] = useRecoilState(answerData);
 
   const onClickStoreAnswer = (e: any) => {
-    setAnswer({ ...answer, q2: e.currentTarget.name });
+    setAnswer({ ...answer, age: e.currentTarget.name });
   };
 
   console.log(answer);

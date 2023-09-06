@@ -1,8 +1,17 @@
+'use client';
+
 import DefaultButton from '@/components/common/DefaultButton';
 import { Box, Typography } from '@mui/material';
+import { useRouter } from 'next/navigation';
 import React from 'react';
 
-const page = () => {
+const Page = () => {
+  const router = useRouter();
+
+  const handleClickToHome = () => {
+    router.push('/');
+  };
+
   return (
     <div>
       <Typography variant='h4' mb={'30px'}>
@@ -12,11 +21,11 @@ const page = () => {
         OOO유형에게 다음 장소를 추천합니다!
       </Typography>
       <Box sx={{ display: 'flex', flexDirection: 'column', gap: '10px' }}>
-        <DefaultButton name='철학이 있는 곳' />
-        <DefaultButton name='가성비가 좋은 곳' />
+        <DefaultButton name='홈으로 돌아가기' onClick={handleClickToHome} />
+        <DefaultButton name='친구에게 공유하기' />
       </Box>
     </div>
   );
 };
 
-export default page;
+export default Page;

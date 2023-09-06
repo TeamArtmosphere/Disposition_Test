@@ -10,7 +10,11 @@ const Page = () => {
   const [answer, setAnswer] = useRecoilState(answerData);
 
   const onClickStoreAnswer = (e: any) => {
-    setAnswer({ ...answer, q1: e.currentTarget.name });
+    if (e.currentTarget.name === '남자') {
+      setAnswer({ ...answer, gender: 1 });
+    } else {
+      setAnswer({ ...answer, gender: 2 });
+    }
   };
 
   console.log(answer);
