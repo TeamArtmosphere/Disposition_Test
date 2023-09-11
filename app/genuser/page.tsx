@@ -4,13 +4,12 @@ import { postRegistUser } from '@/api/axios-api';
 import DefaultButton from '@/components/common/DefaultButton';
 import { eventUserType } from '@/recoil/atom';
 import { Box, Typography } from '@mui/material';
-import { error } from 'console';
 import { useRouter } from 'next/navigation';
 import React, { useState } from 'react';
 import { useRecoilState } from 'recoil';
-import { FlexBoxCol } from '../page';
+import { FlexContainerCol, FlexBoxCol } from '../page';
 
-export const ButtonBox = { ...FlexBoxCol, gap: '10px', width: '100%' };
+export const ButtonBox = { ...FlexContainerCol, gap: '10px', width: '100%' };
 
 type userDataType = {
   ageRange: number;
@@ -21,12 +20,6 @@ type userDataType = {
 
 const Page = () => {
   const router = useRouter();
-  const [userData, setUserData] = useState<userDataType>({
-    gender: '',
-    ageRange: 0,
-    address: '',
-    eventType: 'FESTIVAL',
-  });
 
   const [userType, setUserType] = useRecoilState(eventUserType);
   const [renderType, setRenderType] = useState('gender');
@@ -59,10 +52,8 @@ const Page = () => {
     }
   };
 
-  console.log(userType);
-
   return (
-    <Box>
+    <Box sx={FlexContainerCol}>
       <Typography variant='h3'>당신은 어떤 사람인가요?</Typography>
 
       {renderType === 'gender' ? (

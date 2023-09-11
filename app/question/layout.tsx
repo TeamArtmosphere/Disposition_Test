@@ -29,9 +29,6 @@ const QuestionLayout = ({ children }: { children: React.ReactNode }) => {
   return (
     <Box
       sx={{
-        ...FlexBoxCol,
-        width: '390px',
-        height: '844px',
         position: 'relative',
       }}
     >

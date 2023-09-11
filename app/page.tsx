@@ -7,8 +7,9 @@ import logo from '../public/imgs/logo.png';
 import { useRouter } from 'next/navigation';
 
 export const FlexBox = { display: 'flex', justifyContent: 'center', alignItems: 'center' };
-
 export const FlexBoxCol = { ...FlexBox, flexDirection: 'column' };
+export const FlexContainer = { ...FlexBox, width: '100%', height: '100%' };
+export const FlexContainerCol = { ...FlexBoxCol, width: '100%', height: '100%' };
 
 export default function Home() {
   const router = useRouter();
@@ -18,7 +19,7 @@ export default function Home() {
   };
 
   return (
-    <Box sx={FlexBoxCol}>
+    <Box sx={{ ...FlexBoxCol, width: '100%', height: '100%' }}>
       <Image src={logo} alt='아트모스피어 로고' width={100} />
       <Box sx={{ mt: '30px', mb: '50px', textAlign: 'center' }}>
         <Typography variant='h3'>

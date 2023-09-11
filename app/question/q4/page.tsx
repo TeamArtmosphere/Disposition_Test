@@ -6,6 +6,7 @@ import React, { useEffect, useState } from 'react';
 import ProgressBar from '@/components/Material/ProgressBar';
 import { getQuestion } from '@/api/axios-api';
 import { ButtonBox } from '@/app/genuser/page';
+import { FlexBoxCol, FlexContainerCol } from '@/app/page';
 
 const Page = () => {
   // useState type 수정 필요
@@ -25,7 +26,7 @@ const Page = () => {
   const progress = 40;
   return (
     questionData && (
-      <Box sx={{ display: 'flex', flexDirection: 'column', width: '100%', alignItems: 'center' }}>
+      <Box sx={FlexContainerCol}>
         <Typography variant='h4' mb={'30px'}>
           {questionData?.question_title}
         </Typography>

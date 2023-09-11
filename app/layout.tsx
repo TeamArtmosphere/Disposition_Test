@@ -33,7 +33,17 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
                 p: 0,
               }}
             >
-              <Paper sx={{ ...FlexBoxCol, width: '100%', height: '100%', p: 2 }}>{children}</Paper>
+              <Paper
+                sx={{
+                  justifyContent: 'center',
+                  alignItems: 'center',
+                  width: '100%',
+                  height: '100%',
+                  p: 2,
+                }}
+              >
+                {children}
+              </Paper>
             </Container>
           </RecoilProvider>
           <Script src='https://developers.kakao.com/sdk/js/kakao.js' />
