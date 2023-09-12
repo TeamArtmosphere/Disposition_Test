@@ -5,6 +5,7 @@ import PrevButton from '@/components/common/PrevButton';
 import { Box } from '@mui/material';
 import { usePathname, useRouter } from 'next/navigation';
 import React from 'react';
+import { FlexBoxCol } from '../page';
 
 const QuestionLayout = ({ children }: { children: React.ReactNode }) => {
   const router = useRouter();
@@ -28,10 +29,7 @@ const QuestionLayout = ({ children }: { children: React.ReactNode }) => {
   return (
     <Box
       sx={{
-        display: 'flex',
-        flexDirection: 'column',
-        justifyContent: 'center',
-        alignItems: 'center',
+        ...FlexBoxCol,
         width: '390px',
         height: '844px',
         position: 'relative',
@@ -48,10 +46,14 @@ const QuestionLayout = ({ children }: { children: React.ReactNode }) => {
           //   transform: 'translate(-50%, -50%)',
         }}
       >
-        <Box sx={{ display: 'flex', width: '50%', border: '1px solid #ccc', justifyContent: 'center' }}>
+        <Box
+          sx={{ display: 'flex', width: '50%', border: '1px solid #ccc', justifyContent: 'center' }}
+        >
           <PrevButton onClick={handlePrevPage} />
         </Box>
-        <Box sx={{ display: 'flex', width: '50%', border: '1px solid #ccc', justifyContent: 'center' }}>
+        <Box
+          sx={{ display: 'flex', width: '50%', border: '1px solid #ccc', justifyContent: 'center' }}
+        >
           <NextButton onClick={handleNextPage} />
         </Box>
       </Box>

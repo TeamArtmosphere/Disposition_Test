@@ -8,6 +8,9 @@ import { error } from 'console';
 import { useRouter } from 'next/navigation';
 import React, { useState } from 'react';
 import { useRecoilState } from 'recoil';
+import { FlexBoxCol } from '../page';
+
+export const ButtonBox = { ...FlexBoxCol, gap: '10px', width: '100%' };
 
 type userDataType = {
   ageRange: number;
@@ -63,19 +66,11 @@ const Page = () => {
       <Typography variant='h3'>당신은 어떤 사람인가요?</Typography>
 
       {renderType === 'gender' ? (
-        <Box sx={{ display: 'flex', flexDirection: 'column', width: '100%', alignItems: 'center' }}>
+        <Box sx={FlexBoxCol}>
           <Typography variant='h4' mb={'30px'}>
             성별을 골라주세요
           </Typography>
-          <Box
-            sx={{
-              display: 'flex',
-              flexDirection: 'column',
-              gap: '10px',
-              alignItems: 'center',
-              width: '100%',
-            }}
-          >
+          <Box sx={ButtonBox}>
             <DefaultButton title='남자' id='MAN' name='gender' size='md' onClick={handleUserData} />
             <DefaultButton
               title='여자'
@@ -87,19 +82,11 @@ const Page = () => {
           </Box>
         </Box>
       ) : renderType === 'ageRange' ? (
-        <Box sx={{ display: 'flex', flexDirection: 'column', width: '100%', alignItems: 'center' }}>
+        <Box sx={FlexBoxCol}>
           <Typography variant='h4' mb={'30px'}>
             연령대를 선택해주세요
           </Typography>
-          <Box
-            sx={{
-              display: 'flex',
-              flexDirection: 'column',
-              gap: '10px',
-              alignItems: 'center',
-              width: '100%',
-            }}
-          >
+          <Box sx={ButtonBox}>
             <DefaultButton title='10대' id={10} name='ageRange' onClick={handleUserData} />
             <DefaultButton title='20대' id={20} name='ageRange' onClick={handleUserData} />
             <DefaultButton title='30대' id={30} name='ageRange' onClick={handleUserData} />
@@ -108,19 +95,11 @@ const Page = () => {
           </Box>
         </Box>
       ) : renderType === 'address' ? (
-        <Box sx={{ display: 'flex', flexDirection: 'column', width: '100%', alignItems: 'center' }}>
+        <Box sx={FlexBoxCol}>
           <Typography variant='h4' mb={'30px'}>
             거주 지역을 선택해주세요
           </Typography>
-          <Box
-            sx={{
-              display: 'flex',
-              flexDirection: 'column',
-              gap: '10px',
-              alignItems: 'center',
-              width: '100%',
-            }}
-          >
+          <Box sx={ButtonBox}>
             {/* map */}
             <DefaultButton
               name='address'
