@@ -11,7 +11,7 @@ const Page = () => {
   const [answer, setAnswer] = useRecoilState(answerData);
 
   const onClickStoreAnswer = (e: any) => {
-    if (e.currentTarget.name === '남자') {
+    if (e.currentTarget.name === 'MAN') {
       setAnswer({ ...answer, gender: 1 });
     } else {
       setAnswer({ ...answer, gender: 2 });
@@ -27,9 +27,17 @@ const Page = () => {
       <Typography variant='h4' mb={'30px'}>
         성별을 골라주세요
       </Typography>
-      <Box sx={{ display: 'flex', flexDirection: 'column', gap: '10px', alignItems: 'center', width: '100%' }}>
-        <DefaultButton name='남자' size='md' onClick={onClickStoreAnswer} />
-        <DefaultButton name='여자' size='md' onClick={onClickStoreAnswer} />
+      <Box
+        sx={{
+          display: 'flex',
+          flexDirection: 'column',
+          gap: '10px',
+          alignItems: 'center',
+          width: '100%',
+        }}
+      >
+        <DefaultButton title='남자' name='MAN' size='md' onClick={onClickStoreAnswer} />
+        <DefaultButton title='여자' name='WOMAN' size='md' onClick={onClickStoreAnswer} />
       </Box>
       <ProgressBar progress={progress} />
     </Box>

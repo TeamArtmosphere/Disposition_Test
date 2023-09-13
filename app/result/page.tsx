@@ -23,8 +23,8 @@ const Page = () => {
         OOO유형에게 다음 장소를 추천합니다!
       </Typography>
       <Box sx={{ display: 'flex', flexDirection: 'column', gap: '10px' }}>
-        <DefaultButton name='홈으로 돌아가기' onClick={handleClickToHome} />
-        <DefaultButton name='친구에게 공유하기' />
+        <DefaultButton title='홈으로 돌아가기' name='home' onClick={handleClickToHome} />
+        <DefaultButton title='친구에게 공유하기' name='share' />
       </Box>
     </div>
   );

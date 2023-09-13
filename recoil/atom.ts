@@ -18,9 +18,9 @@ export const answerData = atom({
 export const eventUserType = atom({
   key: 'event_user_type',
   default: {
-    gender: 1,
-    age: 20,
-    address: '은평구,',
-    eventType: 1,
+    ageRange: 0,
+    gender: '',
+    address: '',
+    eventType: 'FESTIVAL',
   },
 });
