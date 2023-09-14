@@ -10,7 +10,7 @@ export default function Home() {
   const router = useRouter();
 
   const onClickStartTest = () => {
-    router.push('/question/q1');
+    router.push('/genuser');
   };
 
   return (
@@ -30,7 +30,7 @@ export default function Home() {
           유저 성향 테스트
         </Typography>
       </Box>
-      <DefaultButton name='테스트 시작하기' size='md' onClick={onClickStartTest} />
+      <DefaultButton title='테스트 시작하기' size='md' onClick={onClickStartTest} />
     </Box>
   );
 }

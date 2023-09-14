@@ -4,7 +4,7 @@ import { Button } from '@mui/material';
 type ButtonProps = {
   id?: any;
   title: string;
-  name: string;
+  name?: string;
   size?: string;
   onClick?: (e?: any) => void;
 };

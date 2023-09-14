@@ -1,8 +1,10 @@
 'use client';
 
+import { postRegistUser } from '@/api/axios-api';
 import DefaultButton from '@/components/common/DefaultButton';
 import { eventUserType } from '@/recoil/atom';
 import { Box, Typography } from '@mui/material';
+import { error } from 'console';
 import { useRouter } from 'next/navigation';
 import React, { useState } from 'react';
 import { useRecoilState } from 'recoil';
@@ -24,8 +26,18 @@ const Page = () => {
   });
 
   const [userType, setUserType] = useRecoilState(eventUserType);
-
   const [renderType, setRenderType] = useState('gender');
+
+  const onClickRegistUser = () => {
+    postRegistUser(userType)
+      .then(data => {
+        console.log(data);
+        router.push('/question/q4');
+      })
+      .catch(error => {
+        console.log(error);
+      });
+  };
 
   const handleUserData = (e: any) => {
     if (e.currentTarget.name === 'gender') {
@@ -34,13 +46,13 @@ const Page = () => {
     }
 
     if (e.currentTarget.name === 'ageRange') {
-      setUserType({ ...userType, ageRange: e.currentTarget.id });
+      setUserType({ ...userType, ageRange: +e.currentTarget.id });
       setRenderType('address');
     }
 
     if (e.currentTarget.name === 'address') {
       setUserType({ ...userType, address: e.currentTarget.id });
-      router.push('/question/q1');
+      // onClickRegistUser();
     }
   };
 
@@ -130,6 +142,9 @@ const Page = () => {
               onClick={handleUserData}
             />
             <DefaultButton name='address' id='타지역' title='타지역' onClick={handleUserData} />
+          </Box>
+          <Box>
+            <DefaultButton title='테스트 시작하기' onClick={onClickRegistUser} />
           </Box>
         </Box>
       ) : null}
