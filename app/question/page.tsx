@@ -3,7 +3,7 @@
 import DefaultButton from '@/components/common/DefaultButton';
 import { Box, Typography } from '@mui/material';
 import React, { useEffect, useState } from 'react';
-import ProgressBar from '@/components/Material/ProgressBar';
+import ProgressBar from '@/components/material/ProgressBar';
 import { getQuestion } from '@/api/axios-api';
 import { ButtonBox } from '@/app/genuser/page';
 import { FlexBoxCol, FlexContainerCol } from '@/app/page';
@@ -11,9 +11,10 @@ import { FlexBoxCol, FlexContainerCol } from '@/app/page';
 const Page = () => {
   // useState type 수정 필요
   const [questionData, setQuestionData] = useState<any>(null);
+  const [questionNumber, setQuestionNumber] = useState(1);
 
   useEffect(() => {
-    getQuestion(1)
+    getQuestion(questionNumber)
       .then(data => {
         console.log(data);
         setQuestionData(data);
@@ -21,7 +22,17 @@ const Page = () => {
       .catch(error => {
         console.log(error);
       });
-  }, []);
+  }, [questionNumber]);
+
+  const onClickNextQuestion = () => {
+    setQuestionNumber((prev: number) => prev + 1);
+  };
+
+  const onClickPrevQuestion = () => {
+    setQuestionNumber((prev: number) => prev - 1);
+  };
+
+  console.log(questionNumber);
 
   const progress = 40;
   return (
@@ -34,7 +45,11 @@ const Page = () => {
           {questionData.selections.map((question: any, idx: number) => {
             return (
               <Box key={idx} sx={ButtonBox}>
-                <DefaultButton title={question.selection_title} size='md' />
+                <DefaultButton
+                  title={question.selection_title}
+                  size='md'
+                  onClick={onClickNextQuestion}
+                />
               </Box>
             );
           })}

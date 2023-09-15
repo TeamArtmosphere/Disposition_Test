@@ -28,7 +28,7 @@ const Page = () => {
     postRegistUser(userType)
       .then(data => {
         console.log(data);
-        router.push('/question/q4');
+        router.push('/question');
       })
       .catch(error => {
         console.log(error);
