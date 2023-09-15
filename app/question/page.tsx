@@ -6,7 +6,12 @@ import React, { useEffect, useState } from 'react';
 import ProgressBar from '@/components/material/ProgressBar';
 import { getQuestion } from '@/api/axios-api';
 import { ButtonBox } from '@/app/genuser/page';
-import { FlexBoxCol, FlexContainerCol } from '@/app/page';
+import { FlexContainerCol } from '@/app/page';
+
+export const browserPreventEvent = (event: () => void) => {
+  history.pushState(null, '', location.href);
+  event();
+};
 
 const Page = () => {
   // useState type 수정 필요
@@ -33,6 +38,20 @@ const Page = () => {
   };
 
   console.log(questionNumber);
+
+  // 테스트 필요
+  useEffect(() => {
+    history.pushState(null, '', location.href);
+    window.addEventListener('popstate', () => {
+      browserPreventEvent(onClickNextQuestion); // 임시용
+    });
+    return () => {
+      window.removeEventListener('popstate', () => {
+        browserPreventEvent(onClickNextQuestion); // 임시용
+      });
+    };
+  }, []);
+  // 테스트 필요
 
   const progress = 40;
   return (
