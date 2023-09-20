@@ -52,6 +52,8 @@ const Page = () => {
     }
   };
 
+  console.log(userType);
+
   return (
     <Box sx={FlexContainerCol}>
       <Typography variant='h3'>당신은 어떤 사람인가요?</Typography>

@@ -21,6 +21,7 @@ export const eventUserType = atom({
     ageRange: 0,
     gender: '',
     address: '',
+    // eventType: 1,
     eventType: 'FESTIVAL',
   },
 });
