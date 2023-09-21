@@ -22,7 +22,7 @@ const Page = () => {
     getQuestion(questionNumber)
       .then((data) => {
         console.log(data, 'ddd');
-        setQuestionData(data);
+        setQuestionData(data.questions);
       })
       .catch((error) => {
         console.log(error);
@@ -38,7 +38,7 @@ const Page = () => {
   };
 
   console.log(questionNumber);
-  console.log(questionData);
+  console.log(questionData, 'data');
 
   // 테스트 필요
   // useEffect(() => {
@@ -61,10 +61,10 @@ const Page = () => {
         {questionData?.question_title}
       </Typography>
       <Box sx={ButtonBox}>
-        {/* {questionData.selections.map((question: any, idx: number) => {
+        {/* {questionData?.map((question: any, idx: number) => {
           return (
             <Box key={idx} sx={ButtonBox}>
-              <DefaultButton title={question.selection_title} size='md' onClick={onClickNextQuestion} />
+              <DefaultButton title={question.} size='md' onClick={onClickNextQuestion} />
             </Box>
           );
         })} */}
