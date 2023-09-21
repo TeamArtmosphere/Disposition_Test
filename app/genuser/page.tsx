@@ -21,16 +21,16 @@ type userDataType = {
 const Page = () => {
   const router = useRouter();
 
-  const [userType, setUserType] = useRecoilState(eventUserType);
+  const [userType, setUserType] = useRecoilState<userDataType>(eventUserType);
   const [renderType, setRenderType] = useState('gender');
 
   const onClickRegistUser = () => {
     postRegistUser(userType)
-      .then(data => {
+      .then((data) => {
         console.log(data);
         router.push('/question');
       })
-      .catch(error => {
+      .catch((error) => {
         console.log(error);
       });
   };
@@ -65,13 +65,7 @@ const Page = () => {
           </Typography>
           <Box sx={ButtonBox}>
             <DefaultButton title='남자' id='MAN' name='gender' size='md' onClick={handleUserData} />
-            <DefaultButton
-              title='여자'
-              id='WOMAN'
-              name='gender'
-              size='md'
-              onClick={handleUserData}
-            />
+            <DefaultButton title='여자' id='WOMAN' name='gender' size='md' onClick={handleUserData} />
           </Box>
         </Box>
       ) : renderType === 'ageRange' ? (
@@ -94,25 +88,10 @@ const Page = () => {
           </Typography>
           <Box sx={ButtonBox}>
             {/* map */}
-            <DefaultButton
-              name='address'
-              id='수색/증산'
-              title='수색/증산'
-              onClick={handleUserData}
-            />
-            <DefaultButton
-              name='address'
-              id='신사/역촌'
-              title='신사/역촌'
-              onClick={handleUserData}
-            />
+            <DefaultButton name='address' id='수색/증산' title='수색/증산' onClick={handleUserData} />
+            <DefaultButton name='address' id='신사/역촌' title='신사/역촌' onClick={handleUserData} />
             <DefaultButton name='address' id='응암' title='응암' onClick={handleUserData} />
-            <DefaultButton
-              name='address'
-              id='그 외 은평구'
-              title='그 외 은평구'
-              onClick={handleUserData}
-            />
+            <DefaultButton name='address' id='그 외 은평구' title='그 외 은평구' onClick={handleUserData} />
             <DefaultButton name='address' id='타지역' title='타지역' onClick={handleUserData} />
           </Box>
           <Box>
