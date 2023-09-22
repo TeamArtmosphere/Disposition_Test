@@ -57,18 +57,28 @@ const Page = () => {
   const progress = 40;
   return questionData ? (
     <Box sx={FlexContainerCol}>
-      <Typography variant='h4' mb={'30px'}>
-        {questionData?.question_title}
-      </Typography>
-      <Box sx={ButtonBox}>
-        {/* {questionData?.map((question: any, idx: number) => {
-          return (
-            <Box key={idx} sx={ButtonBox}>
-              <DefaultButton title={question.} size='md' onClick={onClickNextQuestion} />
+      {questionData?.map((question: any, idx: number) => {
+        return (
+          <Box key={idx}>
+            <Typography variant='h4' mb={'30px'}>
+              {question.content}
+            </Typography>
+            <Box sx={ButtonBox}>
+              {question.selections.map((selection: any) => {
+                return (
+                  <Box key={selection.selection_id} sx={ButtonBox}>
+                    <DefaultButton
+                      title={selection.content}
+                      size='md'
+                      onClick={onClickNextQuestion}
+                    />
+                  </Box>
+                );
+              })}
             </Box>
-          );
-        })} */}
-      </Box>
+          </Box>
+        );
+      })}
       <ProgressBar progress={progress} />
     </Box>
   ) : null;

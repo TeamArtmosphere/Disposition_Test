@@ -15,13 +15,24 @@ export const answerData = atom({
   },
 });
 
-export const eventUserType = atom({
+type userDataType = {
+  ageRange: number;
+  gender: string;
+  address: string;
+  eventType: string;
+};
+
+export const eventUserType = atom<userDataType>({
   key: 'event_user_type',
   default: {
     ageRange: 0,
     gender: '',
     address: '',
-    // eventType: 1,
     eventType: 'FESTIVAL',
   },
+});
+
+export const eventUserId = atom<number | null>({
+  key: 'event_user_id',
+  default: null,
 });
