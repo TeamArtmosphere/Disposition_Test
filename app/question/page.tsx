@@ -6,7 +6,7 @@ import React, { useEffect, useState } from 'react';
 import { getQuestion } from '@/api/axios-api';
 import { ButtonBox } from '@/app/genuser/page';
 import { FlexContainerCol } from '@/app/page';
-import ProgressBar from '@/components/Material/ProgressBar';
+import ProgressBar from '@/components/material/ProgressBar';
 
 export const browserPreventEvent = (event: () => void) => {
   history.pushState(null, '', location.href);
@@ -20,11 +20,11 @@ const Page = () => {
 
   useEffect(() => {
     getQuestion(questionNumber)
-      .then((data) => {
+      .then(data => {
         console.log(data, 'ddd');
         setQuestionData(data.questions);
       })
-      .catch((error) => {
+      .catch(error => {
         console.log(error);
       });
   }, [questionNumber]);
