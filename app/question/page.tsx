@@ -20,11 +20,11 @@ const Page = () => {
 
   useEffect(() => {
     getQuestion(questionNumber)
-      .then(data => {
+      .then((data) => {
         console.log(data, 'ddd');
         setQuestionData(data.questions);
       })
-      .catch(error => {
+      .catch((error) => {
         console.log(error);
       });
   }, [questionNumber]);
@@ -67,11 +67,7 @@ const Page = () => {
               {question.selections.map((selection: any) => {
                 return (
                   <Box key={selection.selection_id} sx={ButtonBox}>
-                    <DefaultButton
-                      title={selection.content}
-                      size='md'
-                      onClick={onClickNextQuestion}
-                    />
+                    <DefaultButton title={selection.content} size='md' onClick={onClickNextQuestion} />
                   </Box>
                 );
               })}

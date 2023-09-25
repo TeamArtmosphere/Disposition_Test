@@ -8,7 +8,7 @@ export const instance = axios.create({
   headers: {
     'Content-Type': 'application/json;charset=UTF-8',
     'ngrok-skip-browser-warning': 'abc',
-    'Access-Control-Allow-Origin': '*',
+    // 'Access-Control-Allow-Origin': '*',
   },
 });
 

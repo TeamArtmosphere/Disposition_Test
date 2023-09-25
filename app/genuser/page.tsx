@@ -11,6 +11,26 @@ import { FlexContainerCol, FlexBoxCol } from '../page';
 
 export const ButtonBox = { ...FlexContainerCol, gap: '10px', width: '100%' };
 
+const genderData = [
+  { id: 'MAN', title: '남자', name: 'gender' },
+  { id: 'WOMAN', title: '여자', name: 'gender' },
+];
+
+const ageRangeData = [
+  { id: 10, title: '10대' },
+  { id: 20, title: '20대' },
+  { id: 30, title: '30대' },
+  { id: 40, title: '40대' },
+  { id: 50, title: '50대 이상' },
+];
+
+const addressData = [
+  { id: '수색/증산', title: '수색/증산' },
+  { id: '신사/역촌', title: '신사/역촌' },
+  { id: '응암', title: '응암' },
+  { id: '그 외 은평구', title: '그 외 은평구' },
+];
+
 const Page = () => {
   const router = useRouter();
 
@@ -18,31 +38,14 @@ const Page = () => {
   const [userId, setUserId] = useRecoilState(eventUserId);
   const [renderType, setRenderType] = useState('gender');
 
-  // const apiTest = async () => {
-  //   const response = await fetch('https://e8d1-175-214-81-205.ngrok-free.app/api/v1/event-users', {
-  //     method: 'post',
-  //     headers: {
-  //       'Content-Type': 'application/json;charset=UTF-8',
-  //       'ngrok-skip-browser-warning': 'abc',
-  //       'Access-Control-Allow-Origin': '*',
-  //     },
-  //     body: JSON.stringify(userType),
-  //   }).then(res => {
-  //     console.log(res.json());
-  //     return res.json();
-  //   });
-
-  //   // return response.json();
-  // };
-
   const onClickRegistUser = () => {
     postRegistUser(userType)
-      .then(data => {
+      .then((data) => {
         console.log(data);
         setUserId(data.event_user_id);
         router.push('/question');
       })
-      .catch(error => {
+      .catch((error) => {
         console.log(error);
       });
   };
@@ -76,14 +79,18 @@ const Page = () => {
             성별을 골라주세요
           </Typography>
           <Box sx={ButtonBox}>
-            <DefaultButton title='남자' id='MAN' name='gender' size='md' onClick={handleUserData} />
-            <DefaultButton
-              title='여자'
-              id='WOMAN'
-              name='gender'
-              size='md'
-              onClick={handleUserData}
-            />
+            {genderData.map((data, idx) => {
+              return (
+                <DefaultButton
+                  key={idx}
+                  title={data.title}
+                  id={data.id}
+                  name='gender'
+                  size='md'
+                  onClick={handleUserData}
+                />
+              );
+            })}
           </Box>
         </Box>
       ) : renderType === 'ageRange' ? (
@@ -92,11 +99,18 @@ const Page = () => {
             연령대를 선택해주세요
           </Typography>
           <Box sx={ButtonBox}>
-            <DefaultButton title='10대' id={10} name='ageRange' onClick={handleUserData} />
-            <DefaultButton title='20대' id={20} name='ageRange' onClick={handleUserData} />
-            <DefaultButton title='30대' id={30} name='ageRange' onClick={handleUserData} />
-            <DefaultButton title='40대' id={40} name='ageRange' onClick={handleUserData} />
-            <DefaultButton title='50대+' id={50} name='ageRange' onClick={handleUserData} />
+            {ageRangeData.map((data, idx) => {
+              return (
+                <DefaultButton
+                  key={idx}
+                  title={data.title}
+                  id={data.id}
+                  name='ageRange'
+                  size='md'
+                  onClick={handleUserData}
+                />
+              );
+            })}
           </Box>
         </Box>
       ) : renderType === 'address' ? (
@@ -105,29 +119,20 @@ const Page = () => {
             거주 지역을 선택해주세요
           </Typography>
           <Box sx={ButtonBox}>
-            {/* map */}
-            <DefaultButton
-              name='address'
-              id='수색/증산'
-              title='수색/증산'
-              onClick={handleUserData}
-            />
-            <DefaultButton
-              name='address'
-              id='신사/역촌'
-              title='신사/역촌'
-              onClick={handleUserData}
-            />
-            <DefaultButton name='address' id='응암' title='응암' onClick={handleUserData} />
-            <DefaultButton
-              name='address'
-              id='그 외 은평구'
-              title='그 외 은평구'
-              onClick={handleUserData}
-            />
-            <DefaultButton name='address' id='타지역' title='타지역' onClick={handleUserData} />
+            {addressData.map((data, idx) => {
+              return (
+                <DefaultButton
+                  key={idx}
+                  title={data.title}
+                  id={data.id}
+                  name='address'
+                  size='md'
+                  onClick={handleUserData}
+                />
+              );
+            })}
           </Box>
-          <Box>
+          <Box sx={{ mt: '20px' }}>
             <DefaultButton title='테스트 시작하기' onClick={onClickRegistUser} />
           </Box>
         </Box>
