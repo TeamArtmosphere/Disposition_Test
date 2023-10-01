@@ -3,6 +3,15 @@ import '../style/globals.css';
 import type { Metadata } from 'next';
 import { Inter } from 'next/font/google';
 import theme from '@/style/theme';
+import RecoilProvider from './RecoilProvider';
+import Script from 'next/script';
+import { FlexBoxCol } from './page';
+
+declare global {
+  interface Window {
+    Kakao: any;
+  }
+}
 
 const inter = Inter({ subsets: ['latin'] });
 
@@ -16,27 +25,28 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
     <html lang='ko'>
       <ThemeProvider theme={theme}>
         <body className={inter.className}>
-          <Container
-            sx={{
-              width: '390px',
-              height: '844px',
-              p: 0,
-            }}
-          >
-            <Paper
+          <RecoilProvider>
+            <Container
               sx={{
-                width: '100%',
-                height: '100%',
-                display: 'flex',
-                flexDirection: 'column',
-                justifyContent: 'center',
-                alignItems: 'center',
-                p: 2,
+                width: '390px',
+                height: '844px',
+                p: 0,
               }}
             >
-              {children}
-            </Paper>
-          </Container>
+              <Paper
+                sx={{
+                  justifyContent: 'center',
+                  alignItems: 'center',
+                  width: '100%',
+                  height: '100%',
+                  p: 2,
+                }}
+              >
+                {children}
+              </Paper>
+            </Container>
+          </RecoilProvider>
+          <Script src='https://developers.kakao.com/sdk/js/kakao.js' />
         </body>
       </ThemeProvider>
     </html>

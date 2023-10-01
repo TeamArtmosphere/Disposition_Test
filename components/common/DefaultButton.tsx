@@ -2,14 +2,20 @@ import React from 'react';
 import { Button } from '@mui/material';
 
 type ButtonProps = {
-  name: string;
+  id?: any;
+  sub_id?: number;
+  title: string;
+  name?: string;
   size?: string;
-  onClick?: () => void;
+  onClick?: (e?: any) => void;
 };
 
-const DefaultButton = ({ name, size, onClick }: ButtonProps) => {
+const DefaultButton = ({ id, sub_id, title, name, size, onClick }: ButtonProps) => {
   return (
     <Button
+      id={id}
+      name={name}
+      key={sub_id}
       color='primary'
       variant='contained'
       onClick={onClick}
@@ -17,7 +23,7 @@ const DefaultButton = ({ name, size, onClick }: ButtonProps) => {
         width: size === 'lg' ? '300px' : size === 'md' ? '250px' : size === 'sm' ? '150px' : '100%',
       }}
     >
-      {name}
+      {title}
     </Button>
   );
 };
