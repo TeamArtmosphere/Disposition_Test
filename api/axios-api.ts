@@ -18,8 +18,14 @@ export const postRegistUser = async (userData: any) => {
   return res.data;
 };
 
-export const getQuestion = async (id: number) => {
+export const getAllQuestion = async (id: number) => {
   const res = await instance.get(`/api/v1/pablos-analysis/${id}`);
+  // const res = await instance.get(`${API_URL}/api/v1/pablos-analysis/${id}`);
+  return res.data;
+};
+
+export const getQuestion = async (id: number) => {
+  const res = await instance.get(`/api/v1/pablos-analysis/questions/${id}`);
   // const res = await instance.get(`${API_URL}/api/v1/pablos-analysis/${id}`);
   return res.data;
 };

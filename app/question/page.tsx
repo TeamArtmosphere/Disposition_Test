@@ -15,14 +15,13 @@ export const browserPreventEvent = (event: () => void) => {
 
 const Page = () => {
   // useState type 수정 필요
-  const [questionData, setQuestionData] = useState<any>([]);
+  const [questionData, setQuestionData] = useState<any>(null);
   const [questionNumber, setQuestionNumber] = useState(1);
 
   useEffect(() => {
     getQuestion(questionNumber)
       .then((data) => {
-        console.log(data, 'ddd');
-        setQuestionData(data.questions);
+        setQuestionData(data);
       })
       .catch((error) => {
         console.log(error);
@@ -57,7 +56,27 @@ const Page = () => {
   const progress = 40;
   return questionData ? (
     <Box sx={FlexContainerCol}>
-      {questionData?.map((question: any, idx: number) => {
+      <Box>
+        <Typography variant='h4' mb={'30px'}>
+          {questionData.content}
+        </Typography>
+        <Box sx={ButtonBox}>
+          {questionData.selections.map((selection: any) => {
+            return (
+              <Box key={selection.selection_id} sx={ButtonBox}>
+                <DefaultButton
+                  id={selection.selection_id}
+                  sub_id={selection.sub_question_id}
+                  title={selection.content}
+                  size='md'
+                  onClick={onClickNextQuestion}
+                />
+              </Box>
+            );
+          })}
+        </Box>
+      </Box>
+      {/* {questionData?.map((question: any, idx: number) => {
         return (
           <Box key={idx}>
             <Typography variant='h4' mb={'30px'}>
@@ -74,7 +93,7 @@ const Page = () => {
             </Box>
           </Box>
         );
-      })}
+      })} */}
       <ProgressBar progress={progress} />
     </Box>
   ) : null;
