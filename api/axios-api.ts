@@ -2,7 +2,7 @@ import axios, { AxiosRequestConfig } from 'axios';
 
 axios.defaults.withCredentials = true;
 
-const API_URL = 'https://e8d1-175-214-81-205.ngrok-free.app';
+const API_URL = 'http://52.79.94.115:8080';
 
 export const instance = axios.create({
   headers: {
@@ -14,18 +14,15 @@ export const instance = axios.create({
 
 export const postRegistUser = async (userData: any) => {
   const res = await instance.post(`/api/v1/event-users`, userData);
-  // const res = await instance.post(`${API_URL}/api/v1/event-users`, userData);
   return res.data;
 };
 
 export const getAllQuestion = async (id: number) => {
   const res = await instance.get(`/api/v1/pablos-analysis/${id}`);
-  // const res = await instance.get(`${API_URL}/api/v1/pablos-analysis/${id}`);
   return res.data;
 };
 
 export const getQuestion = async (id: number) => {
   const res = await instance.get(`/api/v1/pablos-analysis/questions/${id}`);
-  // const res = await instance.get(`${API_URL}/api/v1/pablos-analysis/${id}`);
   return res.data;
 };

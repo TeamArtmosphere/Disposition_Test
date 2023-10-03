@@ -17,6 +17,7 @@ const Page = () => {
   // useState type 수정 필요
   const [questionData, setQuestionData] = useState<any>(null);
   const [questionNumber, setQuestionNumber] = useState(1);
+  const [subQuestionNumber, setSubQuestionNumber] = useState(null);
 
   useEffect(() => {
     getQuestion(questionNumber)
@@ -28,15 +29,22 @@ const Page = () => {
       });
   }, [questionNumber]);
 
-  const onClickNextQuestion = () => {
-    setQuestionNumber((prev: number) => prev + 1);
+  const onClickNextQuestion = (e: any) => {
+    console.log(e.currentTarget.id, 'id');
+    console.log(e.currentTarget.accessKey, 'target');
+
+    if (e.currentTarget.accessKey) {
+      setQuestionNumber(e.currentTarget.accessKey);
+    } else if (e.currentTarget.id === '10') {
+      setQuestionNumber(4);
+    }
   };
 
   const onClickPrevQuestion = () => {
     setQuestionNumber((prev: number) => prev - 1);
   };
 
-  console.log(questionNumber);
+  console.log(questionNumber, 'q number');
   console.log(questionData, 'data');
 
   // 테스트 필요
@@ -66,7 +74,7 @@ const Page = () => {
               <Box key={selection.selection_id} sx={ButtonBox}>
                 <DefaultButton
                   id={selection.selection_id}
-                  sub_id={selection.sub_question_id}
+                  accessKey={selection.sub_question_id}
                   title={selection.content}
                   size='md'
                   onClick={onClickNextQuestion}
