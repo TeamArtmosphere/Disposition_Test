@@ -2,8 +2,6 @@ import axios, { AxiosRequestConfig } from 'axios';
 
 axios.defaults.withCredentials = true;
 
-const API_URL = 'http://52.79.94.115:8080';
-
 export const instance = axios.create({
   headers: {
     'Content-Type': 'application/json;charset=UTF-8',
@@ -17,8 +15,9 @@ export const postRegistUser = async (userData: any) => {
   return res.data;
 };
 
-export const getAllQuestion = async (id: number) => {
-  const res = await instance.get(`/api/v1/pablos-analysis/${id}`);
+export const getAllQuestion = async (id?: number) => {
+  // const res = await instance.get(`/api/v1/pablos-analysis/${id}`);
+  const res = await instance.get(`/api/v1/pablos-analysis/2`);
   return res.data;
 };
 

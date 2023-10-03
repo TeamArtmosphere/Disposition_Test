@@ -59,7 +59,7 @@ const theme = createTheme({
     // },
   },
   typography: {
-    fontFamily: '"Spoqa Han Sans Neo", sans-serif',
+    fontFamily: '"GmarketSansMedium", sans-serif',
 
     h1: { fontSize: '36px', lineHeight: '36px', fontWeight: 700 },
     h2: { fontSize: '36px', lineHeight: '36px', fontWeight: 400 },
