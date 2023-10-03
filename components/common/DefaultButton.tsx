@@ -3,19 +3,19 @@ import { Button } from '@mui/material';
 
 type ButtonProps = {
   id?: any;
-  sub_id?: number;
+  accessKey?: any;
   title: string;
   name?: string;
   size?: string;
   onClick?: (e?: any) => void;
 };
 
-const DefaultButton = ({ id, sub_id, title, name, size, onClick }: ButtonProps) => {
+const DefaultButton = ({ id, accessKey, title, name, size, onClick }: ButtonProps) => {
   return (
     <Button
       id={id}
       name={name}
-      key={sub_id}
+      accessKey={accessKey}
       color='primary'
       variant='contained'
       onClick={onClick}

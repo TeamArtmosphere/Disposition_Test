@@ -1,7 +1,7 @@
 'use client';
 
 import DefaultButton from '@/components/common/DefaultButton';
-import { Box, Container, Paper, Typography } from '@mui/material';
+import { Box, Typography } from '@mui/material';
 import Image from 'next/image';
 import logo from '../public/imgs/logo.png';
 import { useRouter } from 'next/navigation';

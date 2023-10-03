@@ -4,8 +4,7 @@ const nextConfig = {
     return [
       {
         source: '/:path*',
-        destination: `https://e8d1-175-214-81-205.ngrok-free.app/:path*`,
-        // destination: `${process.env.BASE_URL}/:path*`,
+        destination: `${process.env.BASE_URL}/:path*`,
       },
     ];
   },
