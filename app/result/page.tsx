@@ -12,8 +12,6 @@ const Page = () => {
     router.push('/');
   };
 
-  const { Kakao } = window;
-
   return (
     <div>
       <Typography variant='h4' mb={'30px'}>

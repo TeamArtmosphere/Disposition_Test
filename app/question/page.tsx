@@ -4,9 +4,8 @@ import DefaultButton from '@/components/common/DefaultButton';
 import { Box, Typography } from '@mui/material';
 import React, { useEffect, useState } from 'react';
 import { getAllQuestion } from '@/api/axios-api';
-import { ButtonBox } from '@/app/genuser/page';
-import { FlexContainerCol } from '@/app/page';
 import ProgressBar from '@/components/material/ProgressBar';
+import { ButtonBox, FlexContainerCol } from '@/style/style';
 
 const Page = () => {
   // useState type 수정 필요
@@ -31,7 +30,7 @@ const Page = () => {
     setQuestionNumber((prev: number) => prev - 1);
   };
 
-  const progress = (100 / questionData.length) * questionNumber + 1;
+  const progress: number = questionData && (100 / questionData.length) * questionNumber + 1;
 
   console.log(progress);
 

@@ -5,13 +5,6 @@ import { Inter } from 'next/font/google';
 import theme from '@/style/theme';
 import RecoilProvider from './RecoilProvider';
 import Script from 'next/script';
-import { FlexBoxCol } from './page';
-
-declare global {
-  interface Window {
-    Kakao: any;
-  }
-}
 
 const inter = Inter({ subsets: ['latin'] });
 
@@ -46,7 +39,6 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
               </Paper>
             </Container>
           </RecoilProvider>
-          <Script src='https://developers.kakao.com/sdk/js/kakao.js' />
         </body>
       </ThemeProvider>
     </html>

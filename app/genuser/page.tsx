@@ -3,13 +3,11 @@
 import { postRegistUser } from '@/api/axios-api';
 import DefaultButton from '@/components/common/DefaultButton';
 import { eventUserId, eventUserType } from '@/recoil/atom';
+import { ButtonBox, FlexBoxCol, FlexContainerCol } from '@/style/style';
 import { Box, Typography } from '@mui/material';
 import { useRouter } from 'next/navigation';
 import React, { useState } from 'react';
 import { useRecoilState } from 'recoil';
-import { FlexContainerCol, FlexBoxCol } from '../page';
-
-export const ButtonBox = { ...FlexContainerCol, gap: '10px', width: '100%' };
 
 const genderData = [
   { id: 'MAN', title: '남자', name: 'gender' },
