@@ -5,11 +5,7 @@ import { Box, Typography } from '@mui/material';
 import Image from 'next/image';
 import logo from '../public/imgs/logo.png';
 import { useRouter } from 'next/navigation';
-
-export const FlexBox = { display: 'flex', justifyContent: 'center', alignItems: 'center' };
-export const FlexBoxCol = { ...FlexBox, flexDirection: 'column' };
-export const FlexContainer = { ...FlexBox, width: '100%', height: '100%' };
-export const FlexContainerCol = { ...FlexBoxCol, width: '100%', height: '100%' };
+import { FlexBoxCol } from '@/style/style';
 
 export default function Home() {
   const router = useRouter();
