@@ -1,20 +1,5 @@
 import { atom } from 'recoil';
 
-export const answerData = atom({
-  key: 'answer',
-  default: {
-    gender: 1,
-    age: '',
-    address: '',
-    q4: '',
-    q5: '',
-    q6: '',
-    q7: '',
-    q8: '',
-    q9: '',
-  },
-});
-
 type userDataType = {
   ageRange: number;
   gender: string;
@@ -35,4 +20,24 @@ export const eventUserType = atom<userDataType>({
 export const eventUserId = atom<number | null>({
   key: 'event_user_id',
   default: null,
+});
+
+export const eventUserUID = atom<string | null>({
+  key: 'uid',
+  default: null,
+});
+
+export type selectionsType = {
+  selectionId: number | null;
+  value: string | null;
+};
+
+export const selectionsAtom = atom<selectionsType[]>({
+  key: 'selections_array',
+  default: [],
+});
+
+export const pablosCodeAtom = atom<string>({
+  key: 'pablos_code',
+  default: '',
 });

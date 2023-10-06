@@ -2,7 +2,7 @@
 
 import { postRegistUser } from '@/api/axios-api';
 import DefaultButton from '@/components/common/DefaultButton';
-import { eventUserId, eventUserType } from '@/recoil/atom';
+import { eventUserId, eventUserType, eventUserUID } from '@/recoil/atom';
 import { ButtonBox, FlexBoxCol, FlexContainerCol } from '@/style/style';
 import { Box, Typography } from '@mui/material';
 import { useRouter } from 'next/navigation';
@@ -15,11 +15,11 @@ const genderData = [
 ];
 
 const ageRangeData = [
-  { id: 10, title: '10대' },
-  { id: 20, title: '20대' },
-  { id: 30, title: '30대' },
-  { id: 40, title: '40대' },
-  { id: 50, title: '50대 이상' },
+  { id: '10', title: '10대' },
+  { id: '20', title: '20대' },
+  { id: '30', title: '30대' },
+  { id: '40', title: '40대' },
+  { id: '50', title: '50대 이상' },
 ];
 
 const addressData = [
@@ -33,17 +33,19 @@ const Page = () => {
   const router = useRouter();
 
   const [userType, setUserType] = useRecoilState(eventUserType);
-  const [userId, setUserId] = useRecoilState(eventUserId);
   const [renderType, setRenderType] = useState('gender');
+  const [userId, setUserId] = useRecoilState(eventUserId);
+  const [UID, setUID] = useRecoilState(eventUserUID);
 
   const onClickRegistUser = () => {
     postRegistUser(userType)
-      .then((data) => {
+      .then(data => {
         console.log(data);
         setUserId(data.event_user_id);
+        setUID(data.uid);
         router.push('/question');
       })
-      .catch((error) => {
+      .catch(error => {
         console.log(error);
       });
   };
