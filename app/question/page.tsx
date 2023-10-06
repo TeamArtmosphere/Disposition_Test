@@ -7,13 +7,7 @@ import { getAllQuestion, getResult } from '@/api/axios-api';
 import ProgressBar from '@/components/material/ProgressBar';
 import { ButtonBox, FlexContainerCol } from '@/style/style';
 import { useRecoilState, useRecoilValue, useSetRecoilState } from 'recoil';
-import {
-  eventUserId,
-  eventUserUID,
-  pablosCodeAtom,
-  selections,
-  selectionsArray,
-} from '@/recoil/atom';
+import { eventUserId, eventUserUID, pablosCodeAtom, selectionsAtom } from '@/recoil/atom';
 import { useRouter } from 'next/navigation';
 
 const Page = () => {
@@ -21,8 +15,7 @@ const Page = () => {
   // useState type 수정 필요
   const [questionData, setQuestionData] = useState<any>(null);
   const [questionNumber, setQuestionNumber] = useState(0);
-  const [selectionData, setSelectionData] = useRecoilState(selections);
-  const [selectionsArrayData, setSelectionsArrayData] = useRecoilState(selectionsArray);
+  const [selectionData, setSelectionData] = useRecoilState(selectionsAtom);
   const userId = useRecoilValue(eventUserId);
   const UID = useRecoilValue(eventUserUID);
   const setPablosCode = useSetRecoilState(pablosCodeAtom);
@@ -40,18 +33,15 @@ const Page = () => {
   const onClickNextQuestion = (e: any) => {
     setQuestionNumber((prev: number) => prev + 1);
 
-    setSelectionsArrayData([
-      ...selectionsArrayData,
-      { selectionId: Number(e.currentTarget.id), value: null },
-    ]);
+    setSelectionData([...selectionData, { selectionId: Number(e.currentTarget.id), value: null }]);
 
-    if (questionNumber === 8 && userId) {
-      setSelectionsArrayData([
-        ...selectionsArrayData,
+    if (questionNumber === 8 && userId && UID) {
+      setSelectionData([
+        ...selectionData,
         { selectionId: Number(e.currentTarget.id), value: null },
       ]);
 
-      getResult(userId, { testId: userId, uid: UID, selections: selectionsArrayData })
+      getResult(userId, { testId: userId, uid: UID, selections: selectionData })
         .then(data => {
           console.log(data);
           setPablosCode(data.pablos_code);
@@ -71,7 +61,7 @@ const Page = () => {
 
   console.log(progress);
   console.log(questionNumber, 'qnumber');
-  console.log(selectionsArrayData);
+  console.log(selectionData);
   console.log(selectionData);
 
   return questionData ? (

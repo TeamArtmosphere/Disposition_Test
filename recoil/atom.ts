@@ -27,27 +27,12 @@ export const eventUserUID = atom<string | null>({
   default: null,
 });
 
-export type selectionsArrayType = {
+export type selectionsType = {
   selectionId: number | null;
   value: string | null;
 };
 
-export type selectionsType = {
-  testId: number | null;
-  uid: string | null;
-  selections: selectionsArrayType[];
-};
-
-export const selections = atom<selectionsType>({
-  key: 'selections',
-  default: {
-    testId: null,
-    uid: null,
-    selections: [],
-  },
-});
-
-export const selectionsArray = atom<selectionsArrayType[]>({
+export const selectionsAtom = atom<selectionsType[]>({
   key: 'selections_array',
   default: [],
 });

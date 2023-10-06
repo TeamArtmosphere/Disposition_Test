@@ -2,7 +2,7 @@
 
 import { postRegistUser } from '@/api/axios-api';
 import DefaultButton from '@/components/common/DefaultButton';
-import { eventUserId, eventUserType, eventUserUID, selections } from '@/recoil/atom';
+import { eventUserId, eventUserType, eventUserUID } from '@/recoil/atom';
 import { ButtonBox, FlexBoxCol, FlexContainerCol } from '@/style/style';
 import { Box, Typography } from '@mui/material';
 import { useRouter } from 'next/navigation';
@@ -36,7 +36,6 @@ const Page = () => {
   const [renderType, setRenderType] = useState('gender');
   const [userId, setUserId] = useRecoilState(eventUserId);
   const [UID, setUID] = useRecoilState(eventUserUID);
-  const [selectionData, setSelectionData] = useRecoilState(selections);
 
   const onClickRegistUser = () => {
     postRegistUser(userType)
@@ -44,7 +43,6 @@ const Page = () => {
         console.log(data);
         setUserId(data.event_user_id);
         setUID(data.uid);
-        setSelectionData({ ...selectionData, testId: data.event_user_id, uid: data.uid });
         router.push('/question');
       })
       .catch(error => {

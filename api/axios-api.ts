@@ -27,7 +27,13 @@ export const getQuestion = async (id: number) => {
   return res.data;
 };
 
-export const getResult = async (id: number, selectionData: selectionsType) => {
+type selectionsDataType = {
+  testId: number;
+  uid: string;
+  selections: selectionsType[];
+};
+
+export const getResult = async (id: number, selectionData: selectionsDataType) => {
   const res = await instance.post(`/api/v1/pablos-analysis/${id}/complete`, selectionData);
   return res.data;
 };
