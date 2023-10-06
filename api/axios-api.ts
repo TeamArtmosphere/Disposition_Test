@@ -12,7 +12,7 @@ export const instance = axios.create({
 });
 
 export const postRegistUser = async (userData: any) => {
-  const res = await instance.post(`/api/v1/event-users`, userData);
+  const res = await instance.post(`${process.env.NEXT_PUBLIC_URL}/api/v1/event-users`, userData);
   return res.data;
 };
 
