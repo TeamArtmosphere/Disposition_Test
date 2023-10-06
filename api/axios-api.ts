@@ -1,3 +1,4 @@
+import { selectionsType } from '@/recoil/atom';
 import axios, { AxiosRequestConfig } from 'axios';
 
 axios.defaults.withCredentials = true;
@@ -23,5 +24,10 @@ export const getAllQuestion = async (id?: number) => {
 
 export const getQuestion = async (id: number) => {
   const res = await instance.get(`/api/v1/pablos-analysis/questions/${id}`);
+  return res.data;
+};
+
+export const getResult = async (id: number, selectionData: selectionsType) => {
+  const res = await instance.post(`/api/v1/pablos-analysis/${id}/complete`, selectionData);
   return res.data;
 };
