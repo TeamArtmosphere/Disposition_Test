@@ -4,7 +4,7 @@ import DefaultButton from '@/components/common/DefaultButton';
 import { Box, Typography } from '@mui/material';
 import React, { useEffect, useState } from 'react';
 import { getAllQuestion, getResult } from '@/api/axios-api';
-import ProgressBar from '@/components/material/ProgressBar';
+import ProgressBar from '@/components/layout/ProgressBar';
 import { ButtonBox, FlexContainerCol } from '@/style/style';
 import { useRecoilState, useRecoilValue, useSetRecoilState } from 'recoil';
 import { eventUserId, eventUserUID, pablosCodeAtom, selectionsAtom } from '@/recoil/atom';
@@ -22,10 +22,10 @@ const Page = () => {
 
   useEffect(() => {
     getAllQuestion()
-      .then(data => {
+      .then((data) => {
         setQuestionData(data.questions);
       })
-      .catch(error => {
+      .catch((error) => {
         console.log(error);
       });
   }, []);
@@ -36,18 +36,15 @@ const Page = () => {
     setSelectionData([...selectionData, { selectionId: Number(e.currentTarget.id), value: null }]);
 
     if (questionNumber === 8 && userId && UID) {
-      setSelectionData([
-        ...selectionData,
-        { selectionId: Number(e.currentTarget.id), value: null },
-      ]);
+      setSelectionData([...selectionData, { selectionId: Number(e.currentTarget.id), value: null }]);
 
       getResult(userId, { testId: userId, uid: UID, selections: selectionData })
-        .then(data => {
+        .then((data) => {
           console.log(data);
           setPablosCode(data.pablos_code);
           router.push('/result');
         })
-        .catch(error => {
+        .catch((error) => {
           console.log(error);
         });
     }
@@ -58,11 +55,6 @@ const Page = () => {
   };
 
   const progress: number = questionData && (100 / questionData.length) * questionNumber + 1;
-
-  console.log(progress);
-  console.log(questionNumber, 'qnumber');
-  console.log(selectionData);
-  console.log(selectionData);
 
   return questionData ? (
     <Box sx={{ ...FlexContainerCol }}>
