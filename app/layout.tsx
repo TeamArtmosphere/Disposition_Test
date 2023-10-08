@@ -5,6 +5,7 @@ import { Inter } from 'next/font/google';
 import theme from '@/style/theme';
 import RecoilProvider from './RecoilProvider';
 import Script from 'next/script';
+import Header from '@/components/layout/Header';
 
 const inter = Inter({ subsets: ['latin'] });
 
@@ -35,6 +36,7 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
                   p: 2,
                 }}
               >
+                <Header />
                 {children}
               </Paper>
             </Container>
