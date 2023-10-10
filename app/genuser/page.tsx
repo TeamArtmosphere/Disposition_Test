@@ -2,6 +2,7 @@
 
 import { postRegistUser } from '@/api/axios-api';
 import DefaultButton from '@/components/common/DefaultButton';
+import SelectionButton from '@/components/common/SelectionButton';
 import { eventUserId, eventUserType, eventUserUID } from '@/recoil/atom';
 import { ButtonBox, FlexBoxCol, FlexContainerCol } from '@/style/style';
 import { Box, Typography } from '@mui/material';
@@ -39,13 +40,13 @@ const Page = () => {
 
   const onClickRegistUser = () => {
     postRegistUser(userType)
-      .then(data => {
+      .then((data) => {
         console.log(data);
         setUserId(data.event_user_id);
         setUID(data.uid);
         router.push('/question');
       })
-      .catch(error => {
+      .catch((error) => {
         console.log(error);
       });
   };
@@ -71,22 +72,20 @@ const Page = () => {
 
   return (
     <Box sx={FlexContainerCol}>
-      <Typography variant='h3'>당신은 어떤 사람인가요?</Typography>
-
       {renderType === 'gender' ? (
         <Box sx={FlexBoxCol}>
-          <Typography variant='h4' mb={'30px'}>
+          <Typography variant='h3' mb={'30px'}>
             성별을 골라주세요
           </Typography>
           <Box sx={ButtonBox}>
             {genderData.map((data, idx) => {
               return (
-                <DefaultButton
+                <SelectionButton
                   key={idx}
                   title={data.title}
                   id={data.id}
                   name='gender'
-                  size='md'
+                  size='sm'
                   onClick={handleUserData}
                 />
               );
@@ -95,18 +94,18 @@ const Page = () => {
         </Box>
       ) : renderType === 'ageRange' ? (
         <Box sx={FlexBoxCol}>
-          <Typography variant='h4' mb={'30px'}>
+          <Typography variant='h3' mb={'30px'}>
             연령대를 선택해주세요
           </Typography>
           <Box sx={ButtonBox}>
             {ageRangeData.map((data, idx) => {
               return (
-                <DefaultButton
+                <SelectionButton
                   key={idx}
                   title={data.title}
                   id={data.id}
                   name='ageRange'
-                  size='md'
+                  size='sm'
                   onClick={handleUserData}
                 />
               );
@@ -115,18 +114,18 @@ const Page = () => {
         </Box>
       ) : renderType === 'address' ? (
         <Box sx={FlexBoxCol}>
-          <Typography variant='h4' mb={'30px'}>
+          <Typography variant='h3' mb={'30px'}>
             거주 지역을 선택해주세요
           </Typography>
           <Box sx={ButtonBox}>
             {addressData.map((data, idx) => {
               return (
-                <DefaultButton
+                <SelectionButton
                   key={idx}
                   title={data.title}
                   id={data.id}
                   name='address'
-                  size='md'
+                  size='sm'
                   onClick={handleUserData}
                 />
               );

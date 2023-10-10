@@ -1,6 +1,5 @@
 'use client';
 
-import DefaultButton from '@/components/common/DefaultButton';
 import { Box, Typography } from '@mui/material';
 import React, { useEffect, useState } from 'react';
 import { getAllQuestion, getResult } from '@/api/axios-api';
@@ -9,6 +8,7 @@ import { ButtonBox, FlexContainerCol } from '@/style/style';
 import { useRecoilState, useRecoilValue, useSetRecoilState } from 'recoil';
 import { eventUserId, eventUserUID, pablosCodeAtom, selectionsAtom } from '@/recoil/atom';
 import { useRouter } from 'next/navigation';
+import SelectionButton from '@/components/common/SelectionButton';
 
 const Page = () => {
   const router = useRouter();
@@ -60,14 +60,14 @@ const Page = () => {
     <Box sx={{ ...FlexContainerCol }}>
       {questionNumber < 9 && (
         <Box>
-          <Typography variant='h4' mb={'30px'}>
+          <Typography variant='h3' mb={'30px'}>
             {questionData[questionNumber].content}
           </Typography>
           <Box sx={ButtonBox}>
             {questionData[questionNumber].selections.map((selection: any) => {
               return (
                 <Box key={selection.selection_id} sx={ButtonBox}>
-                  <DefaultButton
+                  <SelectionButton
                     id={selection.selection_id}
                     title={selection.content}
                     size='md'

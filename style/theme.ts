@@ -63,10 +63,10 @@ const theme = createTheme({
 
     h1: { fontSize: '36px', lineHeight: '36px', fontWeight: 700 },
     h2: { fontSize: '36px', lineHeight: '36px', fontWeight: 400 },
-    h3: { fontSize: '24px', lineHeight: '30px', fontWeight: 700 },
-    h4: { fontSize: '18px', lineHeight: '22px', fontWeight: 400 },
-    h5: { fontSize: '16px', lineHeight: '22px', fontWeight: 400 },
-    h6: { fontSize: '14px', lineHeight: '18px', fontWeight: 400 },
+    h3: { fontSize: '28px', lineHeight: '30px', fontWeight: 700 },
+    h4: { fontSize: '24px', lineHeight: '22px', fontWeight: 400 },
+    h5: { fontSize: '14px', lineHeight: '22px', fontWeight: 400 },
+    h6: { fontSize: '12px', lineHeight: '18px', fontWeight: 400 },
   },
 });
 
