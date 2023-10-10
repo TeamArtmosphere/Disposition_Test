@@ -20,7 +20,7 @@ const theme = createTheme({
         },
         outlinedPrimary: {
           color: '#767676',
-          border: '1px solid #c4c4c4',
+          border: '1px solid #136ea6',
           borderRadius: '50px',
         },
         sizeLarge: {
@@ -61,9 +61,9 @@ const theme = createTheme({
   typography: {
     fontFamily: '"GmarketSansMedium", sans-serif',
 
-    h1: { fontSize: '36px', lineHeight: '36px', fontWeight: 700 },
-    h2: { fontSize: '36px', lineHeight: '36px', fontWeight: 400 },
-    h3: { fontSize: '28px', lineHeight: '30px', fontWeight: 700 },
+    h1: { fontSize: '36px', lineHeight: '38px', fontWeight: 700 },
+    h2: { fontSize: '36px', lineHeight: '38px', fontWeight: 400 },
+    h3: { fontSize: '28px', lineHeight: '32px', fontWeight: 700 },
     h4: { fontSize: '24px', lineHeight: '22px', fontWeight: 400 },
     h5: { fontSize: '14px', lineHeight: '22px', fontWeight: 400 },
     h6: { fontSize: '12px', lineHeight: '18px', fontWeight: 400 },

@@ -1,4 +1,4 @@
-import { Box, Container, Paper, ThemeProvider, Typography } from '@mui/material';
+import { Container, ThemeProvider } from '@mui/material';
 import '../style/globals.css';
 import type { Metadata } from 'next';
 import { Inter } from 'next/font/google';
@@ -18,27 +18,17 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
   return (
     <html lang='ko'>
       <ThemeProvider theme={theme}>
-        <body className={inter.className}>
+        <body className={inter.className} style={{ backgroundColor: '#F8FCFF' }}>
           <RecoilProvider>
             <Container
               sx={{
-                width: '390px',
-                height: '844px',
+                width: '100%',
+                height: '100vh',
                 p: 0,
               }}
             >
-              <Paper
-                sx={{
-                  justifyContent: 'center',
-                  alignItems: 'center',
-                  width: '100%',
-                  height: '100%',
-                  p: 2,
-                }}
-              >
-                <Header />
-                {children}
-              </Paper>
+              <Header />
+              {children}
             </Container>
           </RecoilProvider>
         </body>

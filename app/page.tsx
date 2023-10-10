@@ -15,15 +15,30 @@ export default function Home() {
   };
 
   return (
-    <Box sx={{ ...FlexBoxCol, width: '100%', height: '100%' }}>
-      <Button variant='contained' sx={{ p: 0, width: '267px', height: '30px', fontSize: '14px' }}>
-        당신의 공간 어떻게 이용하고 계신가요?
-      </Button>
-      <Typography fontSize={26}>나에게 딱맞는 공간 찾기</Typography>
-      <Typography variant='h1' color={'primary'}>
-        PABLOS
-      </Typography>
-      <Image src={mainImg} alt='아트모스피어 로고' width={190} />
+    <Box
+      sx={{ width: '280px', height: '590px', textAlign: 'center', m: '0 auto', bgcolor: '#F8FCFF' }}
+    >
+      <Box sx={{ ...FlexBoxCol, mt: '100px', mb: 4 }}>
+        <Button
+          variant='contained'
+          disableElevation
+          sx={{ p: 0, width: '267px', height: '30px', fontSize: '14px', mb: 2 }}
+        >
+          당신의 공간 어떻게 이용하고 계신가요?
+        </Button>
+        <Typography fontSize={26} mb={1}>
+          나에게 딱맞는 공간 찾기
+        </Typography>
+        <Typography variant='h1' color={'primary'}>
+          PABLOS
+        </Typography>
+      </Box>
+      <Image
+        src={mainImg}
+        alt='컴퓨터 앞에 앉아있는 남자 이미지'
+        width={190}
+        style={{ marginBottom: '30px' }}
+      />
       <Box sx={{ mt: '30px', mb: '50px', textAlign: 'center' }}>
         <Typography fontSize='12px'>
           테스트 결과를 바탕으로

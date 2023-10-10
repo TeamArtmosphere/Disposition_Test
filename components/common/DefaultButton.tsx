@@ -16,6 +16,7 @@ const DefaultButton = ({ id, title, name, size, onClick }: ButtonProps) => {
       name={name}
       color='primary'
       variant='contained'
+      disableElevation
       onClick={onClick}
       sx={{
         width: size === 'lg' ? '300px' : size === 'md' ? '250px' : size === 'sm' ? '150px' : '100%',

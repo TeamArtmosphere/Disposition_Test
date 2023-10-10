@@ -40,18 +40,18 @@ const Page = () => {
 
   const onClickRegistUser = () => {
     postRegistUser(userType)
-      .then((data) => {
+      .then(data => {
         console.log(data);
         setUserId(data.event_user_id);
         setUID(data.uid);
         router.push('/question');
       })
-      .catch((error) => {
+      .catch(error => {
         console.log(error);
       });
   };
 
-  const handleUserData = (e: any) => {
+  const handleUserData = (e?: any) => {
     if (e.currentTarget.name === 'gender') {
       setUserType({ ...userType, gender: e.currentTarget.id });
       setRenderType('ageRange');
@@ -64,7 +64,7 @@ const Page = () => {
 
     if (e.currentTarget.name === 'address') {
       setUserType({ ...userType, address: e.currentTarget.id });
-      // onClickRegistUser();
+      onClickRegistUser();
     }
   };
 
@@ -74,7 +74,7 @@ const Page = () => {
     <Box sx={FlexContainerCol}>
       {renderType === 'gender' ? (
         <Box sx={FlexBoxCol}>
-          <Typography variant='h3' mb={'30px'}>
+          <Typography variant='h3' mb={'50px'}>
             성별을 골라주세요
           </Typography>
           <Box sx={ButtonBox}>
@@ -94,7 +94,7 @@ const Page = () => {
         </Box>
       ) : renderType === 'ageRange' ? (
         <Box sx={FlexBoxCol}>
-          <Typography variant='h3' mb={'30px'}>
+          <Typography variant='h3' mb={'50px'}>
             연령대를 선택해주세요
           </Typography>
           <Box sx={ButtonBox}>
@@ -114,7 +114,7 @@ const Page = () => {
         </Box>
       ) : renderType === 'address' ? (
         <Box sx={FlexBoxCol}>
-          <Typography variant='h3' mb={'30px'}>
+          <Typography variant='h3' mb={'50px'}>
             거주 지역을 선택해주세요
           </Typography>
           <Box sx={ButtonBox}>
@@ -130,9 +130,6 @@ const Page = () => {
                 />
               );
             })}
-          </Box>
-          <Box sx={{ mt: '20px' }}>
-            <DefaultButton title='테스트 시작하기' onClick={onClickRegistUser} />
           </Box>
         </Box>
       ) : null}

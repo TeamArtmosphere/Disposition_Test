@@ -16,6 +16,7 @@ const SelectionButton = ({ id, title, name, size, onClick }: ButtonProps) => {
       name={name}
       color='primary'
       variant='outlined'
+      disableElevation
       onClick={onClick}
       sx={{
         width: size === 'lg' ? '650px' : size === 'md' ? '470px' : size === 'sm' ? '330px' : '100%',

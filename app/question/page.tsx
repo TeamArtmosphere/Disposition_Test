@@ -4,7 +4,7 @@ import { Box, Typography } from '@mui/material';
 import React, { useEffect, useState } from 'react';
 import { getAllQuestion, getResult } from '@/api/axios-api';
 import ProgressBar from '@/components/layout/ProgressBar';
-import { ButtonBox, FlexContainerCol } from '@/style/style';
+import { ButtonBox, FlexBoxCol, FlexContainerCol } from '@/style/style';
 import { useRecoilState, useRecoilValue, useSetRecoilState } from 'recoil';
 import { eventUserId, eventUserUID, pablosCodeAtom, selectionsAtom } from '@/recoil/atom';
 import { useRouter } from 'next/navigation';
@@ -22,10 +22,10 @@ const Page = () => {
 
   useEffect(() => {
     getAllQuestion()
-      .then((data) => {
+      .then(data => {
         setQuestionData(data.questions);
       })
-      .catch((error) => {
+      .catch(error => {
         console.log(error);
       });
   }, []);
@@ -36,15 +36,18 @@ const Page = () => {
     setSelectionData([...selectionData, { selectionId: Number(e.currentTarget.id), value: null }]);
 
     if (questionNumber === 8 && userId && UID) {
-      setSelectionData([...selectionData, { selectionId: Number(e.currentTarget.id), value: null }]);
+      setSelectionData([
+        ...selectionData,
+        { selectionId: Number(e.currentTarget.id), value: null },
+      ]);
 
       getResult(userId, { testId: userId, uid: UID, selections: selectionData })
-        .then((data) => {
+        .then(data => {
           console.log(data);
           setPablosCode(data.pablos_code);
           router.push('/result');
         })
-        .catch((error) => {
+        .catch(error => {
           console.log(error);
         });
     }
@@ -57,10 +60,10 @@ const Page = () => {
   const progress: number = questionData && (100 / questionData.length) * questionNumber + 1;
 
   return questionData ? (
-    <Box sx={{ ...FlexContainerCol }}>
+    <Box sx={FlexContainerCol}>
       {questionNumber < 9 && (
-        <Box>
-          <Typography variant='h3' mb={'30px'}>
+        <Box sx={{ ...FlexBoxCol, p: 2, wordBreak: 'keep-all', textAlign: 'center' }}>
+          <Typography variant='h3' mb={'50px'}>
             {questionData[questionNumber].content}
           </Typography>
           <Box sx={ButtonBox}>
@@ -70,7 +73,7 @@ const Page = () => {
                   <SelectionButton
                     id={selection.selection_id}
                     title={selection.content}
-                    size='md'
+                    size='sm'
                     onClick={onClickNextQuestion}
                   />
                 </Box>
