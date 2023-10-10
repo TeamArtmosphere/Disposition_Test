@@ -67,6 +67,16 @@ const Page = () => {
     }
   };
 
+  const onClickPrevQuestion = () => {
+    if (renderType === 'ageRange') {
+      setUserType({ ...userType, ageRange: 0 });
+      setRenderType('gender');
+    } else if (renderType === 'address') {
+      setUserType({ ...userType, address: '' });
+      setRenderType('ageRange');
+    }
+  };
+
   useEffect(() => {
     if (userType.address !== '') {
       onClickRegistUser();
@@ -102,7 +112,7 @@ const Page = () => {
           <Typography variant='h3' mb={'50px'}>
             연령대를 선택해주세요
           </Typography>
-          <Box sx={ButtonBox}>
+          <Box sx={{ ...ButtonBox, mb: '20px' }}>
             {ageRangeData.map((data, idx) => {
               return (
                 <SelectionButton
@@ -116,13 +126,14 @@ const Page = () => {
               );
             })}
           </Box>
+          <DefaultButton title='이전 질문' onClick={onClickPrevQuestion} size='sm' />
         </Box>
       ) : renderType === 'address' ? (
         <Box sx={FlexBoxCol}>
           <Typography variant='h3' mb={'50px'}>
             거주 지역을 선택해주세요
           </Typography>
-          <Box sx={ButtonBox}>
+          <Box sx={{ ...ButtonBox, mb: '20px' }}>
             {addressData.map((data, idx) => {
               return (
                 <SelectionButton
@@ -136,6 +147,7 @@ const Page = () => {
               );
             })}
           </Box>
+          <DefaultButton title='이전 질문' onClick={onClickPrevQuestion} size='sm' />
         </Box>
       ) : null}
     </Box>

@@ -15,10 +15,8 @@ export default function Home() {
   };
 
   return (
-    <Box
-      sx={{ width: '280px', height: '590px', textAlign: 'center', m: '0 auto', bgcolor: '#F8FCFF' }}
-    >
-      <Box sx={{ ...FlexBoxCol, mt: '100px', mb: 4 }}>
+    <Box sx={{ textAlign: 'center', m: '0 auto', pt: '100px', bgcolor: '#F8FCFF' }}>
+      <Box sx={{ ...FlexBoxCol, mb: 4 }}>
         <Button
           variant='contained'
           disableElevation

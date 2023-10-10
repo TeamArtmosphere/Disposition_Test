@@ -5,8 +5,14 @@ import React, { useEffect, useState } from 'react';
 import { getAllQuestion, getResult } from '@/api/axios-api';
 import ProgressBar from '@/components/layout/ProgressBar';
 import { ButtonBox, FlexBoxCol, FlexContainerCol } from '@/style/style';
-import { useRecoilState, useRecoilValue, useSetRecoilState } from 'recoil';
-import { eventUserId, eventUserUID, pablosCodeAtom, selectionsAtom } from '@/recoil/atom';
+import { useRecoilState, useRecoilValue, useResetRecoilState, useSetRecoilState } from 'recoil';
+import {
+  eventUserId,
+  eventUserType,
+  eventUserUID,
+  pablosCodeAtom,
+  selectionsAtom,
+} from '@/recoil/atom';
 import { useRouter } from 'next/navigation';
 import SelectionButton from '@/components/common/SelectionButton';
 import DefaultButton from '@/components/common/DefaultButton';
@@ -20,6 +26,7 @@ const Page = () => {
   const userId = useRecoilValue(eventUserId);
   const UID = useRecoilValue(eventUserUID);
   const setPablosCode = useSetRecoilState(pablosCodeAtom);
+  const resetUserTypeState = useResetRecoilState(eventUserType);
 
   useEffect(() => {
     getAllQuestion()
@@ -60,6 +67,11 @@ const Page = () => {
     setQuestionNumber((prev: number) => prev - 1);
   };
 
+  const onClickGoGenUserPage = () => {
+    resetUserTypeState();
+    router.push('/genuser');
+  };
+
   const progress: number = questionData && (100 / questionData.length) * questionNumber + 1;
 
   console.log(selectionData);
@@ -87,7 +99,10 @@ const Page = () => {
           </Box>
           <ProgressBar progress={progress} />
           <Box>
-            <DefaultButton title='이전 질문' onClick={onClickPrevQuestion} />
+            <DefaultButton
+              title={questionNumber === 0 ? '개인정보 재입력' : '이전 질문'}
+              onClick={questionNumber === 0 ? onClickGoGenUserPage : onClickPrevQuestion}
+            />
           </Box>
         </Box>
       )}

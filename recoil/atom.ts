@@ -37,7 +37,7 @@ export const selectionsAtom = atom<selectionsType[]>({
   default: [],
 });
 
-export const pablosCodeAtom = atom<string>({
+export const pablosCodeAtom = atom<string | null>({
   key: 'pablos_code',
-  default: '',
+  default: null,
 });
