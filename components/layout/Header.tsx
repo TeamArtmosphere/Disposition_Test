@@ -15,6 +15,7 @@ const Header = () => {
         bgcolor: '#F8FCFF',
         position: 'absolute',
         top: 0,
+        borderBottom: '1px solid #efefef',
       }}
     >
       <Image height={24} src={logo} alt='아트모스피어 로고' />

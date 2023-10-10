@@ -9,6 +9,7 @@ import { useRecoilState, useRecoilValue, useSetRecoilState } from 'recoil';
 import { eventUserId, eventUserUID, pablosCodeAtom, selectionsAtom } from '@/recoil/atom';
 import { useRouter } from 'next/navigation';
 import SelectionButton from '@/components/common/SelectionButton';
+import DefaultButton from '@/components/common/DefaultButton';
 
 const Page = () => {
   const router = useRouter();
@@ -54,10 +55,14 @@ const Page = () => {
   };
 
   const onClickPrevQuestion = () => {
+    const prevData = [...selectionData].slice(0, selectionData.length - 1);
+    setSelectionData(prevData);
     setQuestionNumber((prev: number) => prev - 1);
   };
 
   const progress: number = questionData && (100 / questionData.length) * questionNumber + 1;
+
+  console.log(selectionData);
 
   return questionData ? (
     <Box sx={FlexContainerCol}>
@@ -80,9 +85,12 @@ const Page = () => {
               );
             })}
           </Box>
+          <ProgressBar progress={progress} />
+          <Box>
+            <DefaultButton title='이전 질문' onClick={onClickPrevQuestion} />
+          </Box>
         </Box>
       )}
-      <ProgressBar progress={progress} />
     </Box>
   ) : null;
 };

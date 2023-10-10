@@ -7,7 +7,7 @@ import { eventUserId, eventUserType, eventUserUID } from '@/recoil/atom';
 import { ButtonBox, FlexBoxCol, FlexContainerCol } from '@/style/style';
 import { Box, Typography } from '@mui/material';
 import { useRouter } from 'next/navigation';
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import { useRecoilState } from 'recoil';
 
 const genderData = [
@@ -64,9 +64,14 @@ const Page = () => {
 
     if (e.currentTarget.name === 'address') {
       setUserType({ ...userType, address: e.currentTarget.id });
-      onClickRegistUser();
     }
   };
+
+  useEffect(() => {
+    if (userType.address !== '') {
+      onClickRegistUser();
+    }
+  }, [userType]);
 
   console.log(userType);
 

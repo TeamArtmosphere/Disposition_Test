@@ -2,7 +2,13 @@
 
 import DefaultButton from '@/components/common/DefaultButton';
 import { StarRating } from '@/components/result/StarRating';
-import { eventUserId, eventUserUID, pablosCodeAtom, selectionsAtom } from '@/recoil/atom';
+import {
+  eventUserId,
+  eventUserType,
+  eventUserUID,
+  pablosCodeAtom,
+  selectionsAtom,
+} from '@/recoil/atom';
 import { FlexBox, FlexBoxCol, FlexContainerCol, FlexContainer } from '@/style/style';
 import theme from '@/style/theme';
 import { Box, Button, Divider, Typography } from '@mui/material';
@@ -18,12 +24,14 @@ const Page = () => {
   const resetSelectionsState = useResetRecoilState(selectionsAtom);
   const resetUserIdState = useResetRecoilState(eventUserId);
   const resetUIDState = useResetRecoilState(eventUserUID);
+  const resetUserTypeState = useResetRecoilState(eventUserType);
 
   const handleClickToHome = () => {
     resetPablosCodeState();
     resetSelectionsState();
     resetUserIdState();
     resetUIDState();
+    resetUserTypeState();
     router.push('/');
   };
 
