@@ -36,3 +36,13 @@ export const getResult = async (selectionData: selectionsDataType, id?: number) 
   const res = await instance.post(`/api/v1/pablos-analysis/2/complete`, selectionData);
   return res.data;
 };
+
+type ratingUserData = {
+  uid: string;
+  score: number;
+};
+
+export const postRateStar = async (userData: ratingUserData) => {
+  const res = await instance.post(`/api/v1/pablos-analysis/2/satisfaction`, userData);
+  return res;
+};

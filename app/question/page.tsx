@@ -80,7 +80,7 @@ const Page = () => {
   console.log(selectionData);
 
   return questionData ? (
-    <Box sx={{ ...FlexBoxCol, position: 'relative', top: '30%' }}>
+    <Box sx={{ ...FlexBoxCol, position: 'relative', top: '20%' }}>
       {questionNumber < 9 && (
         <>
           <Box sx={{ p: 2, wordBreak: 'keep-all', textAlign: 'center' }}>

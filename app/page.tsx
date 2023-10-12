@@ -5,7 +5,7 @@ import { Box, Button, Typography } from '@mui/material';
 import Image from 'next/image';
 import mainImg from '@/public/imgs/main_img.png';
 import { useRouter } from 'next/navigation';
-import { FlexBoxCol } from '@/style/style';
+import { FlexBoxCol, FlexContainerCol } from '@/style/style';
 
 export default function Home() {
   const router = useRouter();
@@ -15,7 +15,7 @@ export default function Home() {
   };
 
   return (
-    <Box sx={{ textAlign: 'center', m: '0 auto', pt: '100px', bgcolor: '#F8FCFF' }}>
+    <Box sx={FlexContainerCol}>
       <Box sx={{ ...FlexBoxCol, mb: 4 }}>
         <Button
           variant='contained'
@@ -34,7 +34,7 @@ export default function Home() {
       <Image
         src={mainImg}
         alt='컴퓨터 앞에 앉아있는 남자 이미지'
-        width={190}
+        width={160}
         style={{ marginBottom: '30px' }}
       />
       <Box sx={{ mt: '30px', mb: '50px', textAlign: 'center' }}>

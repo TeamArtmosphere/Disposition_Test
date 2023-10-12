@@ -8,11 +8,12 @@ import theme from '@/style/theme';
 import RecoilProvider from './RecoilProvider';
 import Header from '@/components/layout/Header';
 import { useEffect } from 'react';
+import { useVh } from '@/hooks/useVh';
 
-export const setScreenHeight = () => {
-  const vh = window.innerHeight * 0.01;
-  document.documentElement.style.setProperty('--vh', `${vh}px`);
-};
+// export const setScreenHeight = () => {
+//   const vh = window.innerHeight * 0.01;
+//   document.documentElement.style.setProperty('--vh', `${vh}px`);
+// };
 
 const inter = Inter({ subsets: ['latin'] });
 
@@ -22,12 +23,14 @@ const inter = Inter({ subsets: ['latin'] });
 // };
 
 export default function RootLayout({ children }: { children: React.ReactNode }) {
-  useEffect(() => {
-    setScreenHeight();
+  const vh = useVh();
 
-    window.addEventListener('resize', setScreenHeight);
-    return () => window.removeEventListener('resize', setScreenHeight);
-  }, []);
+  // useEffect(() => {
+  //   setScreenHeight();
+
+  //   window.addEventListener('resize', setScreenHeight);
+  //   return () => window.removeEventListener('resize', setScreenHeight);
+  // }, []);
 
   return (
     <html lang='ko'>
@@ -37,7 +40,8 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
             <Container
               sx={{
                 width: '100%',
-                height: 'calc(var(--vh, 1vh) * 100);',
+                height: `${100 * vh}px`,
+                // height: 'calc(var(--vh, 1vh) * 100);',
                 p: 0,
               }}
             >

@@ -51,3 +51,8 @@ export const pablosCodeViewItemAtom = atom({
   default: null,
   effects_UNSTABLE: [persistAtom],
 });
+
+export const scoreAtom = atom<number | null>({
+  key: 'score',
+  default: null,
+});
