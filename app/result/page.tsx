@@ -37,7 +37,7 @@ const Page = () => {
   const resetUserTypeState = useResetRecoilState(eventUserType);
   const resetViewItemState = useResetRecoilState(pablosCodeViewItemAtom);
 
-  const [mounted, setMounted] = useState(false);
+  // const [mounted, setMounted] = useState(false);
   const [ratingMsg, setRatingMsg] = useState('마음에 들어요!');
   const [locationData, setLocationData] = useState([]);
 
@@ -89,7 +89,7 @@ const Page = () => {
           console.log(error);
         });
     }
-    setMounted(true);
+    // setMounted(true);
   }, []);
 
   const pablosInfo = [
@@ -109,12 +109,13 @@ const Page = () => {
 
   const filteredPablosCode = pablosCode && filterPablosCode(pablosCode);
 
-  return !mounted ? (
-    <Box sx={{ ...FlexBoxCol, gap: '40px', marginTop: '200px' }}>
-      <CircularProgress />
-      <Typography variant='h4'>페이지 로드 중입니다.</Typography>
-    </Box>
-  ) : (
+  // return !mounted ? (
+  //   <Box sx={{ ...FlexBoxCol, gap: '40px', marginTop: '200px' }}>
+  //     <CircularProgress />
+  //     <Typography variant='h4'>페이지 로드 중입니다.</Typography>
+  //   </Box>
+  // ) : (
+  return (
     <Box sx={{ ...FlexBoxCol, pt: '60px' }}>
       {pablosCode && viewItem && (
         <>
@@ -198,7 +199,7 @@ const Page = () => {
                 })}
             </Box>
 
-            <Box sx={{ ...FlexBox, width: '100%', mt: '20px', mb: '30px', gap: '10px', p: '0 22px' }}>
+            <Box sx={{ ...FlexBox, width: '100%', mt: '20px', mb: '50px', gap: '10px', p: '0 22px' }}>
               <Button variant='outlined' onClick={handleClickToHome} sx={{ bgcolor: '#C0E0F0', color: '#136ea6' }}>
                 다시 테스트하기
               </Button>

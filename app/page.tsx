@@ -8,10 +8,10 @@ import { useRouter } from 'next/navigation';
 import { FlexBoxCol, FlexContainerCol } from '@/style/style';
 
 export default function Home() {
-  const router = useRouter();
+  const router2 = useRouter();
 
   const onClickStartTest = () => {
-    router.push('/genuser');
+    router2.push('/genuser');
   };
 
   return (
