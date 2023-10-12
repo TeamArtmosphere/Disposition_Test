@@ -11,41 +11,37 @@ import { useVh } from '@/hooks/useVh';
 import { useRouter } from 'next/navigation';
 import Head from 'next/head';
 
-// export const setScreenHeight = () => {
-//   const vh = window.innerHeight * 0.01;
-//   document.documentElement.style.setProperty('--vh', `${vh}px`);
-// };
-
 const inter = Inter({ subsets: ['latin'] });
 
-export const browserPreventEvent = (e: () => void) => {
+const preventBack = () => {
   history.pushState(null, '', location.href);
-  e();
+  alert('뒤로가기가 금지되어 있습니다. 상단 로고를 사용하여 홈으로 이동하거나 화면의 버튼을 사용해 주세요.');
+};
+
+const preventRefresh = (e: BeforeUnloadEvent) => {
+  e.preventDefault();
+  e.returnValue = '';
 };
 
 export default function RootLayout({ children }: { children: React.ReactNode }) {
   const vh = useVh();
   const router = useRouter();
 
-  const alertModal = () => {
-    alert('뒤로가기가 금지되어 있습니다. 상단 로고를 사용하여 홈으로 이동하거나 화면의 버튼을 사용해 주세요.');
-  };
+  useEffect(() => {
+    (() => {
+      window.addEventListener('beforeunload', preventRefresh);
+    })();
 
-  // useEffect(() => {
-  //   setScreenHeight();
-  //   window.addEventListener('resize', setScreenHeight);
-  //   return () => window.removeEventListener('resize', setScreenHeight);
-  // }, []);
+    return () => {
+      window.removeEventListener('beforeunload', preventRefresh);
+    };
+  }, []);
 
   useEffect(() => {
     history.pushState(null, '', location.href);
-    window.addEventListener('popstate', () => {
-      browserPreventEvent(alertModal);
-    });
+    window.addEventListener('popstate', preventBack);
     return () => {
-      window.removeEventListener('popstate', () => {
-        browserPreventEvent(alertModal);
-      });
+      window.removeEventListener('popstate', preventBack);
     };
   }, []);
 

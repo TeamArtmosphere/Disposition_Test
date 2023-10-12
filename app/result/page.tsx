@@ -100,7 +100,7 @@ const Page = () => {
         {!pablosCode && !viewItem && (
           <Box sx={{ ...FlexBoxCol, gap: '40px', marginTop: '200px' }}>
             <CircularProgress />
-            <Typography variant='h4'>유형을 분석 중입니다.</Typography>
+            <Typography variant='h4'>페이지 로드 중입니다.</Typography>
           </Box>
         )}
         {pablosCode && viewItem && (

@@ -1,7 +1,7 @@
 'use client';
 
 import { Box, Typography } from '@mui/material';
-import React, { useEffect, useRef, useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import { getAllQuestion, getResult } from '@/api/axios-api';
 import ProgressBar from '@/components/layout/ProgressBar';
 import { ButtonBox, FlexBox, FlexBoxCol, FlexContainerCol } from '@/style/style';
@@ -31,9 +31,9 @@ const Page = () => {
   const resetUserTypeState = useResetRecoilState(eventUserType);
   const setViewItem = useSetRecoilState(pablosCodeViewItemAtom);
 
-  const btnRef = useRef();
-
   useEffect(() => {
+    if (!UID) router.push('/genuser');
+
     getAllQuestion()
       .then((data) => {
         setQuestionData(data.questions);
