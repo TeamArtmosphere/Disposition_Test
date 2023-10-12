@@ -149,7 +149,12 @@ const Page = () => {
           </Box>
           <Box sx={{ ...ButtonBox, flexDirection: 'row' }}>
             <DefaultButton title='이전 질문' onClick={onClickPrevQuestion} size='sm' />
-            <DefaultButton title='테스트 시작하기' onClick={onClickRegistUser} size='sm' />
+            <DefaultButton
+              title='테스트 시작하기'
+              onClick={onClickRegistUser}
+              size='sm'
+              disabled={userType.address !== '' ? false : true}
+            />
           </Box>
         </Box>
       ) : null}

@@ -25,7 +25,7 @@ const Page = () => {
   const UID = useRecoilValue(eventUserUID);
   const pablosCode = useRecoilValue(pablosCodeAtom);
   const viewItem = useRecoilValue(pablosCodeViewItemAtom);
-  const pablosCodeViewItem = viewItem && JSON.parse(viewItem).view_items;
+  const pablosCodeViewItem = viewItem && JSON.parse(viewItem);
 
   const [score, setScore] = useRecoilState(scoreAtom);
 
@@ -76,6 +76,9 @@ const Page = () => {
   useEffect(() => {
     setMounted(true);
   }, []);
+
+  console.log(pablosCode, pablosCodeViewItem, 'ㅁㄴㅇ렁ㄴㄹㄴㅇ');
+  console.log(viewItem, '뷰뷰뷰뷰');
 
   return (
     mounted && (
@@ -218,9 +221,9 @@ const Page = () => {
                   )}
                 </Box>
                 <Typography variant='h5' mb='20px'>
-                  테스트 만족도 설문조사에 참여하면
+                  아트모스피어 베타테스터에 등록하시면
                   <br />
-                  추첨을 통해 스타벅스 커피 쿠폰을 보내드려요!
+                  추첨을 통해 기프티콘을 보내드립니다!
                 </Typography>
               </Box>
 

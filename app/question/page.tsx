@@ -1,10 +1,10 @@
 'use client';
 
 import { Box, Typography } from '@mui/material';
-import React, { useEffect, useState } from 'react';
+import React, { useEffect, useRef, useState } from 'react';
 import { getAllQuestion, getResult } from '@/api/axios-api';
 import ProgressBar from '@/components/layout/ProgressBar';
-import { ButtonBox, FlexBoxCol } from '@/style/style';
+import { ButtonBox, FlexBox, FlexBoxCol, FlexContainerCol } from '@/style/style';
 import { useRecoilState, useRecoilValue, useResetRecoilState, useSetRecoilState } from 'recoil';
 import {
   eventUserId,
@@ -17,6 +17,7 @@ import {
 import { useRouter } from 'next/navigation';
 import SelectionButton from '@/components/common/SelectionButton';
 import DefaultButton from '@/components/common/DefaultButton';
+import Image from 'next/image';
 
 const Page = () => {
   const router = useRouter();
@@ -29,6 +30,8 @@ const Page = () => {
   const setPablosCode = useSetRecoilState(pablosCodeAtom);
   const resetUserTypeState = useResetRecoilState(eventUserType);
   const setViewItem = useSetRecoilState(pablosCodeViewItemAtom);
+
+  const btnRef = useRef();
 
   useEffect(() => {
     getAllQuestion()
@@ -84,13 +87,15 @@ const Page = () => {
       {questionNumber < 9 && (
         <>
           <Box sx={{ p: 2, wordBreak: 'keep-all', textAlign: 'center' }}>
-            <Typography variant='h3' mb={'50px'}>
-              {questionData[questionNumber].content}
+            <Typography variant='h3' mb={'30px'}>
+              {questionData[questionNumber].content.includes('사진질문')
+                ? '마음에 드는 장소를 골라주세요.'
+                : questionData[questionNumber].content}
             </Typography>
           </Box>
           <Box sx={{ ...ButtonBox, mb: 3 }}>
             {questionData[questionNumber].selections.map((selection: any, idx: number) => {
-              return (
+              return selection.view_type === 'TEXT' ? (
                 <SelectionButton
                   key={idx}
                   id={selection.selection_id}
@@ -98,7 +103,22 @@ const Page = () => {
                   size='sm'
                   onClick={onClickNextQuestion}
                 />
-              );
+              ) : selection.view_type === 'IMAGE' ? (
+                <Image
+                  key={idx}
+                  id={selection.selection_id}
+                  onClick={onClickNextQuestion}
+                  src={JSON.parse(selection.view_items).images[0]}
+                  alt={JSON.parse(selection.view_items).images[0]}
+                  width={300}
+                  height={150}
+                  style={{
+                    objectFit: 'cover',
+                    border: '1px solid #CFE6F2',
+                    borderRadius: '10px',
+                  }}
+                />
+              ) : null;
             })}
           </Box>
 

@@ -7,12 +7,14 @@ type ButtonProps = {
   name?: string;
   size?: string;
   onClick?: (e?: any) => void;
+  ref?: any;
 };
 
-const SelectionButton = ({ id, title, name, size, onClick }: ButtonProps) => {
+const SelectionButton = ({ id, title, name, size, onClick, ref }: ButtonProps) => {
   return (
     <Button
       id={id}
+      ref={ref}
       name={name}
       color='primary'
       variant='outlined'
