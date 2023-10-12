@@ -54,12 +54,12 @@ const Page = () => {
   const onClickRateStar = () => {
     if (UID && score) {
       postRateStar({ uid: UID, score: score })
-        .then(data => {
+        .then((data) => {
           console.log(data);
           setScore(null);
           setRatingMsg('답변해 주셔서 감사합니다!');
         })
-        .catch(error => {
+        .catch((error) => {
           console.log(error);
         });
     } else {
@@ -88,9 +88,7 @@ const Page = () => {
 
   const filterPablosCode = (pablosCode: any) => {
     const code = pablosCode.split('');
-    const filter = pablosInfo.filter(
-      (item: any) => code.filter((i: string) => i === item.code).length > 0,
-    );
+    const filter = pablosInfo.filter((item: any) => code.filter((i: string) => i === item.code).length > 0);
     return filter;
   };
 
@@ -135,12 +133,7 @@ const Page = () => {
                 position: 'relative',
               }}
             >
-              <Image
-                src={viewItem.slide_images[0]}
-                alt={viewItem.slide_images[0]}
-                layout='fill'
-                objectFit='contain'
-              />
+              <Image src={viewItem.slide_images[0]} alt={viewItem.slide_images[0]} layout='fill' objectFit='contain' />
             </Box>
             <Box
               sx={{
@@ -189,16 +182,13 @@ const Page = () => {
                     </Box>
                   );
                 })}
+
               <Box sx={{ ...FlexBox, width: '100%', mt: '20px', gap: '10px' }}>
-                <Button
-                  variant='outlined'
-                  onClick={handleClickToHome}
-                  sx={{ bgcolor: '#C0E0F0', color: '#136ea6' }}
-                >
+                <Button variant='outlined' onClick={handleClickToHome} sx={{ bgcolor: '#C0E0F0', color: '#136ea6' }}>
                   다시 테스트하기
                 </Button>
-                <DefaultButton title='공유하기' />
               </Box>
+
               <Box sx={{ ...FlexContainerCol, mt: '40px', textAlign: 'center' }}>
                 <Typography fontSize='18px' fontWeight={600} mb='10px'>
                   {pablosCode}유형에게 추천하는 장소
