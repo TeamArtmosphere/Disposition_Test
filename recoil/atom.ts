@@ -1,4 +1,7 @@
 import { atom } from 'recoil';
+import { recoilPersist } from 'recoil-persist';
+
+const { persistAtom } = recoilPersist();
 
 type userDataType = {
   ageRange: number;
@@ -37,7 +40,19 @@ export const selectionsAtom = atom<selectionsType[]>({
   default: [],
 });
 
-export const pablosCodeAtom = atom<string>({
+export const pablosCodeAtom = atom<string | null>({
   key: 'pablos_code',
-  default: '',
+  default: null,
+  effects_UNSTABLE: [persistAtom],
+});
+
+export const pablosCodeViewItemAtom = atom({
+  key: 'view_items',
+  default: null,
+  effects_UNSTABLE: [persistAtom],
+});
+
+export const scoreAtom = atom<number | null>({
+  key: 'score',
+  default: null,
 });

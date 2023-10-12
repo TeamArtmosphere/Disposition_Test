@@ -2,12 +2,13 @@
 
 import { postRegistUser } from '@/api/axios-api';
 import DefaultButton from '@/components/common/DefaultButton';
-import { eventUserId, eventUserType, eventUserUID } from '@/recoil/atom';
+import SelectionButton from '@/components/common/SelectionButton';
+import { eventUserId, eventUserType, eventUserUID, selectionsAtom } from '@/recoil/atom';
 import { ButtonBox, FlexBoxCol, FlexContainerCol } from '@/style/style';
 import { Box, Typography } from '@mui/material';
 import { useRouter } from 'next/navigation';
-import React, { useState } from 'react';
-import { useRecoilState } from 'recoil';
+import React, { useEffect, useState } from 'react';
+import { useRecoilState, useSetRecoilState } from 'recoil';
 
 const genderData = [
   { id: 'MAN', title: '남자', name: 'gender' },
@@ -34,23 +35,25 @@ const Page = () => {
 
   const [userType, setUserType] = useRecoilState(eventUserType);
   const [renderType, setRenderType] = useState('gender');
-  const [userId, setUserId] = useRecoilState(eventUserId);
-  const [UID, setUID] = useRecoilState(eventUserUID);
+  const setUserId = useSetRecoilState(eventUserId);
+  const setUID = useSetRecoilState(eventUserUID);
+  const setSelectionData = useSetRecoilState(selectionsAtom);
 
   const onClickRegistUser = () => {
+    setSelectionData([]);
     postRegistUser(userType)
-      .then(data => {
+      .then((data) => {
         console.log(data);
         setUserId(data.event_user_id);
         setUID(data.uid);
         router.push('/question');
       })
-      .catch(error => {
+      .catch((error) => {
         console.log(error);
       });
   };
 
-  const handleUserData = (e: any) => {
+  const handleUserData = (e?: any) => {
     if (e.currentTarget.name === 'gender') {
       setUserType({ ...userType, gender: e.currentTarget.id });
       setRenderType('ageRange');
@@ -63,30 +66,43 @@ const Page = () => {
 
     if (e.currentTarget.name === 'address') {
       setUserType({ ...userType, address: e.currentTarget.id });
-      // onClickRegistUser();
     }
   };
 
-  console.log(userType);
+  const onClickPrevQuestion = () => {
+    if (renderType === 'ageRange') {
+      setUserType({ ...userType, ageRange: 0 });
+      setRenderType('gender');
+    } else if (renderType === 'address') {
+      setUserType({ ...userType, address: '' });
+      setRenderType('ageRange');
+    }
+  };
+
+  // useEffect(() => {
+  //   if (userType.address !== '') {
+  //     onClickRegistUser();
+  //   }
+  // }, [userType]);
+
+  // console.log(userType);
 
   return (
     <Box sx={FlexContainerCol}>
-      <Typography variant='h3'>당신은 어떤 사람인가요?</Typography>
-
       {renderType === 'gender' ? (
         <Box sx={FlexBoxCol}>
-          <Typography variant='h4' mb={'30px'}>
+          <Typography variant='h3' mb={'50px'}>
             성별을 골라주세요
           </Typography>
           <Box sx={ButtonBox}>
             {genderData.map((data, idx) => {
               return (
-                <DefaultButton
+                <SelectionButton
                   key={idx}
                   title={data.title}
                   id={data.id}
                   name='gender'
-                  size='md'
+                  size='sm'
                   onClick={handleUserData}
                 />
               );
@@ -95,45 +111,52 @@ const Page = () => {
         </Box>
       ) : renderType === 'ageRange' ? (
         <Box sx={FlexBoxCol}>
-          <Typography variant='h4' mb={'30px'}>
+          <Typography variant='h3' mb={'50px'}>
             연령대를 선택해주세요
           </Typography>
-          <Box sx={ButtonBox}>
+          <Box sx={{ ...ButtonBox, mb: '40px' }}>
             {ageRangeData.map((data, idx) => {
               return (
-                <DefaultButton
+                <SelectionButton
                   key={idx}
                   title={data.title}
                   id={data.id}
                   name='ageRange'
-                  size='md'
+                  size='sm'
                   onClick={handleUserData}
                 />
               );
             })}
           </Box>
+          <DefaultButton title='이전 질문' onClick={onClickPrevQuestion} size='sm' />
         </Box>
       ) : renderType === 'address' ? (
         <Box sx={FlexBoxCol}>
-          <Typography variant='h4' mb={'30px'}>
+          <Typography variant='h3' mb={'50px'}>
             거주 지역을 선택해주세요
           </Typography>
-          <Box sx={ButtonBox}>
+          <Box sx={{ ...ButtonBox, mb: '40px' }}>
             {addressData.map((data, idx) => {
               return (
-                <DefaultButton
+                <SelectionButton
                   key={idx}
                   title={data.title}
                   id={data.id}
                   name='address'
-                  size='md'
+                  size='sm'
                   onClick={handleUserData}
                 />
               );
             })}
           </Box>
-          <Box sx={{ mt: '20px' }}>
-            <DefaultButton title='테스트 시작하기' onClick={onClickRegistUser} />
+          <Box sx={{ ...ButtonBox, flexDirection: 'row' }}>
+            <DefaultButton title='이전 질문' onClick={onClickPrevQuestion} size='sm' />
+            <DefaultButton
+              title='테스트 시작하기'
+              onClick={onClickRegistUser}
+              size='sm'
+              disabled={userType.address !== '' ? false : true}
+            />
           </Box>
         </Box>
       ) : null}
