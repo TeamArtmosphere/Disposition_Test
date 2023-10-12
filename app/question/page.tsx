@@ -32,6 +32,7 @@ const Page = () => {
   const setViewItem = useSetRecoilState(pablosCodeViewItemAtom);
 
   useEffect(() => {
+    setSelectionData([]);
     if (!UID) {
       router.push('/genuser');
     }

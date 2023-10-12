@@ -53,6 +53,7 @@ const Page = () => {
 
   const onClickRateStar = () => {
     if (UID && score) {
+      console.log({ uid: UID, score: score });
       postRateStar({ uid: UID, score: score })
         .then((data) => {
           console.log(data);
@@ -63,9 +64,11 @@ const Page = () => {
           console.log(error);
         });
     } else {
-      alert('uid 음슴');
+      alert('uid가 없습니다.');
     }
   };
+
+  console.log(UID);
 
   const onClickLinkSurvey = () => {
     window.open('https://forms.gle/yxMXJ49uTQxo6Fd49');

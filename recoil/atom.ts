@@ -28,6 +28,7 @@ export const eventUserId = atom<number | null>({
 export const eventUserUID = atom<string | null>({
   key: 'uid',
   default: null,
+  effects_UNSTABLE: [persistAtom],
 });
 
 export type selectionsType = {
