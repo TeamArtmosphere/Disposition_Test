@@ -15,7 +15,7 @@ export default function Home() {
   };
 
   return (
-    <Box sx={FlexContainerCol}>
+    <Box sx={{ ...FlexContainerCol, pt: '60px' }}>
       <Box sx={{ ...FlexBoxCol, mb: 4 }}>
         <Button
           variant='contained'
