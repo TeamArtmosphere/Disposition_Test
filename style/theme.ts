@@ -25,11 +25,11 @@ const theme = createTheme({
         },
         sizeLarge: {
           height: '48px',
-          width: '100%',
+          width: '400px',
         },
         sizeMedium: {
           height: '36px',
-          width: '300px',
+          width: '100%',
         },
         sizeSmall: {
           height: '24px',

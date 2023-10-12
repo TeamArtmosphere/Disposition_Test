@@ -7,6 +7,7 @@ import {
   eventUserType,
   eventUserUID,
   pablosCodeAtom,
+  pablosCodeViewItemAtom,
   selectionsAtom,
 } from '@/recoil/atom';
 import { FlexBox, FlexBoxCol, FlexContainerCol, FlexContainer } from '@/style/style';
@@ -14,17 +15,21 @@ import theme from '@/style/theme';
 import { Box, Button, CircularProgress, Divider, Typography } from '@mui/material';
 import Image from 'next/image';
 import { useRouter } from 'next/navigation';
-import React from 'react';
+import React, { useEffect, useState } from 'react';
 import { useRecoilValue, useResetRecoilState } from 'recoil';
 
 const Page = () => {
   const router = useRouter();
   const pablosCode = useRecoilValue(pablosCodeAtom);
+  const viewItem = useRecoilValue(pablosCodeViewItemAtom);
+  const pablosCodeViewItem = viewItem && JSON.parse(viewItem).view_items;
+
   const resetPablosCodeState = useResetRecoilState(pablosCodeAtom);
   const resetSelectionsState = useResetRecoilState(selectionsAtom);
   const resetUserIdState = useResetRecoilState(eventUserId);
   const resetUIDState = useResetRecoilState(eventUserUID);
   const resetUserTypeState = useResetRecoilState(eventUserType);
+  const resetViewItemState = useResetRecoilState(pablosCodeViewItemAtom);
 
   const handleClickToHome = () => {
     resetPablosCodeState();
@@ -32,25 +37,29 @@ const Page = () => {
     resetUserIdState();
     resetUIDState();
     resetUserTypeState();
+    resetViewItemState();
+    localStorage.removeItem('recoil-persist');
     router.push('/');
   };
 
-  console.log(pablosCode);
+  console.log(router);
 
   return (
     <Box sx={{ ...FlexBoxCol, pt: '60px' }}>
-      {!pablosCode ? (
+      {!pablosCode && (
         <Box sx={{ ...FlexBoxCol, gap: '40px', marginTop: '200px' }}>
           <CircularProgress />
           <Typography variant='h4'>유형을 분석 중입니다.</Typography>
         </Box>
-      ) : (
+      )}
+      {pablosCode && pablosCodeViewItem && (
         <>
           <Typography variant='h4' mt={'30px'} mb={'30px'}>
             나의 PABLOS는?
           </Typography>
           <Typography
             variant='h4'
+            fontWeight={600}
             sx={{
               minWidth: '100px',
               p: '4px 20px',
@@ -62,32 +71,49 @@ const Page = () => {
               textAlign: 'center',
             }}
           >
-            {pablosCode}
+            {pablosCodeViewItem.name}
           </Typography>
           <Box sx={{ width: '100%', height: '204px', bgcolor: '#ececec' }}></Box>
-          <Box sx={{ width: '100%', height: '90px', bgcolor: theme.palette.primary.main }}></Box>
+          <Box
+            sx={{
+              ...FlexContainerCol,
+              height: '90px',
+              bgcolor: theme.palette.primary.main,
+              color: 'white',
+            }}
+          >
+            <Typography variant='h4' fontWeight={600}>
+              {pablosCodeViewItem.intro}
+            </Typography>
+          </Box>
           <Box sx={{ ...FlexContainerCol, p: '24px 22px', gap: '10px' }}>
             <Typography fontSize='18px' fontWeight='600' pb={2}>
               {pablosCode}유형이 추구하는 가치는?
             </Typography>
-            <Box
-              sx={{
-                width: '100%',
-                minHeight: '100px',
-                bgcolor: 'white',
-                border: '1px solid #CFE6F2',
-                borderRadius: '20px',
-              }}
-            ></Box>
-            <Box
-              sx={{
-                width: '100%',
-                minHeight: '100px',
-                bgcolor: 'white',
-                border: '1px solid #CFE6F2',
-                borderRadius: '20px',
-              }}
-            ></Box>
+            {pablosCodeViewItem.descriptions &&
+              pablosCodeViewItem.descriptions.map((desc: any, idx: number) => {
+                return (
+                  <Box
+                    key={idx}
+                    sx={{
+                      width: '100%',
+                      minHeight: '100px',
+                      bgcolor: 'white',
+                      border: '1px solid #CFE6F2',
+                      borderRadius: '20px',
+                      p: '18px 24px',
+                      textAlign: 'center',
+                    }}
+                  >
+                    <Typography fontSize='18px' fontWeight='600' pb={2} color={'primary'}>
+                      {desc.title}
+                    </Typography>
+                    <Typography variant='h5' color={'#262B41'}>
+                      {desc.content}
+                    </Typography>
+                  </Box>
+                );
+              })}
             <Box sx={{ ...FlexBox, width: '100%', mt: '20px', gap: '10px' }}>
               <Button variant='outlined' sx={{ bgcolor: '#C0E0F0', color: '#136ea6' }}>
                 상세결과 보기
@@ -104,20 +130,19 @@ const Page = () => {
                 당신의 취향에 맞는 장소를 확인해보세요!
               </Typography>
               <Box sx={{ ...FlexContainer, gap: '10px', overflow: 'scroll', mb: '30px' }}>
-                <Image
-                  width={293}
-                  height={175}
-                  src=''
-                  alt=''
-                  style={{ backgroundColor: '#e0e0e0', borderRadius: '10px' }}
-                />
-                <Image
-                  width={293}
-                  height={175}
-                  src=''
-                  alt=''
-                  style={{ backgroundColor: '#e0e0e0', borderRadius: '10px' }}
-                />
+                {pablosCodeViewItem.slide_images &&
+                  pablosCodeViewItem.slide_images.map((item: any, idx: number) => {
+                    return (
+                      <Image
+                        key={idx}
+                        width={293}
+                        height={175}
+                        src={item}
+                        alt={item}
+                        style={{ backgroundColor: '#e0e0e0', borderRadius: '10px' }}
+                      />
+                    );
+                  })}
               </Box>
             </Box>
 
@@ -159,7 +184,7 @@ const Page = () => {
               >
                 다시 테스트하기
               </Button>
-              <DefaultButton title='설문조사 하러 가기' />
+              <DefaultButton title='설문조사 하러 가기' size='n' />
             </Box>
           </Box>
         </>

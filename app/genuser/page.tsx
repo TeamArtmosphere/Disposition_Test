@@ -77,13 +77,13 @@ const Page = () => {
     }
   };
 
-  useEffect(() => {
-    if (userType.address !== '') {
-      onClickRegistUser();
-    }
-  }, [userType]);
+  // useEffect(() => {
+  //   if (userType.address !== '') {
+  //     onClickRegistUser();
+  //   }
+  // }, [userType]);
 
-  console.log(userType);
+  // console.log(userType);
 
   return (
     <Box sx={FlexContainerCol}>
@@ -112,7 +112,7 @@ const Page = () => {
           <Typography variant='h3' mb={'50px'}>
             연령대를 선택해주세요
           </Typography>
-          <Box sx={{ ...ButtonBox, mb: '20px' }}>
+          <Box sx={{ ...ButtonBox, mb: '40px' }}>
             {ageRangeData.map((data, idx) => {
               return (
                 <SelectionButton
@@ -133,7 +133,7 @@ const Page = () => {
           <Typography variant='h3' mb={'50px'}>
             거주 지역을 선택해주세요
           </Typography>
-          <Box sx={{ ...ButtonBox, mb: '20px' }}>
+          <Box sx={{ ...ButtonBox, mb: '40px' }}>
             {addressData.map((data, idx) => {
               return (
                 <SelectionButton
@@ -147,7 +147,10 @@ const Page = () => {
               );
             })}
           </Box>
-          <DefaultButton title='이전 질문' onClick={onClickPrevQuestion} size='sm' />
+          <Box sx={{ ...ButtonBox, flexDirection: 'row' }}>
+            <DefaultButton title='이전 질문' onClick={onClickPrevQuestion} size='sm' />
+            <DefaultButton title='테스트 시작하기' onClick={onClickRegistUser} size='sm' />
+          </Box>
         </Box>
       ) : null}
     </Box>

@@ -7,9 +7,10 @@ type ButtonProps = {
   name?: string;
   size?: string;
   onClick?: (e?: any) => void;
+  sx?: any;
 };
 
-const DefaultButton = ({ id, title, name, size, onClick }: ButtonProps) => {
+const DefaultButton = ({ id, title, name, size, onClick, sx }: ButtonProps) => {
   return (
     <Button
       id={id}
@@ -18,9 +19,20 @@ const DefaultButton = ({ id, title, name, size, onClick }: ButtonProps) => {
       variant='contained'
       disableElevation
       onClick={onClick}
-      sx={{
-        width: size === 'lg' ? '300px' : size === 'md' ? '250px' : size === 'sm' ? '150px' : '100%',
-      }}
+      sx={
+        sx
+          ? sx
+          : {
+              width:
+                size === 'lg'
+                  ? '300px'
+                  : size === 'md'
+                  ? '250px'
+                  : size === 'sm'
+                  ? '150px'
+                  : '100%',
+            }
+      }
     >
       {title}
     </Button>
