@@ -35,19 +35,23 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
   return (
     <html lang='ko'>
       <ThemeProvider theme={theme}>
-        <body className={inter.className} style={{ backgroundColor: '#F8FCFF' }}>
+        <body
+          className={inter.className}
+          style={{ backgroundColor: '#F8FCFF', width: '100%', height: `${100 * vh}px`, margin: 0, padding: 0 }}
+        >
           <RecoilProvider>
-            <Container
+            {/* <Container
+              maxWidth={'xl'}
               sx={{
-                width: '100%',
-                height: `${100 * vh}px`,
-                // height: 'calc(var(--vh, 1vh) * 100);',
+                height: 'calc(var(--vh, 1vh) * 100);',
                 p: 0,
               }}
-            >
+            > */}
+            <>
               <Header />
               {children}
-            </Container>
+            </>
+            {/* </Container> */}
           </RecoilProvider>
         </body>
       </ThemeProvider>

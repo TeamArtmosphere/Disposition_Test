@@ -35,10 +35,10 @@ const Page = () => {
 
   useEffect(() => {
     getAllQuestion()
-      .then(data => {
+      .then((data) => {
         setQuestionData(data.questions);
       })
-      .catch(error => {
+      .catch((error) => {
         console.log(error);
       });
   }, []);
@@ -49,19 +49,16 @@ const Page = () => {
     setSelectionData([...selectionData, { selectionId: Number(e.currentTarget.id), value: null }]);
 
     if (questionNumber === 8 && UID) {
-      setSelectionData([
-        ...selectionData,
-        { selectionId: Number(e.currentTarget.id), value: null },
-      ]);
+      setSelectionData([...selectionData, { selectionId: Number(e.currentTarget.id), value: null }]);
 
       getResult({ uid: UID, selections: selectionData })
-        .then(data => {
+        .then((data) => {
           console.log(data);
           setPablosCode(data.result.pablos_code);
           setViewItem(data.result.view_items);
           router.push('/result');
         })
-        .catch(error => {
+        .catch((error) => {
           console.log(error);
         });
     }
@@ -83,9 +80,10 @@ const Page = () => {
   console.log(selectionData);
 
   return questionData ? (
-    <Box sx={{ ...FlexBoxCol, position: 'relative', top: '20%' }}>
+    <Box sx={{ ...FlexContainerCol, height: '100%' }}>
+      {/* <Box sx={{ ...FlexBoxCol, position: 'relative', top: '20%' }}> */}
       {questionNumber < 9 && (
-        <>
+        <Box sx={{ ...FlexBoxCol, width: '100%' }}>
           <Box sx={{ p: 2, wordBreak: 'keep-all', textAlign: 'center' }}>
             <Typography variant='h3' mb={'30px'}>
               {questionData[questionNumber].content.includes('사진질문')
@@ -108,8 +106,8 @@ const Page = () => {
                   key={idx}
                   id={selection.selection_id}
                   onClick={onClickNextQuestion}
-                  src={JSON.parse(selection.view_items).images[0]}
-                  alt={JSON.parse(selection.view_items).images[0]}
+                  alt={selection.view_items.images[0]}
+                  src={selection.view_items.images[0]}
                   width={300}
                   height={150}
                   style={{
@@ -130,7 +128,7 @@ const Page = () => {
               onClick={questionNumber === 0 ? onClickGoGenUserPage : onClickPrevQuestion}
             />
           </Box>
-        </>
+        </Box>
       )}
     </Box>
   ) : null;
