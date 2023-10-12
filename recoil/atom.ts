@@ -1,5 +1,9 @@
+'use client';
+
 import { atom } from 'recoil';
 import { recoilPersist } from 'recoil-persist';
+
+const sessionStorage: any = typeof window !== 'undefined' ? window.sessionStorage : null;
 
 const { persistAtom } = recoilPersist({
   key: 'recoil-persist',
