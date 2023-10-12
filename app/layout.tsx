@@ -27,15 +27,15 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
   const vh = useVh();
   const router = useRouter();
 
-  useEffect(() => {
-    (() => {
-      window.addEventListener('beforeunload', preventRefresh);
-    })();
+  // useEffect(() => {
+  //   (() => {
+  //     window.addEventListener('beforeunload', preventRefresh);
+  //   })();
 
-    return () => {
-      window.removeEventListener('beforeunload', preventRefresh);
-    };
-  }, []);
+  //   return () => {
+  //     window.removeEventListener('beforeunload', preventRefresh);
+  //   };
+  // }, []);
 
   useEffect(() => {
     history.pushState(null, '', location.href);
@@ -48,12 +48,17 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
   return (
     <html lang='ko'>
       <ThemeProvider theme={theme}>
-        <Head>
+        <head>
           <title>PABLOS 테스트</title>
-        </Head>
+        </head>
         <body
           className={inter.className}
-          style={{ backgroundColor: '#F8FCFF', width: '100%', height: `${100 * vh}px`, margin: 0, padding: 0 }}
+          style={{
+            backgroundColor: '#F8FCFF',
+            width: '100%',
+            height: `${100 * vh}px`,
+            padding: 0,
+          }}
         >
           <RecoilProvider>
             <>

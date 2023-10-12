@@ -50,13 +50,15 @@ const Header = () => {
         borderBottom: '1px solid #efefef',
       }}
     >
-      <Image
-        height={24}
-        src={logo}
-        alt='아트모스피어 로고'
-        onClick={handleClickToHome}
-        style={{ cursor: 'pointer' }}
-      />
+      <Box sx={{ maxWidth: '1920px', width: '100%', m: '0 auto' }}>
+        <Image
+          height={24}
+          src={logo}
+          alt='아트모스피어 로고'
+          onClick={handleClickToHome}
+          style={{ cursor: 'pointer' }}
+        />
+      </Box>
     </Box>
   );
 };

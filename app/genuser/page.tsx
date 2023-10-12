@@ -3,12 +3,12 @@
 import { postRegistUser } from '@/api/axios-api';
 import DefaultButton from '@/components/common/DefaultButton';
 import SelectionButton from '@/components/common/SelectionButton';
-import { eventUserId, eventUserType, eventUserUID } from '@/recoil/atom';
+import { eventUserId, eventUserType, eventUserUID, selectionsAtom } from '@/recoil/atom';
 import { ButtonBox, FlexBoxCol, FlexContainerCol } from '@/style/style';
 import { Box, Typography } from '@mui/material';
 import { useRouter } from 'next/navigation';
 import React, { useEffect, useState } from 'react';
-import { useRecoilState } from 'recoil';
+import { useRecoilState, useSetRecoilState } from 'recoil';
 
 const genderData = [
   { id: 'MAN', title: '남자', name: 'gender' },
@@ -35,18 +35,20 @@ const Page = () => {
 
   const [userType, setUserType] = useRecoilState(eventUserType);
   const [renderType, setRenderType] = useState('gender');
-  const [userId, setUserId] = useRecoilState(eventUserId);
-  const [UID, setUID] = useRecoilState(eventUserUID);
+  const setUserId = useSetRecoilState(eventUserId);
+  const setUID = useSetRecoilState(eventUserUID);
+  const setSelectionData = useSetRecoilState(selectionsAtom);
 
   const onClickRegistUser = () => {
+    setSelectionData([]);
     postRegistUser(userType)
-      .then(data => {
+      .then((data) => {
         console.log(data);
         setUserId(data.event_user_id);
         setUID(data.uid);
         router.push('/question');
       })
-      .catch(error => {
+      .catch((error) => {
         console.log(error);
       });
   };

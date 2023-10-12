@@ -32,7 +32,9 @@ const Page = () => {
   const setViewItem = useSetRecoilState(pablosCodeViewItemAtom);
 
   useEffect(() => {
-    if (!UID) router.push('/genuser');
+    if (!UID) {
+      router.push('/genuser');
+    }
 
     getAllQuestion()
       .then((data) => {
