@@ -154,9 +154,11 @@ const Page = () => {
                 {viewItem.intro}
               </Typography>
               <Box sx={FlexBox}>
-                <Typography variant='h5'>
-                  {`${filteredPablosCode[0].desc} ${filteredPablosCode[0].code} / ${filteredPablosCode[1].desc} ${filteredPablosCode[1].code} / ${filteredPablosCode[2].desc} ${filteredPablosCode[2].code}`}
-                </Typography>
+                {filteredPablosCode && (
+                  <Typography variant='h5'>
+                    {`${filteredPablosCode[0].desc} ${filteredPablosCode[0].code} / ${filteredPablosCode[1].desc} ${filteredPablosCode[1].code} / ${filteredPablosCode[2].desc} ${filteredPablosCode[2].code}`}
+                  </Typography>
+                )}
               </Box>
             </Box>
             <Box sx={{ ...FlexContainerCol, p: '24px 22px', gap: '10px' }}>
