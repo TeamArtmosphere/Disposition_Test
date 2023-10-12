@@ -25,7 +25,7 @@ const Page = () => {
   const UID = useRecoilValue(eventUserUID);
   const pablosCode = useRecoilValue(pablosCodeAtom);
   const viewItem = useRecoilValue(pablosCodeViewItemAtom);
-  const pablosCodeViewItem = viewItem && JSON.parse(viewItem);
+  // const pablosCodeViewItem = viewItem && JSON.parse(viewItem);
 
   const [score, setScore] = useRecoilState(scoreAtom);
 
@@ -77,19 +77,35 @@ const Page = () => {
     setMounted(true);
   }, []);
 
-  console.log(pablosCode, pablosCodeViewItem, 'ㅁㄴㅇ렁ㄴㄹㄴㅇ');
-  console.log(viewItem, '뷰뷰뷰뷰');
+  const pablosInfo = [
+    { code: 'I', desc: '개인적인' },
+    { code: 'S', desc: '사교적인' },
+    { code: 'X', desc: '경험추구' },
+    { code: 'P', desc: '상품추구' },
+    { code: 'V', desc: '가치추구' },
+    { code: 'R', desc: '가성비추구' },
+  ];
+
+  const filterPablosCode = (pablosCode: any) => {
+    const code = pablosCode.split('');
+    const filter = pablosInfo.filter(
+      (item: any) => code.filter((i: string) => i === item.code).length > 0,
+    );
+    return filter;
+  };
+
+  const filteredPablosCode = pablosCode && filterPablosCode(pablosCode);
 
   return (
     mounted && (
       <Box sx={{ ...FlexBoxCol, pt: '60px' }}>
-        {!pablosCode && !pablosCodeViewItem && (
+        {!pablosCode && !viewItem && (
           <Box sx={{ ...FlexBoxCol, gap: '40px', marginTop: '200px' }}>
             <CircularProgress />
             <Typography variant='h4'>유형을 분석 중입니다.</Typography>
           </Box>
         )}
-        {pablosCode && pablosCodeViewItem && (
+        {pablosCode && viewItem && (
           <>
             <Typography variant='h4' mt={'30px'} mb={'30px'}>
               나의 PABLOS는?
@@ -108,9 +124,24 @@ const Page = () => {
                 textAlign: 'center',
               }}
             >
-              {pablosCodeViewItem.name}
+              {viewItem.name}
             </Typography>
-            <Box sx={{ width: '100%', height: '204px', bgcolor: '#ececec' }}></Box>
+            <Box
+              sx={{
+                width: '100%',
+                height: '204px',
+                bgcolor: '#ececec',
+                overflow: 'hidden',
+                position: 'relative',
+              }}
+            >
+              <Image
+                src={viewItem.slide_images[0]}
+                alt={viewItem.slide_images[0]}
+                layout='fill'
+                objectFit='contain'
+              />
+            </Box>
             <Box
               sx={{
                 ...FlexContainerCol,
@@ -119,16 +150,21 @@ const Page = () => {
                 color: 'white',
               }}
             >
-              <Typography variant='h4' fontWeight={600}>
-                {pablosCodeViewItem.intro}
+              <Typography variant='h4' fontWeight={600} pb={1}>
+                {viewItem.intro}
               </Typography>
+              <Box sx={FlexBox}>
+                <Typography variant='h5'>
+                  {`${filteredPablosCode[0].desc} ${filteredPablosCode[0].code} / ${filteredPablosCode[1].desc} ${filteredPablosCode[1].code} / ${filteredPablosCode[2].desc} ${filteredPablosCode[2].code}`}
+                </Typography>
+              </Box>
             </Box>
             <Box sx={{ ...FlexContainerCol, p: '24px 22px', gap: '10px' }}>
               <Typography fontSize='18px' fontWeight='600' pb={2}>
                 {pablosCode}유형이 추구하는 가치는?
               </Typography>
-              {pablosCodeViewItem.descriptions &&
-                pablosCodeViewItem.descriptions.map((desc: any, idx: number) => {
+              {viewItem.descriptions &&
+                viewItem.descriptions.map((desc: any, idx: number) => {
                   return (
                     <Box
                       key={idx}
@@ -171,8 +207,8 @@ const Page = () => {
                   당신의 취향에 맞는 장소를 확인해보세요!
                 </Typography>
                 <Box sx={{ ...FlexContainer, gap: '10px', overflow: 'scroll', mb: '30px' }}>
-                  {pablosCodeViewItem.slide_images &&
-                    pablosCodeViewItem.slide_images.map((item: any, idx: number) => {
+                  {viewItem.slide_images &&
+                    viewItem.slide_images.map((item: any, idx: number) => {
                       return (
                         <Image
                           key={idx}
