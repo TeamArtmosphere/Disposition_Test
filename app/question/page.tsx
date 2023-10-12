@@ -26,13 +26,15 @@ const Page = () => {
   const [questionNumber, setQuestionNumber] = useState(0);
   const [selectionData, setSelectionData] = useRecoilState(selectionsAtom);
   // const userId = useRecoilValue(eventUserId);
-  const UID = useRecoilValue(eventUserUID);
+  const [UID, setUID] = useRecoilState(eventUserUID);
   const setPablosCode = useSetRecoilState(pablosCodeAtom);
   const resetUserTypeState = useResetRecoilState(eventUserType);
   const setViewItem = useSetRecoilState(pablosCodeViewItemAtom);
 
   useEffect(() => {
     setSelectionData([]);
+    setPablosCode(null);
+    setViewItem(null);
     if (!UID) {
       router.push('/genuser');
     }
@@ -45,6 +47,8 @@ const Page = () => {
         console.log(error);
       });
   }, []);
+
+  console.log(UID, 'uid');
 
   const onClickNextQuestion = (e: any) => {
     setQuestionNumber((prev: number) => prev + 1);

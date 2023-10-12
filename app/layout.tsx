@@ -27,15 +27,15 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
   const vh = useVh();
   const router = useRouter();
 
-  // useEffect(() => {
-  //   (() => {
-  //     window.addEventListener('beforeunload', preventRefresh);
-  //   })();
+  useEffect(() => {
+    (() => {
+      window.addEventListener('beforeunload', preventRefresh);
+    })();
 
-  //   return () => {
-  //     window.removeEventListener('beforeunload', preventRefresh);
-  //   };
-  // }, []);
+    return () => {
+      window.removeEventListener('beforeunload', preventRefresh);
+    };
+  }, []);
 
   useEffect(() => {
     history.pushState(null, '', location.href);
