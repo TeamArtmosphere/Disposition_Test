@@ -31,13 +31,8 @@ export default function Home() {
           PABLOS
         </Typography>
       </Box>
-      <Image
-        src={mainImg}
-        alt='컴퓨터 앞에 앉아있는 남자 이미지'
-        width={160}
-        style={{ marginBottom: '30px' }}
-      />
-      <Box sx={{ mt: '30px', mb: '50px', textAlign: 'center' }}>
+      <Image src={mainImg} alt='컴퓨터 앞에 앉아있는 남자 이미지' width={160} />
+      <Box sx={{ mt: '20px', mb: '40px', textAlign: 'center' }}>
         <Typography fontSize='12px'>
           테스트 결과를 바탕으로
           <br />
