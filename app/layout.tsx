@@ -15,7 +15,9 @@ const inter = Inter({ subsets: ['latin'] });
 
 const preventBack = () => {
   history.pushState(null, '', location.href);
-  alert('뒤로가기가 금지되어 있습니다. 상단 로고를 사용하여 홈으로 이동하거나 화면의 버튼을 사용해 주세요.');
+  alert(
+    '뒤로가기가 금지되어 있습니다. 상단 로고를 사용하여 홈으로 이동하거나 화면의 버튼을 사용해 주세요.',
+  );
 };
 
 const preventRefresh = (e: BeforeUnloadEvent) => {
@@ -73,6 +75,11 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
       <ThemeProvider theme={theme}>
         <head>
           <title>PABLOS 테스트</title>
+          <meta
+            property='og:description'
+            content='ARTMOSPHERE 사용자의 PABLOS 유형을 검사합니다.'
+          />
+          <meta property='og:image' content={'../public/imgs/ogImage.png'} />
         </head>
         <body
           className={inter.className}
