@@ -79,11 +79,7 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
             property='og:description'
             content='ARTMOSPHERE 사용자의 PABLOS 유형을 검사합니다.'
           />
-          <meta
-            property='og:image'
-            content='https://drive.google.com/file/d/10UVNcZcEUCZ5EDx19rUVI7G9UFrrzlp_/view?usp=sharing'
-          />
-
+          <meta property='og:image' content='/public/imgs/og_image.png' />
           <meta property='og:image:width' content='1200' />
           <meta property='og:image:height' content='630' />
         </head>

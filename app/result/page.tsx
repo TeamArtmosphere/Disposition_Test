@@ -14,7 +14,15 @@ import {
 } from '@/recoil/atom';
 import { FlexBox, FlexBoxCol, FlexContainerCol, FlexContainer } from '@/style/style';
 import theme from '@/style/theme';
-import { Box, Button, CircularProgress, Divider, Typography } from '@mui/material';
+import {
+  Box,
+  Button,
+  CircularProgress,
+  Divider,
+  Typography,
+  useMediaQuery,
+  useTheme,
+} from '@mui/material';
 import Image from 'next/image';
 import { useRouter } from 'next/navigation';
 import React, { useEffect, useState } from 'react';
@@ -23,6 +31,9 @@ import goBtn from '@/public/imgs/left_btn.png';
 import Link from 'next/link';
 
 const Page = () => {
+  const theme = useTheme();
+  const onTablet = useMediaQuery(theme.breakpoints.down('lg'));
+
   const router = useRouter();
   const UID = useRecoilValue(eventUserUID);
   const pablosCode = useRecoilValue(pablosCodeAtom);
@@ -114,13 +125,21 @@ const Page = () => {
 
   const [mounted, setMounted] = useState(false);
 
+  console.log(onTablet);
+
   return !mounted ? (
-    <Box sx={{ ...FlexBoxCol, gap: '40px', marginTop: '200px' }}>
+    <Box
+      sx={{
+        ...FlexBoxCol,
+        gap: '40px',
+        marginTop: '200px',
+      }}
+    >
       <CircularProgress />
       <Typography variant='h4'>페이지 로드 중입니다.</Typography>
     </Box>
   ) : (
-    <Box sx={{ ...FlexBoxCol, pt: '60px' }}>
+    <Box sx={{ ...FlexBoxCol, pt: '60px', maxWidth: onTablet ? '900px' : '1536px' }}>
       {pablosCode && viewItem && (
         <>
           <Typography variant='h4' mt={'30px'} mb={'30px'}>
