@@ -80,6 +80,8 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
             content='ARTMOSPHERE 사용자의 PABLOS 유형을 검사합니다.'
           />
           <meta property='og:image' content={'../public/imgs/ogImage.png'} />
+          <meta property='og:image:width' content='1200' />
+          <meta property='og:image:height' content='27' />
         </head>
         <body
           className={inter.className}
