@@ -81,8 +81,9 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
           />
           <meta
             property='og:image'
-            content='https://drive.google.com/file/d/10UVNcZcEUCZ5EDx19rUVI7G9UFrrzlp_/view?usp=drive_link'
+            content='https://drive.google.com/file/d/10UVNcZcEUCZ5EDx19rUVI7G9UFrrzlp_/view?usp=sharing'
           />
+
           <meta property='og:image:width' content='1200' />
           <meta property='og:image:height' content='630' />
         </head>
