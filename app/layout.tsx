@@ -81,7 +81,7 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
           />
           <meta
             property='og:image'
-            content='https://pablos-code.vercel.app/public/imgs/ogImage.png'
+            content='https://drive.google.com/file/d/10UVNcZcEUCZ5EDx19rUVI7G9UFrrzlp_/view?usp=drive_link'
           />
           <meta property='og:image:width' content='1200' />
           <meta property='og:image:height' content='630' />
