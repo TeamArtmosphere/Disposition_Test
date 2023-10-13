@@ -84,7 +84,7 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
             content='https://pablos-mbit.vercel.app/public/imgs/ogImage.png'
           />
           <meta property='og:image:width' content='1200' />
-          <meta property='og:image:height' content='27' />
+          <meta property='og:image:height' content='627' />
         </head>
         <body
           className={inter.className}
