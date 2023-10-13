@@ -20,6 +20,7 @@ import { useRouter } from 'next/navigation';
 import React, { useEffect, useState } from 'react';
 import { useRecoilState, useRecoilValue, useResetRecoilState } from 'recoil';
 import goBtn from '@/public/imgs/left_btn.png';
+import Link from 'next/link';
 
 const Page = () => {
   const router = useRouter();
@@ -57,12 +58,12 @@ const Page = () => {
     if (UID && score) {
       console.log({ uid: UID, score: score });
       postRateStar({ uid: UID, score: score })
-        .then((data) => {
+        .then(data => {
           console.log(data);
           setScore(null);
           setRatingMsg('답변해 주셔서 감사합니다!');
         })
-        .catch((error) => {
+        .catch(error => {
           console.log(error);
         });
     } else {
@@ -81,15 +82,15 @@ const Page = () => {
   useEffect(() => {
     if (pablosCode) {
       getRecommendLocationList(pablosCode)
-        .then((data) => {
+        .then(data => {
           console.log(data);
           setLocationData(data);
         })
-        .catch((error) => {
+        .catch(error => {
           console.log(error);
         });
     }
-    // setMounted(true);
+    setMounted(true);
   }, []);
 
   const pablosInfo = [
@@ -103,19 +104,22 @@ const Page = () => {
 
   const filterPablosCode = (pablosCode: any) => {
     const code = pablosCode.split('');
-    const filter = pablosInfo.filter((item: any) => code.filter((i: string) => i === item.code).length > 0);
+    const filter = pablosInfo.filter(
+      (item: any) => code.filter((i: string) => i === item.code).length > 0,
+    );
     return filter;
   };
 
   const filteredPablosCode = pablosCode && filterPablosCode(pablosCode);
 
-  // return !mounted ? (
-  //   <Box sx={{ ...FlexBoxCol, gap: '40px', marginTop: '200px' }}>
-  //     <CircularProgress />
-  //     <Typography variant='h4'>페이지 로드 중입니다.</Typography>
-  //   </Box>
-  // ) : (
-  return (
+  const [mounted, setMounted] = useState(false);
+
+  return !mounted ? (
+    <Box sx={{ ...FlexBoxCol, gap: '40px', marginTop: '200px' }}>
+      <CircularProgress />
+      <Typography variant='h4'>페이지 로드 중입니다.</Typography>
+    </Box>
+  ) : (
     <Box sx={{ ...FlexBoxCol, pt: '60px' }}>
       {pablosCode && viewItem && (
         <>
@@ -146,7 +150,12 @@ const Page = () => {
               position: 'relative',
             }}
           >
-            <Image src={viewItem.slide_images[0]} alt={viewItem.slide_images[0]} layout='fill' objectFit='contain' />
+            <Image
+              src={viewItem.slide_images[0]}
+              alt={viewItem.slide_images[0]}
+              layout='fill'
+              objectFit='contain'
+            />
           </Box>
           <Box
             sx={{
@@ -172,7 +181,7 @@ const Page = () => {
             <Typography fontSize='18px' fontWeight='600' pb={2}>
               {pablosCode}유형이 추구하는 가치는?
             </Typography>
-            <Box sx={{ ...FlexBoxCol, gap: '10px', p: '0 22px' }}>
+            <Box sx={{ ...FlexBoxCol, gap: '10px', p: '0 22px', pb: 3 }}>
               {viewItem.descriptions &&
                 viewItem.descriptions.map((desc: any, idx: number) => {
                   return (
@@ -199,18 +208,16 @@ const Page = () => {
                 })}
             </Box>
 
-            <Box sx={{ ...FlexBox, width: '100%', mt: '20px', mb: '50px', gap: '10px', p: '0 22px' }}>
-              <Button variant='outlined' onClick={handleClickToHome} sx={{ bgcolor: '#C0E0F0', color: '#136ea6' }}>
-                다시 테스트하기
-              </Button>
-            </Box>
+            {/* <Box
+              sx={{ ...FlexBox, width: '100%', mt: '20px', mb: '50px', gap: '10px', p: '0 22px' }}
+            ></Box> */}
 
             <Divider variant='middle' sx={{ width: '95%' }} />
 
             <Box
               sx={{
                 ...FlexContainerCol,
-                mt: '40px',
+                mt: '30px',
                 textAlign: 'center',
               }}
             >
@@ -222,7 +229,15 @@ const Page = () => {
                 <br />
                 당신의 취향에 맞는 장소를 확인해보세요!
               </Typography>
-              <Box sx={{ display: 'flex', pl: '22px', width: '100%', justifyContent: 'center', alignItems: 'center' }}>
+              <Box
+                sx={{
+                  display: 'flex',
+                  pl: '22px',
+                  width: '100%',
+                  justifyContent: 'center',
+                  alignItems: 'center',
+                }}
+              >
                 <Box
                   sx={{
                     ...FlexBox,
@@ -239,49 +254,50 @@ const Page = () => {
                   {locationData.length > 0 &&
                     locationData.map((location: any, idx: number) => {
                       return (
-                        <Box
-                          key={idx}
-                          sx={{
-                            ...FlexBoxCol,
-                            flexShrink: 0,
-                            width: '293px',
-                            height: '175px',
-                            position: 'relative',
-                            overflow: 'hidden',
-                            borderRadius: '10px',
-                          }}
-                        >
-                          <Image
-                            layout='fill'
-                            objectFit='cover'
-                            sizes='100%'
-                            src={location.extra_info.images[0]}
-                            alt={`${location.name}의 사진`}
-                          />
+                        <Link target='_blank' href={location.extra_info.links.naver_map} key={idx}>
                           <Box
                             sx={{
-                              ...FlexBox,
-                              width: '100%',
-                              position: 'absolute',
-                              bottom: 0,
-                              pl: 2,
-                              pb: 2,
-                              pr: 1,
-                              color: 'white',
-                              justifyContent: 'space-between',
+                              ...FlexBoxCol,
+                              flexShrink: 0,
+                              width: '293px',
+                              height: '175px',
+                              position: 'relative',
+                              overflow: 'hidden',
+                              borderRadius: '10px',
                             }}
                           >
-                            <Typography fontSize={'24px'} fontWeight={700}>
-                              {location.name}
-                            </Typography>
                             <Image
-                              src={goBtn}
-                              alt={`${location.name}정보로 이동`}
-                              width={36}
-                              style={{ paddingBottom: 4 }}
+                              layout='fill'
+                              objectFit='cover'
+                              sizes='100%'
+                              src={location.extra_info.images[0]}
+                              alt={`${location.name}의 사진`}
                             />
+                            <Box
+                              sx={{
+                                ...FlexBox,
+                                width: '100%',
+                                position: 'absolute',
+                                bottom: 0,
+                                pl: 2,
+                                pb: 2,
+                                pr: 1,
+                                color: 'white',
+                                justifyContent: 'space-between',
+                              }}
+                            >
+                              <Typography fontSize={'24px'} fontWeight={700}>
+                                {location.name}
+                              </Typography>
+                              <Image
+                                src={goBtn}
+                                alt={`${location.name}정보로 이동`}
+                                width={36}
+                                style={{ paddingBottom: 4 }}
+                              />
+                            </Box>
                           </Box>
-                        </Box>
+                        </Link>
                       );
                     })}
                 </Box>
@@ -290,7 +306,7 @@ const Page = () => {
 
             <Divider variant='middle' sx={{ width: '95%' }} />
 
-            <Box sx={{ ...FlexContainerCol, mt: '40px', textAlign: 'center', p: '0 22px' }}>
+            <Box sx={{ ...FlexContainerCol, mt: '30px', textAlign: 'center', p: '0 22px' }}>
               <Typography fontSize='18px' fontWeight={600} mb='10px'>
                 테스트 유형이 잘 맞나요?
               </Typography>
@@ -327,6 +343,13 @@ const Page = () => {
                 추첨을 통해 기프티콘을 보내드립니다!
               </Typography>
               <Box sx={{ ...FlexBox, width: '100%', mb: '50px', gap: '10px' }}>
+                <Button
+                  variant='outlined'
+                  onClick={handleClickToHome}
+                  sx={{ bgcolor: '#C0E0F0', color: '#136ea6' }}
+                >
+                  다시 테스트하기
+                </Button>
                 <DefaultButton title='설문조사 하러 가기' size='n' onClick={onClickLinkSurvey} />
               </Box>
             </Box>

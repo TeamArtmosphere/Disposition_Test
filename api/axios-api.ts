@@ -48,6 +48,6 @@ export const postRateStar = async (userData: ratingUserData) => {
 };
 
 export const getRecommendLocationList = async (pablosCode: string) => {
-  const res = await instance.get(`/api/v1/artmosphere-places?tagName=${pablosCode}`);
+  const res = await instance.get(`/api/v1/artmosphere-places?tagNames=${pablosCode}`);
   return res.data;
 };
