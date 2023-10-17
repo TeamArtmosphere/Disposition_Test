@@ -10,8 +10,15 @@ import { useEffect, useState } from 'react';
 import { useVh } from '@/hooks/useVh';
 import router from 'next/router';
 import { FlexBoxCol } from '@/style/style';
+import Script from 'next/script';
 
 const inter = Inter({ subsets: ['latin'] });
+
+declare global {
+  interface Window {
+    Kakao: any;
+  }
+}
 
 const preventBack = () => {
   history.pushState(null, '', location.href);
@@ -28,6 +35,13 @@ const preventRefresh = (e: BeforeUnloadEvent) => {
 export default function RootLayout({ children }: { children: React.ReactNode }) {
   const vh = useVh();
   // const router = useRouter();
+
+  const kakaoInit = () => {
+    // 페이지가 로드시 실행
+    if (!window.Kakao.isInitialized())
+      // 선언되지 않았을 때만 실행하도록 if문 추가
+      window.Kakao.init(process.env.NEXT_PUBLIC_JAVASCRIPT_KEY);
+  };
 
   useEffect(() => {
     (() => {
@@ -106,6 +120,7 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
             )}
           </RecoilProvider>
         </body>
+        <Script src='https://t1.kakaocdn.net/kakao_js_sdk/2.4.0/kakao.min.js' onLoad={kakaoInit} />
       </ThemeProvider>
     </html>
   );
