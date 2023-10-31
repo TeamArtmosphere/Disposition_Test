@@ -1,7 +1,14 @@
+'use client';
+
 import { atom } from 'recoil';
 import { recoilPersist } from 'recoil-persist';
 
-const { persistAtom } = recoilPersist();
+const sessionStorage: any = typeof window !== 'undefined' ? window.sessionStorage : null;
+
+const { persistAtom } = recoilPersist({
+  key: 'recoil-persist',
+  storage: sessionStorage,
+});
 
 type userDataType = {
   ageRange: number;
@@ -28,6 +35,7 @@ export const eventUserId = atom<number | null>({
 export const eventUserUID = atom<string | null>({
   key: 'uid',
   default: null,
+  effects_UNSTABLE: [persistAtom],
 });
 
 export type selectionsType = {

@@ -1,6 +1,6 @@
 'use client';
 
-import { postRateStar } from '@/api/axios-api';
+import { getRecommendLocationList, postRateStar } from '@/api/axios-api';
 import DefaultButton from '@/components/common/DefaultButton';
 import { StarRating } from '@/components/result/StarRating';
 import {
@@ -14,13 +14,26 @@ import {
 } from '@/recoil/atom';
 import { FlexBox, FlexBoxCol, FlexContainerCol, FlexContainer } from '@/style/style';
 import theme from '@/style/theme';
-import { Box, Button, CircularProgress, Divider, Typography } from '@mui/material';
+import {
+  Box,
+  Button,
+  CircularProgress,
+  Divider,
+  Typography,
+  useMediaQuery,
+  useTheme,
+} from '@mui/material';
 import Image from 'next/image';
 import { useRouter } from 'next/navigation';
 import React, { useEffect, useState } from 'react';
 import { useRecoilState, useRecoilValue, useResetRecoilState } from 'recoil';
+import goBtn from '@/public/imgs/left_btn.png';
+import Link from 'next/link';
 
 const Page = () => {
+  const theme = useTheme();
+  const onTablet = useMediaQuery(theme.breakpoints.down('lg'));
+
   const router = useRouter();
   const UID = useRecoilValue(eventUserUID);
   const pablosCode = useRecoilValue(pablosCodeAtom);
@@ -36,8 +49,9 @@ const Page = () => {
   const resetUserTypeState = useResetRecoilState(eventUserType);
   const resetViewItemState = useResetRecoilState(pablosCodeViewItemAtom);
 
-  const [mounted, setMounted] = useState(false);
+  // const [mounted, setMounted] = useState(false);
   const [ratingMsg, setRatingMsg] = useState('마음에 들어요!');
+  const [locationData, setLocationData] = useState([]);
 
   const handleClickToHome = () => {
     resetPablosCodeState();
@@ -48,24 +62,65 @@ const Page = () => {
     resetViewItemState();
     setScore(null);
     router.push('/');
-    localStorage.removeItem('recoil-persist');
+    sessionStorage.removeItem('recoil-persist');
+  };
+
+  const onClickShareKakao = async () => {
+    await window.Kakao.Share.sendDefault({
+      objectType: 'feed',
+      content: {
+        title: '딸기 치즈 케익',
+        description: '#케익 #딸기 #삼평동 #카페 #분위기 #소개팅',
+        imageUrl:
+          'http://k.kakaocdn.net/dn/Q2iNx/btqgeRgV54P/VLdBs9cvyn8BJXB3o7N8UK/kakaolink40_original.png',
+        link: {
+          // [내 애플리케이션] > [플랫폼] 에서 등록한 사이트 도메인과 일치해야 함
+          mobileWebUrl: 'http://localhost:3000',
+          webUrl: 'http://localhost:3000',
+        },
+      },
+      social: {
+        likeCount: 286,
+        commentCount: 45,
+        sharedCount: 845,
+      },
+      buttons: [
+        {
+          title: '웹으로 보기',
+          link: {
+            mobileWebUrl: 'http://localhost:3000',
+            webUrl: 'http://localhost:3000',
+          },
+        },
+        {
+          title: '앱으로 보기',
+          link: {
+            mobileWebUrl: 'http://localhost:3000',
+            webUrl: 'http://localhost:3000',
+          },
+        },
+      ],
+    });
   };
 
   const onClickRateStar = () => {
     if (UID && score) {
+      console.log({ uid: UID, score: score });
       postRateStar({ uid: UID, score: score })
-        .then((data) => {
+        .then(data => {
           console.log(data);
           setScore(null);
           setRatingMsg('답변해 주셔서 감사합니다!');
         })
-        .catch((error) => {
+        .catch(error => {
           console.log(error);
         });
     } else {
-      alert('uid 음슴');
+      alert('uid가 없습니다.');
     }
   };
+
+  console.log(UID);
 
   const onClickLinkSurvey = () => {
     window.open('https://forms.gle/yxMXJ49uTQxo6Fd49');
@@ -74,6 +129,16 @@ const Page = () => {
   console.log(score, '점수점수');
 
   useEffect(() => {
+    if (pablosCode) {
+      getRecommendLocationList(pablosCode)
+        .then(data => {
+          console.log(data);
+          setLocationData(data);
+        })
+        .catch(error => {
+          console.log(error);
+        });
+    }
     setMounted(true);
   }, []);
 
@@ -88,19 +153,31 @@ const Page = () => {
 
   const filterPablosCode = (pablosCode: any) => {
     const code = pablosCode.split('');
-    const filter = pablosInfo.filter((item: any) => code.filter((i: string) => i === item.code).length > 0);
+    const filter = pablosInfo.filter(
+      (item: any) => code.filter((i: string) => i === item.code).length > 0,
+    );
     return filter;
   };
 
   const filteredPablosCode = pablosCode && filterPablosCode(pablosCode);
 
+  const [mounted, setMounted] = useState(false);
+
+  console.log(onTablet);
+
   return !mounted ? (
-    <Box sx={{ ...FlexBoxCol, gap: '40px', marginTop: '200px' }}>
+    <Box
+      sx={{
+        ...FlexBoxCol,
+        gap: '40px',
+        marginTop: '200px',
+      }}
+    >
       <CircularProgress />
       <Typography variant='h4'>페이지 로드 중입니다.</Typography>
     </Box>
   ) : (
-    <Box sx={{ ...FlexBoxCol, pt: '60px' }}>
+    <Box sx={{ ...FlexBoxCol, pt: '60px', maxWidth: onTablet ? '900px' : '1536px' }}>
       {pablosCode && viewItem && (
         <>
           <Typography variant='h4' mt={'30px'} mb={'30px'}>
@@ -127,11 +204,15 @@ const Page = () => {
               width: '100%',
               height: '204px',
               bgcolor: '#ececec',
-              overflow: 'hidden',
               position: 'relative',
             }}
           >
-            <Image src={viewItem.slide_images[0]} alt={viewItem.slide_images[0]} layout='fill' objectFit='contain' />
+            <Image
+              src={viewItem.slide_images[0]}
+              alt={viewItem.slide_images[0]}
+              layout='fill'
+              objectFit='contain'
+            />
           </Box>
           <Box
             sx={{
@@ -152,42 +233,51 @@ const Page = () => {
               )}
             </Box>
           </Box>
-          <Box sx={{ ...FlexContainerCol, p: '24px 22px', gap: '10px' }}>
+
+          <Box sx={{ ...FlexContainerCol, p: '24px 0' }}>
             <Typography fontSize='18px' fontWeight='600' pb={2}>
               {pablosCode}유형이 추구하는 가치는?
             </Typography>
-            {viewItem.descriptions &&
-              viewItem.descriptions.map((desc: any, idx: number) => {
-                return (
-                  <Box
-                    key={idx}
-                    sx={{
-                      width: '100%',
-                      minHeight: '100px',
-                      bgcolor: 'white',
-                      border: '1px solid #CFE6F2',
-                      borderRadius: '20px',
-                      p: '18px 24px',
-                      textAlign: 'center',
-                    }}
-                  >
-                    <Typography fontSize='18px' fontWeight='600' pb={2} color={'primary'}>
-                      {desc.title}
-                    </Typography>
-                    <Typography variant='h5' color={'#262B41'}>
-                      {desc.content}
-                    </Typography>
-                  </Box>
-                );
-              })}
-
-            <Box sx={{ ...FlexBox, width: '100%', mt: '20px', gap: '10px' }}>
-              <Button variant='outlined' onClick={handleClickToHome} sx={{ bgcolor: '#C0E0F0', color: '#136ea6' }}>
-                다시 테스트하기
-              </Button>
+            <Box sx={{ ...FlexBoxCol, gap: '10px', p: '0 22px', pb: 3 }}>
+              {viewItem.descriptions &&
+                viewItem.descriptions.map((desc: any, idx: number) => {
+                  return (
+                    <Box
+                      key={idx}
+                      sx={{
+                        width: '100%',
+                        minHeight: '100px',
+                        bgcolor: 'white',
+                        border: '1px solid #CFE6F2',
+                        borderRadius: '20px',
+                        p: '18px 24px',
+                        textAlign: 'center',
+                      }}
+                    >
+                      <Typography fontSize='18px' fontWeight='600' pb={2} color={'primary'}>
+                        {desc.title}
+                      </Typography>
+                      <Typography variant='h5' color={'#262B41'}>
+                        {desc.content}
+                      </Typography>
+                    </Box>
+                  );
+                })}
             </Box>
 
-            <Box sx={{ ...FlexContainerCol, mt: '40px', textAlign: 'center' }}>
+            {/* <Box
+              sx={{ ...FlexBox, width: '100%', mt: '20px', mb: '50px', gap: '10px', p: '0 22px' }}
+            ></Box> */}
+
+            <Divider variant='middle' sx={{ width: '95%' }} />
+
+            <Box
+              sx={{
+                ...FlexContainerCol,
+                mt: '30px',
+                textAlign: 'center',
+              }}
+            >
               <Typography fontSize='18px' fontWeight={600} mb='10px'>
                 {pablosCode}유형에게 추천하는 장소
               </Typography>
@@ -196,26 +286,84 @@ const Page = () => {
                 <br />
                 당신의 취향에 맞는 장소를 확인해보세요!
               </Typography>
-              <Box sx={{ ...FlexContainer, gap: '10px', overflow: 'scroll', mb: '30px' }}>
-                {viewItem.slide_images &&
-                  viewItem.slide_images.map((item: any, idx: number) => {
-                    return (
-                      <Image
-                        key={idx}
-                        width={293}
-                        height={175}
-                        src={item}
-                        alt={item}
-                        style={{ backgroundColor: '#e0e0e0', borderRadius: '10px' }}
-                      />
-                    );
-                  })}
+              <Box
+                sx={{
+                  display: 'flex',
+                  pl: '22px',
+                  width: '100%',
+                  justifyContent: 'center',
+                  alignItems: 'center',
+                }}
+              >
+                <Box
+                  sx={{
+                    ...FlexBox,
+                    alignItems: 'flex-start',
+                    justifyContent: 'flex-start',
+                    gap: '10px',
+                    overflowX: 'scroll',
+                    mb: '30px',
+                    width: '100%',
+                    // m: '0 auto',
+                    pr: '22px',
+                  }}
+                >
+                  {locationData.length > 0 &&
+                    locationData.map((location: any, idx: number) => {
+                      return (
+                        <Link target='_blank' href={location.extra_info.links.naver_map} key={idx}>
+                          <Box
+                            sx={{
+                              ...FlexBoxCol,
+                              flexShrink: 0,
+                              width: '293px',
+                              height: '175px',
+                              position: 'relative',
+                              overflow: 'hidden',
+                              borderRadius: '10px',
+                            }}
+                          >
+                            <Image
+                              layout='fill'
+                              objectFit='cover'
+                              sizes='100%'
+                              src={location.extra_info.images[0]}
+                              alt={`${location.name}의 사진`}
+                            />
+                            <Box
+                              sx={{
+                                ...FlexBox,
+                                width: '100%',
+                                position: 'absolute',
+                                bottom: 0,
+                                pl: 2,
+                                pb: 2,
+                                pr: 1,
+                                color: 'white',
+                                justifyContent: 'space-between',
+                              }}
+                            >
+                              <Typography fontSize={'24px'} fontWeight={700}>
+                                {location.name}
+                              </Typography>
+                              <Image
+                                src={goBtn}
+                                alt={`${location.name}정보로 이동`}
+                                width={36}
+                                style={{ paddingBottom: 4 }}
+                              />
+                            </Box>
+                          </Box>
+                        </Link>
+                      );
+                    })}
+                </Box>
               </Box>
             </Box>
 
-            <Divider variant='middle' sx={{ width: '100%' }} />
+            <Divider variant='middle' sx={{ width: '95%' }} />
 
-            <Box sx={{ ...FlexContainerCol, mt: '40px', textAlign: 'center' }}>
+            <Box sx={{ ...FlexContainerCol, mt: '30px', textAlign: 'center', p: '0 22px' }}>
               <Typography fontSize='18px' fontWeight={600} mb='10px'>
                 테스트 유형이 잘 맞나요?
               </Typography>
@@ -251,10 +399,23 @@ const Page = () => {
                 <br />
                 추첨을 통해 기프티콘을 보내드립니다!
               </Typography>
-            </Box>
-
-            <Box sx={{ ...FlexBox, width: '100%', mt: '20px', gap: '10px' }}>
-              <DefaultButton title='설문조사 하러 가기' size='n' onClick={onClickLinkSurvey} />
+              <Box sx={{ ...FlexBox, width: '100%', mb: '50px', gap: '10px' }}>
+                <Button
+                  variant='outlined'
+                  onClick={handleClickToHome}
+                  sx={{ bgcolor: '#C0E0F0', color: '#136ea6' }}
+                >
+                  다시 테스트하기
+                </Button>
+                <Button
+                  variant='outlined'
+                  onClick={onClickShareKakao}
+                  sx={{ bgcolor: '#C0E0F0', color: '#136ea6' }}
+                >
+                  공유하기
+                </Button>
+                {/* <DefaultButton title='설문조사 하러 가기' size='n' onClick={onClickLinkSurvey} /> */}
+              </Box>
             </Box>
           </Box>
         </>

@@ -1,21 +1,30 @@
 'use client';
 
-import { Container, ThemeProvider } from '@mui/material';
+import { Box, CircularProgress, ThemeProvider, Typography } from '@mui/material';
 import '../style/globals.css';
 import { Inter } from 'next/font/google';
 import theme from '@/style/theme';
 import RecoilProvider from './RecoilProvider';
 import Header from '@/components/layout/Header';
-import { useEffect } from 'react';
+import { useEffect, useState } from 'react';
 import { useVh } from '@/hooks/useVh';
-import { useRouter } from 'next/navigation';
-import Head from 'next/head';
+import router from 'next/router';
+import { FlexBoxCol } from '@/style/style';
+import Script from 'next/script';
 
 const inter = Inter({ subsets: ['latin'] });
 
+declare global {
+  interface Window {
+    Kakao: any;
+  }
+}
+
 const preventBack = () => {
   history.pushState(null, '', location.href);
-  alert('뒤로가기가 금지되어 있습니다. 상단 로고를 사용하여 홈으로 이동하거나 화면의 버튼을 사용해 주세요.');
+  alert(
+    '뒤로가기가 금지되어 있습니다. 상단 로고를 사용하여 홈으로 이동하거나 화면의 버튼을 사용해 주세요.',
+  );
 };
 
 const preventRefresh = (e: BeforeUnloadEvent) => {
@@ -25,17 +34,24 @@ const preventRefresh = (e: BeforeUnloadEvent) => {
 
 export default function RootLayout({ children }: { children: React.ReactNode }) {
   const vh = useVh();
-  const router = useRouter();
+  // const router = useRouter();
 
-  // useEffect(() => {
-  //   (() => {
-  //     window.addEventListener('beforeunload', preventRefresh);
-  //   })();
+  const kakaoInit = () => {
+    // 페이지가 로드시 실행
+    if (!window.Kakao.isInitialized())
+      // 선언되지 않았을 때만 실행하도록 if문 추가
+      window.Kakao.init(process.env.NEXT_PUBLIC_JAVASCRIPT_KEY);
+  };
 
-  //   return () => {
-  //     window.removeEventListener('beforeunload', preventRefresh);
-  //   };
-  // }, []);
+  useEffect(() => {
+    (() => {
+      window.addEventListener('beforeunload', preventRefresh);
+    })();
+
+    return () => {
+      window.removeEventListener('beforeunload', preventRefresh);
+    };
+  }, []);
 
   useEffect(() => {
     history.pushState(null, '', location.href);
@@ -45,11 +61,41 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
     };
   }, []);
 
+  const [loading, setLoading] = useState(false);
+
+  useEffect(() => {
+    const startLoading = () => setLoading(true);
+    const stopLoading = () => setLoading(false);
+
+    // Register event listeners to show/hide the loading component
+    // addEventListener : documen의 특정 요소 (id, class, tag ... ) event(클릭하면 함수를 실행하라.)
+    window.addEventListener('beforeunload', startLoading);
+    router.events.on('routeChangeStart', startLoading);
+    router.events.on('routeChangeComplete', stopLoading);
+    router.events.on('routeChangeError', stopLoading);
+
+    // Unregister event listeners during cleanup
+    // window.removeEventListener 이벤트 제거할 경우
+    return () => {
+      window.removeEventListener('beforeunload', startLoading);
+      router.events.off('routeChangeStart', startLoading);
+      router.events.off('routeChangeComplete', stopLoading);
+      router.events.off('routeChangeError', stopLoading);
+    };
+  }, []);
+
   return (
     <html lang='ko'>
       <ThemeProvider theme={theme}>
         <head>
           <title>PABLOS 테스트</title>
+          <meta
+            property='og:description'
+            content='ARTMOSPHERE 사용자의 PABLOS 유형을 검사합니다.'
+          />
+          <meta property='og:image' content='/public/imgs/og_image.png' />
+          <meta property='og:image:width' content='1200' />
+          <meta property='og:image:height' content='630' />
         </head>
         <body
           className={inter.className}
@@ -61,12 +107,20 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
           }}
         >
           <RecoilProvider>
-            <>
-              <Header />
-              {children}
-            </>
+            {loading ? (
+              <Box sx={{ ...FlexBoxCol, gap: '40px', marginTop: '200px' }}>
+                <CircularProgress />
+                <Typography variant='h4'>페이지 로드 중입니다.</Typography>
+              </Box>
+            ) : (
+              <>
+                <Header />
+                {children}
+              </>
+            )}
           </RecoilProvider>
         </body>
+        <Script src='https://t1.kakaocdn.net/kakao_js_sdk/2.4.0/kakao.min.js' onLoad={kakaoInit} />
       </ThemeProvider>
     </html>
   );

@@ -33,7 +33,7 @@ const Header = () => {
     resetViewItemState();
     resetScoreState();
     router.push('/');
-    localStorage.removeItem('recoil-persist');
+    sessionStorage.removeItem('recoil-persist');
   };
 
   return (
