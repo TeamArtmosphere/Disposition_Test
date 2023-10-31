@@ -1,7 +1,6 @@
 'use client';
 
 import { getRecommendLocationList, postRateStar } from '@/api/axios-api';
-import DefaultButton from '@/components/common/DefaultButton';
 import { StarRating } from '@/components/result/StarRating';
 import {
   eventUserId,
@@ -13,7 +12,6 @@ import {
   selectionsAtom,
 } from '@/recoil/atom';
 import { FlexBox, FlexBoxCol, FlexContainerCol, FlexContainer } from '@/style/style';
-import theme from '@/style/theme';
 import {
   Box,
   Button,
@@ -63,6 +61,10 @@ const Page = () => {
     setScore(null);
     router.push('/');
     sessionStorage.removeItem('recoil-persist');
+  };
+
+  const handleClickToRecommend = () => {
+    router.push('/recommend');
   };
 
   const onClickShareKakao = async () => {
@@ -140,7 +142,7 @@ const Page = () => {
         });
     }
     setMounted(true);
-  }, []);
+  }, [pablosCode]);
 
   const pablosInfo = [
     { code: 'I', desc: '개인적인' },
@@ -358,6 +360,15 @@ const Page = () => {
                       );
                     })}
                 </Box>
+              </Box>
+              <Box sx={{ ...FlexBox, width: '100%', mb: '50px', gap: '10px', p: '0 22px' }}>
+                <Button
+                  variant='outlined'
+                  onClick={handleClickToRecommend}
+                  sx={{ bgcolor: '#C0E0F0', color: '#136ea6' }}
+                >
+                  더 많은 장소 보기
+                </Button>
               </Box>
             </Box>
 
