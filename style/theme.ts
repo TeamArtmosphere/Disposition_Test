@@ -1,13 +1,38 @@
 'use client';
 
-import { createTheme } from '@mui/material';
+import { createTheme, useMediaQuery, useTheme } from '@mui/material';
 import { grey } from '@mui/material/colors';
 
+declare module '@mui/material/styles' {
+  interface BreakpointOverrides {
+    xs: false; // removes the `xs` breakpoint
+    sm: false;
+    md: false;
+    lg: false;
+    xl: false;
+    mobile: true; // adds the `mobile` breakpoint
+    tablet: true;
+    laptop: true;
+    desktop: true;
+  }
+}
+
 const theme = createTheme({
+  breakpoints: {
+    values: {
+      mobile: 0,
+      tablet: 640,
+      laptop: 1024,
+      desktop: 1200,
+    },
+  },
   palette: {
     primary: {
-      main: '#046EA7',
+      main: '#67309B',
       contrastText: '#fff',
+    },
+    secondary: {
+      main: '#D5B6F2',
     },
   },
   components: {
@@ -16,12 +41,14 @@ const theme = createTheme({
         containedPrimary: {
           color: 'white',
           fontSize: '16px',
-          borderRadius: '50px',
+        },
+        containedSecondary: {
+          color: 'black',
+          backgroundColor: '#EDF0F3',
         },
         outlinedPrimary: {
           color: '#767676',
           border: '1px solid #136ea6',
-          borderRadius: '50px',
         },
         sizeLarge: {
           height: '48px',
@@ -60,13 +87,79 @@ const theme = createTheme({
   },
   typography: {
     fontFamily: '"GmarketSansMedium", sans-serif',
-
-    h1: { fontSize: '36px', lineHeight: '38px', fontWeight: 700 },
-    h2: { fontSize: '36px', lineHeight: '38px', fontWeight: 400 },
-    h3: { fontSize: '28px', lineHeight: '32px', fontWeight: 700 },
-    h4: { fontSize: '24px', lineHeight: '22px', fontWeight: 400 },
-    h5: { fontSize: '14px', lineHeight: '22px', fontWeight: 400 },
+    h1: {
+      '@media (max-width:1200px)': {
+        fontSize: '72px',
+        lineHeight: '94px',
+        fontWeight: 700,
+      },
+      '@media (max-width:640px)': {
+        fontSize: '24px',
+        lineHeight: '38px',
+        fontWeight: 700,
+      },
+    },
+    h2: {
+      '@media (max-width:1200px)': {
+        fontSize: '64px',
+        lineHeight: '90px',
+        fontWeight: 700,
+      },
+      '@media (max-width:640px)': {
+        fontSize: '24px',
+        lineHeight: '38px',
+        fontWeight: 700,
+      },
+    },
+    h3: {
+      '@media (max-width:1200px)': {
+        fontSize: '48px',
+        lineHeight: '62px',
+        fontWeight: 700,
+      },
+      '@media (max-width:640px)': {
+        fontSize: '14px',
+        lineHeight: '38px',
+        fontWeight: 700,
+      },
+    },
+    h4: {
+      '@media (max-width:1200px)': {
+        fontSize: '36px',
+        lineHeight: '47px',
+        fontWeight: 700,
+      },
+      '@media (max-width:640px)': {
+        fontSize: '14px',
+        lineHeight: '38px',
+        fontWeight: 700,
+      },
+    },
+    h5: {
+      '@media (max-width:1200px)': {
+        fontSize: '24px',
+        lineHeight: '31px',
+        fontWeight: 700,
+      },
+      '@media (max-width:640px)': {
+        fontSize: '14px',
+        lineHeight: '38px',
+        fontWeight: 700,
+      },
+    },
     h6: { fontSize: '12px', lineHeight: '18px', fontWeight: 400 },
+    body1: {
+      '@media (max-width:1200px)': {
+        fontSize: '24px',
+        lineHeight: '31px',
+        fontWeight: 700,
+      },
+      '@media (max-width:640px)': {
+        fontSize: '14px',
+        lineHeight: '38px',
+        fontWeight: 700,
+      },
+    },
   },
 });
 

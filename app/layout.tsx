@@ -100,7 +100,7 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
         <body
           className={inter.className}
           style={{
-            backgroundColor: '#F8FCFF',
+            backgroundColor: '#fff',
             width: '100%',
             height: `${100 * vh}px`,
             padding: 0,

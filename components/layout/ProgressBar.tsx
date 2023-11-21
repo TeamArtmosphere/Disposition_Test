@@ -1,6 +1,5 @@
 import * as React from 'react';
 import LinearProgress, { LinearProgressProps } from '@mui/material/LinearProgress';
-import Typography from '@mui/material/Typography';
 import Box from '@mui/material/Box';
 
 type ProgressBarProps = {
@@ -20,7 +19,14 @@ const LinearProgressWithLabel = (props: LinearProgressProps & { value: number })
 const ProgressBar = ({ progress }: ProgressBarProps) => {
   return (
     <Box sx={{ width: '100%', p: 2 }}>
-      <LinearProgressWithLabel value={progress} />
+      <LinearProgressWithLabel
+        value={progress}
+        sx={{
+          '& .MuiSlider-thumb': {
+            border: '2px solid black',
+          },
+        }}
+      />
     </Box>
   );
 };

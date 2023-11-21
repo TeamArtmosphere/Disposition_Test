@@ -30,7 +30,7 @@ import Link from 'next/link';
 
 const Page = () => {
   const theme = useTheme();
-  const onTablet = useMediaQuery(theme.breakpoints.down('lg'));
+  const onTablet = useMediaQuery(theme.breakpoints.down('desktop'));
 
   const router = useRouter();
   const UID = useRecoilValue(eventUserUID);

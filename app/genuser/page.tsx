@@ -4,11 +4,13 @@ import { postRegistUser } from '@/api/axios-api';
 import DefaultButton from '@/components/common/DefaultButton';
 import SelectionButton from '@/components/common/SelectionButton';
 import { eventUserId, eventUserType, eventUserUID, selectionsAtom } from '@/recoil/atom';
-import { ButtonBox, FlexBoxCol, FlexContainerCol } from '@/style/style';
-import { Box, Typography } from '@mui/material';
+import { ButtonBox, FlexBoxCol, FlexContainerCol, FlexContainer } from '@/style/style';
+import { Box, Button, Icon, Paper, Typography } from '@mui/material';
 import { useRouter } from 'next/navigation';
 import React, { useEffect, useState } from 'react';
 import { useRecoilState, useSetRecoilState } from 'recoil';
+import backIcon from '@/public/imgs/icon_back.png';
+import Image from 'next/image';
 
 const genderData = [
   { id: 'MAN', title: '남자', name: 'gender' },
@@ -42,13 +44,13 @@ const Page = () => {
   const onClickRegistUser = () => {
     setSelectionData([]);
     postRegistUser(userType)
-      .then((data) => {
+      .then(data => {
         console.log(data);
         setUserId(data.event_user_id);
         setUID(data.uid);
         router.push('/question');
       })
-      .catch((error) => {
+      .catch(error => {
         console.log(error);
       });
   };
@@ -70,7 +72,9 @@ const Page = () => {
   };
 
   const onClickPrevQuestion = () => {
-    if (renderType === 'ageRange') {
+    if (renderType == 'gender') {
+      router.push('/');
+    } else if (renderType === 'ageRange') {
       setUserType({ ...userType, ageRange: 0 });
       setRenderType('gender');
     } else if (renderType === 'address') {
@@ -88,13 +92,14 @@ const Page = () => {
   // console.log(userType);
 
   return (
-    <Box sx={FlexContainerCol}>
+    <Box sx={{ p: 12 }}>
       {renderType === 'gender' ? (
-        <Box sx={FlexBoxCol}>
-          <Typography variant='h3' mb={'50px'}>
-            성별을 골라주세요
+        <Box>
+          <Typography variant='h2' mt={'127px'} mb={'64px'}>
+            <span className='sep_typo'>성별</span>을 <br />
+            선택해주세요
           </Typography>
-          <Box sx={ButtonBox}>
+          <Box sx={{ ...FlexContainerCol, height: '761px', gap: '20px', mb: '140px' }}>
             {genderData.map((data, idx) => {
               return (
                 <SelectionButton
@@ -102,7 +107,7 @@ const Page = () => {
                   title={data.title}
                   id={data.id}
                   name='gender'
-                  size='sm'
+                  size='lg'
                   onClick={handleUserData}
                 />
               );
@@ -110,11 +115,12 @@ const Page = () => {
           </Box>
         </Box>
       ) : renderType === 'ageRange' ? (
-        <Box sx={FlexBoxCol}>
-          <Typography variant='h3' mb={'50px'}>
-            연령대를 선택해주세요
+        <Box>
+          <Typography variant='h2' mt={'127px'} mb={'64px'}>
+            <span className='sep_typo'>연령대</span>를 <br />
+            선택해주세요
           </Typography>
-          <Box sx={{ ...ButtonBox, mb: '40px' }}>
+          <Box sx={{ ...FlexContainerCol, height: '761px', gap: '20px', mb: '140px' }}>
             {ageRangeData.map((data, idx) => {
               return (
                 <SelectionButton
@@ -122,20 +128,20 @@ const Page = () => {
                   title={data.title}
                   id={data.id}
                   name='ageRange'
-                  size='sm'
+                  size='lg'
                   onClick={handleUserData}
                 />
               );
             })}
           </Box>
-          <DefaultButton title='이전 질문' onClick={onClickPrevQuestion} size='sm' />
         </Box>
       ) : renderType === 'address' ? (
-        <Box sx={FlexBoxCol}>
-          <Typography variant='h3' mb={'50px'}>
-            거주 지역을 선택해주세요
+        <Box>
+          <Typography variant='h2' mt={'127px'} mb={'64px'}>
+            <span className='sep_typo'>거주 지역</span>을 <br />
+            선택해주세요
           </Typography>
-          <Box sx={{ ...ButtonBox, mb: '40px' }}>
+          <Box sx={{ ...FlexContainerCol, height: '761px', gap: '20px', mb: '140px' }}>
             {addressData.map((data, idx) => {
               return (
                 <SelectionButton
@@ -143,14 +149,13 @@ const Page = () => {
                   title={data.title}
                   id={data.id}
                   name='address'
-                  size='sm'
+                  size='lg'
                   onClick={handleUserData}
                 />
               );
             })}
           </Box>
           <Box sx={{ ...ButtonBox, flexDirection: 'row' }}>
-            <DefaultButton title='이전 질문' onClick={onClickPrevQuestion} size='sm' />
             <DefaultButton
               title='테스트 시작하기'
               onClick={onClickRegistUser}
@@ -160,6 +165,19 @@ const Page = () => {
           </Box>
         </Box>
       ) : null}
+      <Button
+        onClick={onClickPrevQuestion}
+        sx={{
+          width: '275px',
+          height: '120px',
+          border: '1px solid #EDF0F3',
+          fontSize: '36px',
+          color: 'black',
+        }}
+      >
+        <Image src={backIcon} alt='이전 아이콘' style={{ marginRight: '20px' }} />
+        이전
+      </Button>
     </Box>
   );
 };

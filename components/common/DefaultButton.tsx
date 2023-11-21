@@ -27,12 +27,14 @@ const DefaultButton = ({ id, title, name, size, onClick, sx, disabled }: ButtonP
           : {
               width:
                 size === 'lg'
-                  ? '300px'
+                  ? '582px'
                   : size === 'md'
                   ? '250px'
                   : size === 'sm'
-                  ? '150px'
+                  ? '206px'
                   : '100%',
+              height:
+                size === 'lg' ? '136px' : size === 'md' ? '80px' : size === 'sm' ? '56px' : '100%',
             }
       }
     >

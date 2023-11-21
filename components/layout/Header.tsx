@@ -1,4 +1,4 @@
-import { Box } from '@mui/material';
+import { Box, useMediaQuery, useTheme } from '@mui/material';
 import Image from 'next/image';
 import React from 'react';
 import logo from '@/public/imgs/vertical_logo.png';
@@ -24,6 +24,11 @@ const Header = () => {
   const resetUserTypeState = useResetRecoilState(eventUserType);
   const resetViewItemState = useResetRecoilState(pablosCodeViewItemAtom);
 
+  const theme = useTheme();
+  const onMobile = useMediaQuery(theme.breakpoints.down('mobile'));
+  const onTablet = useMediaQuery(theme.breakpoints.between('tablet', 'mobile'));
+  const onDesktop = useMediaQuery(theme.breakpoints.between('laptop', 'desktop'));
+
   const handleClickToHome = () => {
     resetPablosCodeState();
     resetSelectionsState();
@@ -36,15 +41,17 @@ const Header = () => {
     sessionStorage.removeItem('recoil-persist');
   };
 
+  console.log(onDesktop, onTablet, onMobile);
+
   return (
     <Box
       sx={{
         display: 'flex',
         alignItems: 'center',
         width: '100%',
-        height: '60px',
+        height: onDesktop ? '96px' : '56px',
         p: '16px',
-        bgcolor: '#F8FCFF',
+        bgcolor: '#fff',
         position: 'absolute',
         top: 0,
         borderBottom: '1px solid #efefef',
