@@ -20,7 +20,7 @@ const SelectionButton = ({ id, title, name, size, onClick, ref, className }: But
       name={name}
       color='secondary'
       variant='contained'
-      disableElevation
+      // disableElevation // theme에서 shadow 삭제
       onClick={onClick}
       sx={{
         width:
@@ -43,11 +43,18 @@ const SelectionButton = ({ id, title, name, size, onClick, ref, className }: But
             : size === 'xs'
             ? '37px'
             : '100%',
-        fontSize: '36px',
-        border: '1px solid #CFE6F2',
-        // '& .MuiButton-root:hover': {
-        //   bgcolor: '#000',
-        // },
+        fontSize:
+          size === 'lg'
+            ? '36px'
+            : size === 'md'
+            ? '16px'
+            : size === 'sm'
+            ? '16px'
+            : size === 'xs'
+            ? '16px'
+            : '16px',
+        // border: '1px solid #FFDE3C',
+        borderRadius: '8px',
       }}
     >
       {title}

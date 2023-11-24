@@ -1,7 +1,7 @@
 import { Box, useMediaQuery, useTheme } from '@mui/material';
 import Image from 'next/image';
 import React from 'react';
-import logo from '@/public/imgs/vertical_logo.png';
+import logo from '@/public/imgs/choople_logo.png';
 import { useResetRecoilState } from 'recoil';
 import {
   eventUserId,
@@ -48,24 +48,25 @@ const Header = () => {
       sx={{
         display: 'flex',
         alignItems: 'center',
+        justifyContent: 'center',
         width: '100%',
         height: onDesktop ? '96px' : '56px',
         p: '16px',
         bgcolor: '#fff',
         position: 'absolute',
         top: 0,
-        borderBottom: '1px solid #efefef',
+        // borderBottom: '1px solid #efefef',
       }}
     >
-      <Box sx={{ maxWidth: '1920px', width: '100%', m: '0 auto' }}>
-        <Image
-          height={24}
-          src={logo}
-          alt='아트모스피어 로고'
-          onClick={handleClickToHome}
-          style={{ cursor: 'pointer' }}
-        />
-      </Box>
+      {/* <Box sx={{ maxWidth: '1920px', width: '100%', m: '0 auto' }}> */}
+      <Image
+        height={24}
+        src={logo}
+        alt='아트모스피어 로고'
+        onClick={handleClickToHome}
+        style={{ cursor: 'pointer' }}
+      />
+      {/* </Box> */}
     </Box>
   );
 };

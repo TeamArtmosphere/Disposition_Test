@@ -19,8 +19,15 @@ export default function Home() {
   };
 
   return (
-    <Box sx={{ p: 12, pt: '60px' }}>
-      <Box sx={{ ...FlexBox, justifyContent: 'space-between', mt: '154px', mb: '75px' }}>
+    <Box sx={{ p: onDesktop ? 12 : 3, pt: 7 }}>
+      <Box
+        sx={{
+          ...FlexBox,
+          justifyContent: 'space-between',
+          mt: onDesktop ? '154px' : '48px',
+          mb: onDesktop ? '75px' : '29px',
+        }}
+      >
         <Typography variant='h3' color={'secondary'}>
           PABLOS
         </Typography>
@@ -42,13 +49,18 @@ export default function Home() {
         <Image
           src={mainImg}
           alt='컴퓨터 앞에 앉아있는 남자 이미지'
-          width={888}
+          width={onDesktop ? 888 : 312}
           style={{ marginBottom: '100px' }}
         />
         <DefaultButton
           title='테스트 시작하기'
           onClick={onClickStartTest}
-          sx={{ width: '100%', height: '160px', fontSize: '48px', fontWeight: '700' }}
+          sx={{
+            width: '100%',
+            height: onDesktop ? '160px' : '52px',
+            fontSize: onDesktop ? '48px' : '18px',
+            fontWeight: '700',
+          }}
         />
       </Box>
     </Box>

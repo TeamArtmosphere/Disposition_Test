@@ -1,6 +1,6 @@
 'use client';
 
-import { Box, Button, Slider, Typography } from '@mui/material';
+import { Box, Button, Slider, Typography, useMediaQuery, useTheme } from '@mui/material';
 import React, { useEffect, useState } from 'react';
 import { getAllQuestion, getResult } from '@/api/axios-api';
 import { FlexBox, FlexBoxCol, FlexContainerCol, FlexContainer } from '@/style/style';
@@ -16,9 +16,13 @@ import { useRouter } from 'next/navigation';
 import SelectionButton from '@/components/common/SelectionButton';
 import Image from 'next/image';
 import backIcon from '@/public/imgs/icon_back.png';
+import ProgressSlideBar from '@/components/layout/ProgressSlideBar';
 
 const Page = () => {
   const router = useRouter();
+  const theme = useTheme();
+  const onDesktop = useMediaQuery(theme.breakpoints.between('laptop', 'desktop'));
+
   // useState type 수정 필요
   const [questionData, setQuestionData] = useState<any>(null);
   const [questionNumber, setQuestionNumber] = useState(0);
@@ -45,6 +49,7 @@ const Page = () => {
       .catch(error => {
         console.log(error);
       });
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
   useEffect(() => {
@@ -98,34 +103,20 @@ const Page = () => {
   console.log(selectionData);
 
   return questionData ? (
-    <Box sx={{ p: 12 }}>
-      <Box sx={{ display: 'flex', alignItems: 'center', width: '100%', height: '168px' }}>
-        <Slider
-          // disabled
-          value={progress}
-          sx={{
-            height: '20px',
-            borderRadius: '0px',
-
-            '& .MuiSlider-track': {
-              borderRadius: 0,
-              height: '20px',
-            },
-            '& .MuiSlider-rail': {
-              backgroundColor: '#C9CDD6',
-            },
-            '& .MuiSlider-thumb': {
-              height: '48px',
-              width: '48px',
-              border: '8px solid currentColor',
-              backgroundColor: '#fff',
-            },
-          }}
-        />
+    <Box sx={{ height: '100%', p: onDesktop ? 12 : 3, pt: 7 }}>
+      <Box
+        sx={{
+          display: 'flex',
+          alignItems: 'center',
+          width: '100%',
+          height: onDesktop ? '168px' : '32px',
+        }}
+      >
+        <ProgressSlideBar progress={progress} onDesktop={onDesktop} />
       </Box>
       {questionNumber < 9 && (
         <Box>
-          <Box sx={{ height: '180px', wordBreak: 'keep-all', mt: '127px', mb: '64px' }}>
+          <Box sx={{ wordBreak: 'keep-all', mt: onDesktop ? '127px' : 3, mb: '64px' }}>
             <Typography variant='h2'>
               {questionData[questionNumber].content.includes('사진질문')
                 ? `다음 중 어떤 공간을\n 선호하시나요?`
@@ -134,11 +125,11 @@ const Page = () => {
           </Box>
           <Box
             sx={{
-              ...FlexContainer,
-              flexDirection: flexDirection,
-              height: '761px',
+              ...FlexContainerCol,
+              // flexDirection: flexDirection, // 모바일에서 필요없음
+              height: onDesktop ? '761px' : '328px',
               gap: '20px',
-              mb: '140px',
+              mb: onDesktop ? '140px' : '47px',
             }}
           >
             {questionData[questionNumber].selections.map((selection: any, idx: number) => {
@@ -148,13 +139,14 @@ const Page = () => {
                   key={idx}
                   id={selection.selection_id}
                   title={selection.content}
-                  size='lg'
+                  size={onDesktop ? 'lg' : 'md'}
                   onClick={onClickNextQuestion}
                 />
               ) : selection.view_type === 'IMAGE' ? (
                 <Box
                   onClick={onClickNextQuestion}
-                  sx={{ width: '50%', height: '100%', position: 'relative' }}
+                  id={selection.selection_id}
+                  sx={{ width: '100%', height: '100%', position: 'relative' }}
                 >
                   <Image
                     key={idx}
@@ -164,7 +156,8 @@ const Page = () => {
                     layout='fill'
                     objectFit='cover'
                   />
-                  <Button
+                  {/* <Button
+                    className='MuiButton'
                     disableElevation
                     sx={{
                       width: '100%',
@@ -179,29 +172,36 @@ const Page = () => {
                       color: 'black',
                     }}
                   >
-                    #미치겠다 #진짜로 #하하하
-                  </Button>
+                    #태그 #사용 #여부
+                  </Button> */}
                 </Box>
               ) : null;
             })}
           </Box>
-          {/* <Box sx={{ mt: 2 }}>
-            <DefaultButton
-              title={questionNumber === 0 ? '개인정보 재입력' : '이전 질문'}
-              onClick={questionNumber === 0 ? onClickGoGenUserPage : onClickPrevQuestion}
-            />
-          </Box> */}
           <Button
             onClick={onClickPrevQuestion}
-            sx={{
-              width: '275px',
-              height: '120px',
-              border: '1px solid #EDF0F3',
-              fontSize: '36px',
-              color: 'black',
-            }}
+            sx={
+              onDesktop
+                ? {
+                    width: '275px',
+                    height: '120px',
+                    border: '1px solid #EDF0F3',
+                    fontSize: '36px',
+                    color: 'black',
+                  }
+                : {
+                    width: '99px',
+                    height: '48px',
+                    border: '1px solid #EDF0F3',
+                    fontSize: '14px',
+                    color: 'black',
+                    // bottom: '38px',
+                  }
+            }
           >
-            <Image src={backIcon} alt='이전 아이콘' style={{ marginRight: '20px' }} />
+            {onDesktop ? (
+              <Image src={backIcon} alt='이전 아이콘' style={{ marginRight: '20px' }} />
+            ) : null}
             이전
           </Button>
         </Box>

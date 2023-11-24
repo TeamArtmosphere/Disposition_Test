@@ -110,6 +110,12 @@ video {
   vertical-align: baseline;
 }
 
+:root {
+  --primary-color: #ffde3c;
+  --secondary-color: #fff9da;
+  --light-grey: #edf0f3;
+}
+
 * {
   box-sizing: border-box;
 }
@@ -120,22 +126,31 @@ a {
 }
 
 .sep_typo {
-  color: #67309b;
+  color: var(--primary-color);
 }
 
-.MuiButton {
+/* .MuiButton {
+} */
+
+.text_body_title {
+  font-size: 18px;
+}
+
+.text_body {
+  font-family: 'Pretendard-Regular';
+  font-weight: 500;
 }
 
 .MuiButton:hover {
-  background-color: #edf0f3;
+  background-color: var(--light-grey);
 }
 
 .MuiButton:active {
-  background-color: #67309b;
+  background-color: var(--primary-color);
 }
 
 @media (hover: hover) {
   .MuiButton:hover {
-    background: #d5b6f2;
+    background: var(--secondary-color);
   }
 }

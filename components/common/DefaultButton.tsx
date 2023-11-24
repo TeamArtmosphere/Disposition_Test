@@ -35,6 +35,7 @@ const DefaultButton = ({ id, title, name, size, onClick, sx, disabled }: ButtonP
                   : '100%',
               height:
                 size === 'lg' ? '136px' : size === 'md' ? '80px' : size === 'sm' ? '56px' : '100%',
+              borderRadius: '8px',
             }
       }
     >

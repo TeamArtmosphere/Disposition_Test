@@ -28,18 +28,26 @@ const theme = createTheme({
   },
   palette: {
     primary: {
-      main: '#67309B',
+      main: '#FFDE3C',
       contrastText: '#fff',
     },
     secondary: {
-      main: '#D5B6F2',
+      main: '#FFF9DA',
+    },
+    grey: {
+      '500': '#212325',
+      '400': '#333639',
+      '300': '#5C6471',
+      '200': '#8B93A6',
+      '100': '#C9CDD6',
     },
   },
   components: {
     MuiButton: {
       styleOverrides: {
         containedPrimary: {
-          color: 'white',
+          boxShadow: 'none',
+          color: '#625D44',
           fontSize: '16px',
         },
         containedSecondary: {
@@ -47,8 +55,8 @@ const theme = createTheme({
           backgroundColor: '#EDF0F3',
         },
         outlinedPrimary: {
-          color: '#767676',
-          border: '1px solid #136ea6',
+          color: '#8B93A6',
+          border: '1px solid #FFDE3B',
         },
         sizeLarge: {
           height: '48px',
@@ -118,8 +126,8 @@ const theme = createTheme({
         fontWeight: 700,
       },
       '@media (max-width:640px)': {
-        fontSize: '14px',
-        lineHeight: '38px',
+        fontSize: '20px',
+        lineHeight: '26px',
         fontWeight: 700,
       },
     },
@@ -131,7 +139,7 @@ const theme = createTheme({
       },
       '@media (max-width:640px)': {
         fontSize: '14px',
-        lineHeight: '38px',
+        lineHeight: '16px',
         fontWeight: 700,
       },
     },
@@ -143,7 +151,7 @@ const theme = createTheme({
       },
       '@media (max-width:640px)': {
         fontSize: '14px',
-        lineHeight: '38px',
+        lineHeight: '20px',
         fontWeight: 700,
       },
     },
@@ -157,6 +165,16 @@ const theme = createTheme({
       '@media (max-width:640px)': {
         fontSize: '14px',
         lineHeight: '38px',
+        fontWeight: 700,
+      },
+    },
+    body2: {
+      '@media (max-width:1200px)': {
+        fontSize: '24px',
+        fontWeight: 700,
+      },
+      '@media (max-width:640px)': {
+        fontSize: '12px',
         fontWeight: 700,
       },
     },
@@ -182,10 +200,12 @@ export const lightTheme = createTheme({
       main: '#eb5757',
     },
     grey: {
+      '50': 'EDF0F3',
       '100': '#f2f2f2',
       '200': '#E0E0E0',
       '300': '#c4c4c4',
       '400': '#767676',
+      '500': '#161A1E',
     },
     background: {
       default: '#fff',
