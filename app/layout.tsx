@@ -1,7 +1,7 @@
 'use client';
 
 import { Box, CircularProgress, ThemeProvider, Typography } from '@mui/material';
-import './globals.css';
+import './global.css';
 import { Inter } from 'next/font/google';
 import theme from '@/style/theme';
 import RecoilProvider from './RecoilProvider';
