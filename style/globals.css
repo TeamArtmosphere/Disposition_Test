@@ -138,6 +138,7 @@ a {
 
 .text_body {
   font-family: 'Pretendard-Regular';
+  box-shadow: 'none';
   font-weight: 500;
 }
 
@@ -151,6 +152,7 @@ a {
 
 @media (hover: hover) {
   .MuiButton:hover {
-    background: var(--secondary-color);
+    background-color: var(--light-grey);
+    box-shadow: 'none';
   }
 }

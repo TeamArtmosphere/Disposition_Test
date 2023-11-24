@@ -20,7 +20,7 @@ const SelectionButton = ({ id, title, name, size, onClick, ref, className }: But
       name={name}
       color='secondary'
       variant='contained'
-      // disableElevation // theme에서 shadow 삭제
+      disableElevation // theme에서 shadow 삭제
       onClick={onClick}
       sx={{
         width:

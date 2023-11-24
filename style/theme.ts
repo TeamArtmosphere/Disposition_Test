@@ -51,6 +51,7 @@ const theme = createTheme({
           fontSize: '16px',
         },
         containedSecondary: {
+          boxShadow: 'none',
           color: 'black',
           backgroundColor: '#EDF0F3',
         },
