@@ -154,7 +154,7 @@ const Page = () => {
       </Box>
       {genuserData && (
         <Box>
-          <Typography variant='h2' mt={onDesktop ? '127px' : 3} mb={'64px'}>
+          <Typography variant='h2' height={'62px'} mt={onDesktop ? '127px' : 3} mb={'42px'}>
             {genuserData[questionNumber].content}
           </Typography>
           <Box

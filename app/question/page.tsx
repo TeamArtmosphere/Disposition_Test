@@ -116,7 +116,9 @@ const Page = () => {
       </Box>
       {questionNumber < 9 && (
         <Box>
-          <Box sx={{ wordBreak: 'keep-all', mt: onDesktop ? '127px' : 3, mb: '64px' }}>
+          <Box
+            sx={{ height: '62px', wordBreak: 'keep-all', mt: onDesktop ? '127px' : 3, mb: '42px' }}
+          >
             <Typography variant='h2'>
               {questionData[questionNumber].content.includes('사진질문')
                 ? `다음 중 어떤 공간을\n 선호하시나요?`
@@ -155,6 +157,7 @@ const Page = () => {
                     src={selection.view_items.images[0]}
                     layout='fill'
                     objectFit='cover'
+                    style={{ borderRadius: '8px' }}
                   />
                   {/* <Button
                     className='MuiButton'

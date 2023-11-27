@@ -1,5 +1,5 @@
 import React from 'react';
-import { Button } from '@mui/material';
+import { Button, useTheme } from '@mui/material';
 
 type ButtonProps = {
   id?: string;
@@ -12,22 +12,27 @@ type ButtonProps = {
 };
 
 const SelectionButton = ({ id, title, name, size, onClick, ref, className }: ButtonProps) => {
+  const theme = useTheme();
+
   return (
     <Button
       className={className}
       id={id}
       ref={ref}
       name={name}
-      color='secondary'
-      variant='contained'
+      color='primary'
+      variant='outlined'
       disableElevation // theme에서 shadow 삭제
+      disableRipple
+      disableTouchRipple
+      disableFocusRipple
       onClick={onClick}
       sx={{
         width:
           size === 'lg'
             ? '582px'
             : size === 'md'
-            ? '206px'
+            ? '270px'
             : size === 'sm'
             ? '175px'
             : size === 'xs'
@@ -53,8 +58,18 @@ const SelectionButton = ({ id, title, name, size, onClick, ref, className }: But
             : size === 'xs'
             ? '16px'
             : '16px',
-        // border: '1px solid #FFDE3C',
         borderRadius: '8px',
+        p: 1,
+        '&:hover': {
+          border: '2px solid #e1e1e1',
+          // bgcolor: theme.palette.grey[50],
+          bgcolor: 'white',
+        },
+        '&:active': {
+          border: '2px solid',
+          bgcolor: theme.palette.secondary.main,
+          borderColor: theme.palette.primary.main,
+        },
       }}
     >
       {title}

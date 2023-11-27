@@ -19,6 +19,7 @@ const ProgressSlideBar = ({ progress, onDesktop }: ProgressSlideBarProps) => {
           borderRadius: onDesktop ? '20px' : '8px',
           height: onDesktop ? '20px' : '8px',
           backgroundColor: '#464646',
+          border: 'none',
         },
         '& .MuiSlider-rail': {
           backgroundColor: '#C9CDD6',

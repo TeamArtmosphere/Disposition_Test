@@ -19,6 +19,8 @@ const Page = () => {
   const [locationData, setLocationData] = useState([]);
   const [mounted, setMounted] = useState(false);
 
+  const [active, setActive] = useState(false);
+
   useEffect(() => {
     if (pablosCode) {
       getRecommendLocationList(pablosCode)
@@ -33,91 +35,94 @@ const Page = () => {
     setMounted(true);
   }, [pablosCode]);
 
-  console.log(pablosCode, viewItem);
+  const [clicked, setClicked] = useState('');
+
+  const onClickActiveBox = (name: string) => {
+    if (clicked === '') {
+      setClicked(name);
+    } else {
+      setClicked('');
+    }
+  };
 
   return (
-    <Box sx={{ ...FlexBoxCol, maxWidth: onTablet ? '900px' : '1536px', p: '60px 22px' }}>
-      <Typography variant='h4' mt={'30px'} mb={1}>
-        불광천 인근 가볼만한 곳
-      </Typography>
-      <Typography
-        // variant='h4'
-        fontSize={'18px'}
-        fontWeight={600}
-        sx={{
-          minWidth: '100px',
-          p: '4px 20px',
-          color: 'white',
-          bgcolor: theme.palette.primary.main,
-          borderRadius: '50px',
-          mb: '20px',
-          textAlign: 'center',
-        }}
-      >
-        {pablosCode}유형이라면 바로 여기!
-      </Typography>
-      <Box>
-        {locationData.map((location: any, idx: number) => {
-          return (
-            <Box key={idx} sx={{ display: 'flex', flexDirection: 'column', mb: 2 }}>
-              <Carousel autoPlay={false}>
-                {location.extra_info.images.map((image: string, idx2: number) => (
-                  <Box
-                    key={idx2}
-                    sx={{
-                      //   width: '100%',
-                      height: '204px',
-                      position: 'relative',
-                      overflow: 'hidden',
-                      borderRadius: '10px',
-                    }}
-                  >
-                    <Image
-                      layout='fill'
-                      objectFit='cover'
-                      sizes='100%'
-                      src={image}
-                      alt={`${image}의 사진`}
-                    />
-                  </Box>
-                ))}
-              </Carousel>
-              <Typography variant='h4' fontWeight={600} sx={{ mt: '12px', mb: '6px' }}>
-                {location?.name}
-              </Typography>
-              <Typography
-                variant='h5'
+    viewItem && (
+      <Box sx={{ ...FlexBoxCol, maxWidth: onTablet ? '900px' : '1536px', p: '60px 22px' }}>
+        <Typography variant='h1' mt={'30px'} mb={1}>
+          <span className='sep_typo'>{viewItem?.name}</span>유형을 위한
+          <br />
+          불광천 인근 가게를 추천드려요!
+        </Typography>
+        <Box>
+          {locationData.map((location: any, idx: number) => {
+            return (
+              <Box
+                key={idx}
+                onClick={() => onClickActiveBox(location.name)}
                 sx={{
-                  color: 'white',
-                  //   minWidth: '10px',
-                  bgcolor: theme.palette.primary.main,
-                  mb: '12px',
-                  p: '1px 12px',
-                  borderRadius: '24px',
+                  display: 'flex',
+                  flexDirection: 'column',
+                  mb: 3,
+                  p: '12px',
+                  border: clicked === location.name ? '2px solid #ffde3c' : '2px solid #e1e1e1',
+                  borderRadius: '12px',
                 }}
               >
-                {location?.address}
-              </Typography>
-              <Typography variant='h6'>{location?.descriptions?.introduction}</Typography>
-              <Link target='_blank' href={location.extra_info.links.naver_map}>
-                <Box
-                  sx={{
-                    ...FlexBox,
-                    // width: '100%',
-                    height: '50px',
-                    border: '1px solid #ccc',
-                    borderRadius: '8px',
-                    m: '16px 0',
-                  }}
+                {/* <div key={idx} className={divStyle} onClick={onClickActiveBox}> */}
+                <Carousel autoPlay={false} indicators={false}>
+                  {location.extra_info.images.map((image: string, idx2: number) => (
+                    <Box
+                      key={idx2}
+                      sx={{
+                        //   width: '100%',
+                        height: '204px',
+                        position: 'relative',
+                        overflow: 'hidden',
+                        borderRadius: '8px',
+                      }}
+                    >
+                      <Image
+                        layout='fill'
+                        objectFit='cover'
+                        sizes='100%'
+                        src={image}
+                        alt={`${image}의 사진`}
+                      />
+                    </Box>
+                  ))}
+                </Carousel>
+                <Typography
+                  variant='h3'
+                  fontFamily={'Pretendard-Regular'}
+                  sx={{ mt: '12px', mb: '6px' }}
                 >
-                  <Typography variant='h5'>{location?.name} 정보 더 보기</Typography>
-                </Box>
-              </Link>
-            </Box>
-          );
-        })}
+                  {location?.name}
+                </Typography>
+                <Typography variant='h6' fontFamily={'Pretendard-Regular'}>
+                  {location?.descriptions?.introduction}
+                </Typography>
+                <Link target='_blank' href={location.extra_info.links.naver_map}>
+                  <Box
+                    sx={{
+                      ...FlexBox,
+                      // width: '100%',
+                      height: '50px',
+                      bgcolor: '#ffde3c',
+                      borderRadius: '8px',
+                      mt: '12px',
+                      display: clicked === location.name ? 'flex' : 'none',
+                    }}
+                  >
+                    <Typography variant='h5'>{location?.name} 정보 더 보기</Typography>
+                  </Box>
+                </Link>
+              </Box>
+              // </div>
+            );
+          })}
+        </Box>
       </Box>
-    </Box>
+    )
   );
 };
 

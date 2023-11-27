@@ -1,5 +1,5 @@
 import React from 'react';
-import { Button } from '@mui/material';
+import { Button, useTheme } from '@mui/material';
 
 type ButtonProps = {
   id?: string;
@@ -12,6 +12,8 @@ type ButtonProps = {
 };
 
 const DefaultButton = ({ id, title, name, size, onClick, sx, disabled }: ButtonProps) => {
+  const theme = useTheme();
+
   return (
     <Button
       id={id}
@@ -21,6 +23,8 @@ const DefaultButton = ({ id, title, name, size, onClick, sx, disabled }: ButtonP
       disableElevation
       onClick={onClick}
       disabled={disabled}
+      disableRipple
+      disableTouchRipple
       sx={
         sx
           ? sx
@@ -36,6 +40,12 @@ const DefaultButton = ({ id, title, name, size, onClick, sx, disabled }: ButtonP
               height:
                 size === 'lg' ? '136px' : size === 'md' ? '80px' : size === 'sm' ? '56px' : '100%',
               borderRadius: '8px',
+              '&:hover': {
+                bgcolor: theme.palette.grey[50],
+              },
+              '&:active': {
+                bgcolor: theme.palette.primary.main,
+              },
             }
       }
     >

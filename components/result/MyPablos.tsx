@@ -34,20 +34,15 @@ const MyPablos = ({ viewItem, onDesktop }: MyPablosProps) => {
       >
         <Box sx={{ flex: 3 }}>
           {/* 12px mobile */}
-          <Typography
-            // variant='h2'
-            // fontSize={'12px'}
-            mb={onDesktop ? '24px' : '4px'}
-            color={'grey.100'}
-          >
+          <Typography variant='h6' mb={onDesktop ? '24px' : '4px'} color={'primary'}>
             나의 PABLOS는?
           </Typography>
           {/* 20px mobile */}
           <Typography
-            variant='h3'
+            variant='h2'
             fontSize={'20px'}
             fontWeight={700}
-            mb={onDesktop ? '24px' : '19px'}
+            mb={onDesktop ? '24px' : '16px'}
             color={'grey.400'}
           >
             {viewItem.name}

@@ -1,8 +1,6 @@
 import { Box, Typography } from '@mui/material';
 import React from 'react';
-import { FlexBox, FlexBoxCol, FlexContainerCol } from '@/style/style';
 import theme from '@/style/theme';
-import styles from './styles.module.css';
 
 interface PablosDescProps {
   viewItem: any;
@@ -11,7 +9,7 @@ interface PablosDescProps {
 const PablosDesc = ({ viewItem }: PablosDescProps) => {
   return (
     <Box sx={{ display: 'flex', flexDirection: 'column', mt: 10 }}>
-      <Typography className='text_body_title' mb={'24px'}>
+      <Typography variant='h3' mb={'24px'}>
         {viewItem.summary}
       </Typography>
       <Box>
@@ -20,9 +18,9 @@ const PablosDesc = ({ viewItem }: PablosDescProps) => {
             return (
               <Box key={idx} sx={{ mb: '36px' }}>
                 <Typography
-                  className={styles.text_body}
-                  fontWeight='600'
+                  variant='h5'
                   color={'grey.500'}
+                  fontFamily={'Pretendard-Regular'}
                   sx={{
                     display: 'inline',
                     lineHeight: '32px',
@@ -33,12 +31,16 @@ const PablosDesc = ({ viewItem }: PablosDescProps) => {
                     borderColor: theme.palette.primary.main,
                     borderRadius: '4px',
                     p: '4px 12px',
-                    mb: '12px',
                   }}
                 >
                   {desc.title}
                 </Typography>
-                <Typography className='text_body' variant='h5' color={'grey.500'}>
+                <Typography
+                  variant='body1'
+                  color={'grey.500'}
+                  fontFamily={'Pretendard-Regular'}
+                  mt={'12px'}
+                >
                   {desc.content}
                 </Typography>
               </Box>

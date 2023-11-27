@@ -2,7 +2,7 @@ import { Box, Button, Typography } from '@mui/material';
 import React from 'react';
 import { FlexBox, FlexBoxCol, FlexContainerCol } from '@/style/style';
 import Image from 'next/image';
-import goBtn from '@/public/imgs/left_btn.png';
+import goBtn from '@/public/imgs/icon_more.png';
 import Link from 'next/link';
 import { useRouter } from 'next/navigation';
 
@@ -78,11 +78,11 @@ const PlaceSlider = ({ viewItem, locationData, pablosCode }: MyPablosProps) => {
                     sx={{
                       ...FlexBoxCol,
                       flexShrink: 0,
-                      width: '293px',
-                      height: '175px',
+                      width: '259px',
+                      height: '148px',
                       position: 'relative',
                       overflow: 'hidden',
-                      borderRadius: '10px',
+                      borderRadius: '8px',
                     }}
                   >
                     <Image
@@ -92,30 +92,28 @@ const PlaceSlider = ({ viewItem, locationData, pablosCode }: MyPablosProps) => {
                       src={location.extra_info.images[0]}
                       alt={`${location.name}의 사진`}
                     />
-                    <Box
-                      sx={{
-                        ...FlexBox,
-                        width: '100%',
-                        position: 'absolute',
-                        bottom: 0,
-                        pl: 2,
-                        pb: 2,
-                        pr: 1,
-                        color: 'white',
-                        justifyContent: 'space-between',
-                      }}
-                    >
-                      <Typography fontSize={'24px'} fontWeight={700}>
-                        {location.name}
-                      </Typography>
-                      <Image
-                        src={goBtn}
-                        alt={`${location.name}정보로 이동`}
-                        width={36}
-                        style={{ paddingBottom: 4 }}
-                      />
-                    </Box>
                   </Box>
+                  <Box
+                    sx={{
+                      ...FlexBox,
+                      width: '100%',
+                      justifyContent: 'space-between',
+                      m: '4px 0',
+                    }}
+                  >
+                    <Typography variant='h3' fontWeight={700}>
+                      {location.name}
+                    </Typography>
+                    <Image
+                      src={goBtn}
+                      alt={`${location.name}정보로 이동`}
+                      width={24}
+                      style={{ paddingBottom: 4 }}
+                    />
+                  </Box>
+                  <Typography variant='h6' fontWeight={500}>
+                    {location.address}
+                  </Typography>
                 </Link>
               );
             })}
