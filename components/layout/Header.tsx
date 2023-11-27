@@ -7,6 +7,7 @@ import {
   eventUserId,
   eventUserType,
   eventUserUID,
+  interimPablosCodeAtom,
   pablosCodeAtom,
   pablosCodeViewItemAtom,
   scoreAtom,
@@ -17,6 +18,7 @@ import { useRouter } from 'next/navigation';
 const Header = () => {
   const router = useRouter();
   const resetPablosCodeState = useResetRecoilState(pablosCodeAtom);
+  const resetInterimPablosCodeState = useResetRecoilState(interimPablosCodeAtom);
   const resetScoreState = useResetRecoilState(scoreAtom);
   const resetSelectionsState = useResetRecoilState(selectionsAtom);
   const resetUserIdState = useResetRecoilState(eventUserId);
@@ -31,6 +33,7 @@ const Header = () => {
 
   const handleClickToHome = () => {
     resetPablosCodeState();
+    resetInterimPablosCodeState();
     resetSelectionsState();
     resetUserIdState();
     resetUIDState();

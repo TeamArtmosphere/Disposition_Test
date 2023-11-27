@@ -6,6 +6,7 @@ import {
   eventUserId,
   eventUserType,
   eventUserUID,
+  interimPablosCodeAtom,
   pablosCodeAtom,
   pablosCodeViewItemAtom,
   scoreAtom,
@@ -43,6 +44,7 @@ const Page = () => {
   const [score, setScore] = useRecoilState(scoreAtom);
 
   const resetPablosCodeState = useResetRecoilState(pablosCodeAtom);
+  const resetInterimPablosCodeState = useResetRecoilState(interimPablosCodeAtom);
   const resetSelectionsState = useResetRecoilState(selectionsAtom);
   const resetUserIdState = useResetRecoilState(eventUserId);
   const resetUIDState = useResetRecoilState(eventUserUID);
@@ -55,6 +57,7 @@ const Page = () => {
 
   const handleClickToHome = () => {
     resetPablosCodeState();
+    resetInterimPablosCodeState();
     resetSelectionsState();
     resetUserIdState();
     resetUIDState();

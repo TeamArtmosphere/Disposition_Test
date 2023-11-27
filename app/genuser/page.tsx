@@ -161,7 +161,7 @@ const Page = () => {
             sx={{
               ...FlexContainerCol,
               height: onDesktop ? '761px' : '328px',
-              gap: '20px',
+              gap: '12px',
               mb: onDesktop ? '140px' : '47px',
             }}
           >

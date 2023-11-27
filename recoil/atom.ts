@@ -54,6 +54,12 @@ export const pablosCodeAtom = atom<string | null>({
   effects_UNSTABLE: [persistAtom],
 });
 
+export const interimPablosCodeAtom = atom<string | null>({
+  key: 'interim_pablos_code',
+  default: null,
+  effects_UNSTABLE: [persistAtom],
+});
+
 export const pablosCodeViewItemAtom = atom({
   key: 'view_items',
   default: null,
