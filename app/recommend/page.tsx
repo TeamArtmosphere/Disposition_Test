@@ -12,7 +12,7 @@ import Carousel from 'react-material-ui-carousel';
 
 const Page = () => {
   const theme = useTheme();
-  const onTablet = useMediaQuery(theme.breakpoints.down('lg'));
+  const onTablet = useMediaQuery(theme.breakpoints.down('desktop'));
   const pablosCode = useRecoilValue(pablosCodeAtom);
   const viewItem = useRecoilValue(pablosCodeViewItemAtom);
 

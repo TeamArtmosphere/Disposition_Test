@@ -1,45 +1,68 @@
 'use client';
 
 import DefaultButton from '@/components/common/DefaultButton';
-import { Box, Button, Typography } from '@mui/material';
+import { Box, Button, Typography, useMediaQuery, useTheme } from '@mui/material';
 import Image from 'next/image';
 import mainImg from '@/public/imgs/main_img.png';
 import { useRouter } from 'next/navigation';
-import { FlexBoxCol, FlexContainerCol } from '@/style/style';
+import { FlexBox, FlexContainerCol, FlexBoxCol } from '@/style/style';
 
 export default function Home() {
   const router2 = useRouter();
+  const theme = useTheme();
+  const onMobile = useMediaQuery(theme.breakpoints.down('mobile'));
+  const onTablet = useMediaQuery(theme.breakpoints.between('tablet', 'mobile'));
+  const onDesktop = useMediaQuery(theme.breakpoints.between('laptop', 'desktop'));
 
   const onClickStartTest = () => {
     router2.push('/genuser');
   };
 
   return (
-    <Box sx={{ ...FlexContainerCol, pt: '60px' }}>
-      <Box sx={{ ...FlexBoxCol, mb: 4 }}>
-        <Button
-          variant='contained'
-          disableElevation
-          sx={{ p: 0, width: '267px', height: '30px', fontSize: '14px', mb: 2 }}
-        >
-          당신의 공간 어떻게 이용하고 계신가요?
-        </Button>
-        <Typography fontSize={26} mb={1}>
-          나에게 딱맞는 공간 찾기
-        </Typography>
-        <Typography variant='h1' color={'primary'}>
+    <Box sx={{ p: onDesktop ? 12 : 3, pt: 7 }}>
+      <Box
+        sx={{
+          ...FlexBox,
+          justifyContent: 'space-between',
+          mt: onDesktop ? '154px' : '48px',
+          mb: onDesktop ? '75px' : '29px',
+        }}
+      >
+        <Typography variant='h3' color={'secondary'}>
           PABLOS
         </Typography>
-      </Box>
-      <Image src={mainImg} alt='컴퓨터 앞에 앉아있는 남자 이미지' width={160} />
-      <Box sx={{ mt: '20px', mb: '40px', textAlign: 'center' }}>
-        <Typography fontSize='12px'>
-          테스트 결과를 바탕으로
-          <br />
-          불광천 인근 가게를 추천해 드릴게요!
+        <Typography variant='h5' fontWeight={300} fontFamily={'Pretendard-Regular'}>
+          파블로스 공간 선호 테스트 알아보기
         </Typography>
       </Box>
-      <DefaultButton title='지금바로 테스트해보기' size='md' onClick={onClickStartTest} />
+      <Box sx={{ mb: '109px' }}>
+        <Typography variant='h1' color={'primary'} mb={3}>
+          나에게 딱! 맞는
+          <br />
+          공간 찾기
+        </Typography>
+        <Typography variant='h4' fontWeight={300} fontFamily={'Pretendard-Regular'}>
+          테스트 결과를 바탕으로 불광천 인근 가게를 추천해 드릴게요!
+        </Typography>
+      </Box>
+      <Box sx={{ textAlign: 'center' }}>
+        <Image
+          src={mainImg}
+          alt='컴퓨터 앞에 앉아있는 남자 이미지'
+          width={onDesktop ? 888 : 312}
+          style={{ marginBottom: '100px' }}
+        />
+        <DefaultButton
+          title='테스트 시작하기'
+          onClick={onClickStartTest}
+          sx={{
+            width: '100%',
+            height: onDesktop ? '160px' : '52px',
+            fontSize: onDesktop ? '48px' : '18px',
+            fontWeight: '700',
+          }}
+        />
+      </Box>
     </Box>
   );
 }

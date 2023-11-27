@@ -1,13 +1,11 @@
 'use client';
 
-import { Box, Typography } from '@mui/material';
+import { Box, Button, Slider, Typography, useMediaQuery, useTheme } from '@mui/material';
 import React, { useEffect, useState } from 'react';
 import { getAllQuestion, getResult } from '@/api/axios-api';
-import ProgressBar from '@/components/layout/ProgressBar';
-import { ButtonBox, FlexBox, FlexBoxCol, FlexContainerCol } from '@/style/style';
-import { useRecoilState, useRecoilValue, useResetRecoilState, useSetRecoilState } from 'recoil';
+import { FlexBox, FlexBoxCol, FlexContainerCol, FlexContainer } from '@/style/style';
+import { useRecoilState, useResetRecoilState, useSetRecoilState } from 'recoil';
 import {
-  eventUserId,
   eventUserType,
   eventUserUID,
   pablosCodeAtom,
@@ -16,11 +14,15 @@ import {
 } from '@/recoil/atom';
 import { useRouter } from 'next/navigation';
 import SelectionButton from '@/components/common/SelectionButton';
-import DefaultButton from '@/components/common/DefaultButton';
 import Image from 'next/image';
+import backIcon from '@/public/imgs/icon_back.png';
+import ProgressSlideBar from '@/components/layout/ProgressSlideBar';
 
 const Page = () => {
   const router = useRouter();
+  const theme = useTheme();
+  const onDesktop = useMediaQuery(theme.breakpoints.between('laptop', 'desktop'));
+
   // useState type 수정 필요
   const [questionData, setQuestionData] = useState<any>(null);
   const [questionNumber, setQuestionNumber] = useState(0);
@@ -30,6 +32,7 @@ const Page = () => {
   const setPablosCode = useSetRecoilState(pablosCodeAtom);
   const resetUserTypeState = useResetRecoilState(eventUserType);
   const setViewItem = useSetRecoilState(pablosCodeViewItemAtom);
+  const [flexDirection, setflexDirection] = useState('column');
 
   useEffect(() => {
     setSelectionData([]);
@@ -40,15 +43,25 @@ const Page = () => {
     }
 
     getAllQuestion()
-      .then((data) => {
+      .then(data => {
         setQuestionData(data.questions);
       })
-      .catch((error) => {
+      .catch(error => {
         console.log(error);
       });
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
+  useEffect(() => {
+    if (questionNumber === 6 || questionNumber === 7 || questionNumber === 8) {
+      setflexDirection('row');
+    } else {
+      setflexDirection('column');
+    }
+  }, [questionNumber]);
+
   console.log(UID, 'uid');
+  console.log(questionData);
 
   const onClickNextQuestion = (e: any) => {
     setQuestionNumber((prev: number) => prev + 1);
@@ -56,16 +69,19 @@ const Page = () => {
     setSelectionData([...selectionData, { selectionId: Number(e.currentTarget.id), value: null }]);
 
     if (questionNumber === 8 && UID) {
-      setSelectionData([...selectionData, { selectionId: Number(e.currentTarget.id), value: null }]);
+      setSelectionData([
+        ...selectionData,
+        { selectionId: Number(e.currentTarget.id), value: null },
+      ]);
 
       getResult({ uid: UID, selections: selectionData })
-        .then((data) => {
+        .then(data => {
           console.log(data);
           setPablosCode(data.result.pablos_code);
           setViewItem(data.result.view_items);
           router.push('/result');
         })
-        .catch((error) => {
+        .catch(error => {
           console.log(error);
         });
     }
@@ -87,53 +103,107 @@ const Page = () => {
   console.log(selectionData);
 
   return questionData ? (
-    <Box sx={{ ...FlexContainerCol, height: '100%' }}>
+    <Box sx={{ height: '100%', p: onDesktop ? 12 : 3, pt: 7 }}>
+      <Box
+        sx={{
+          display: 'flex',
+          alignItems: 'center',
+          width: '100%',
+          height: onDesktop ? '168px' : '32px',
+        }}
+      >
+        <ProgressSlideBar progress={progress} onDesktop={onDesktop} />
+      </Box>
       {questionNumber < 9 && (
-        <Box sx={{ ...FlexBoxCol, width: '100%' }}>
-          <Box sx={{ p: 2, wordBreak: 'keep-all', textAlign: 'center' }}>
-            <Typography variant='h3' mb={'30px'}>
+        <Box>
+          <Box sx={{ wordBreak: 'keep-all', mt: onDesktop ? '127px' : 3, mb: '64px' }}>
+            <Typography variant='h2'>
               {questionData[questionNumber].content.includes('사진질문')
-                ? '마음에 드는 장소를 골라주세요.'
+                ? `다음 중 어떤 공간을\n 선호하시나요?`
                 : questionData[questionNumber].content}
             </Typography>
           </Box>
-          <Box sx={{ ...ButtonBox, mb: 3 }}>
+          <Box
+            sx={{
+              ...FlexContainerCol,
+              // flexDirection: flexDirection, // 모바일에서 필요없음
+              height: onDesktop ? '761px' : '328px',
+              gap: '20px',
+              mb: onDesktop ? '140px' : '47px',
+            }}
+          >
             {questionData[questionNumber].selections.map((selection: any, idx: number) => {
               return selection.view_type === 'TEXT' ? (
                 <SelectionButton
+                  className='MuiButton'
                   key={idx}
                   id={selection.selection_id}
                   title={selection.content}
-                  size='sm'
+                  size={onDesktop ? 'lg' : 'md'}
                   onClick={onClickNextQuestion}
                 />
               ) : selection.view_type === 'IMAGE' ? (
-                <Image
-                  key={idx}
-                  id={selection.selection_id}
+                <Box
                   onClick={onClickNextQuestion}
-                  alt={selection.view_items.images[0]}
-                  src={selection.view_items.images[0]}
-                  width={300}
-                  height={150}
-                  style={{
-                    objectFit: 'cover',
-                    border: '1px solid #CFE6F2',
-                    borderRadius: '10px',
-                  }}
-                />
+                  id={selection.selection_id}
+                  sx={{ width: '100%', height: '100%', position: 'relative' }}
+                >
+                  <Image
+                    key={idx}
+                    id={selection.selection_id}
+                    alt={selection.view_items.images[0]}
+                    src={selection.view_items.images[0]}
+                    layout='fill'
+                    objectFit='cover'
+                  />
+                  {/* <Button
+                    className='MuiButton'
+                    disableElevation
+                    sx={{
+                      width: '100%',
+                      height: '136px',
+                      position: 'absolute',
+                      bottom: '0',
+                      fontSize: '32px',
+                      fontFamily: 'Pretendard-Regular',
+                      bgcolor: '#EDF0F3',
+                      border: 'none',
+                      borderRadius: 0,
+                      color: 'black',
+                    }}
+                  >
+                    #태그 #사용 #여부
+                  </Button> */}
+                </Box>
               ) : null;
             })}
           </Box>
-
-          <ProgressBar progress={progress} />
-
-          <Box sx={{ mt: 2 }}>
-            <DefaultButton
-              title={questionNumber === 0 ? '개인정보 재입력' : '이전 질문'}
-              onClick={questionNumber === 0 ? onClickGoGenUserPage : onClickPrevQuestion}
-            />
-          </Box>
+          <Button
+            onClick={onClickPrevQuestion}
+            sx={
+              onDesktop
+                ? {
+                    width: '275px',
+                    height: '120px',
+                    border: '1px solid #EDF0F3',
+                    fontSize: '36px',
+                    color: 'black',
+                  }
+                : {
+                    width: '99px',
+                    height: '48px',
+                    border: '1px solid #EDF0F3',
+                    fontSize: '14px',
+                    color: 'black',
+                    // bottom: '38px',
+                  }
+            }
+          >
+            {onDesktop ? (
+              <Image src={backIcon} alt='이전 아이콘' style={{ marginRight: '20px' }} />
+            ) : null}
+            이전
+          </Button>
         </Box>
       )}
     </Box>
