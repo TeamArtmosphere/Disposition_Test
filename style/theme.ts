@@ -1,6 +1,6 @@
 'use client';
 
-import { createTheme, useMediaQuery, useTheme } from '@mui/material';
+import { createTheme } from '@mui/material';
 import { grey } from '@mui/material/colors';
 
 declare module '@mui/material/styles' {
@@ -86,13 +86,6 @@ const theme = createTheme({
         colorSecondary: '#fff',
       },
     },
-    // MuiOutlinedInput: {
-    //   styleOverrides: {
-    //     notchedOutline: {
-    //       borderColor: 'red'
-    //     }
-    //   }
-    // },
   },
   typography: {
     fontFamily: '"GmarketSansMedium", sans-serif',

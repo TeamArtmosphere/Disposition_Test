@@ -2,6 +2,7 @@ import { Box, Typography } from '@mui/material';
 import React from 'react';
 import { FlexBox, FlexBoxCol, FlexContainerCol } from '@/style/style';
 import theme from '@/style/theme';
+import styles from './styles.module.css';
 
 interface PablosDescProps {
   viewItem: any;
@@ -19,7 +20,7 @@ const PablosDesc = ({ viewItem }: PablosDescProps) => {
             return (
               <Box key={idx} sx={{ mb: '36px' }}>
                 <Typography
-                  className='text_body'
+                  className={styles.text_body}
                   fontWeight='600'
                   color={'grey.500'}
                   sx={{
