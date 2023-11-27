@@ -1,8 +1,6 @@
 import { Box, Typography } from '@mui/material';
 import React from 'react';
-import { FlexBox, FlexBoxCol, FlexContainerCol } from '@/style/style';
 import theme from '@/style/theme';
-import styles from './styles.module.css';
 
 interface PablosDescProps {
   viewItem: any;
@@ -15,12 +13,14 @@ const PablosDesc = ({ viewItem }: PablosDescProps) => {
         {viewItem.summary}
       </Typography>
       <Box>
+        <h1 className='text_body_title'>여기는 테스트 글씨</h1>
+        <p className='text_body'>여기도 테스트 글씨</p>
         {viewItem &&
           viewItem.descriptions.map((desc: any, idx: number) => {
             return (
               <Box key={idx} sx={{ mb: '36px' }}>
                 <Typography
-                  className={styles.text_body}
+                  className='text_body'
                   fontWeight='600'
                   color={'grey.500'}
                   sx={{
