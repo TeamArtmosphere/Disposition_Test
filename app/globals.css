@@ -113,6 +113,7 @@ video {
 :root {
   --primary-color: #ffde3c;
   --secondary-color: #fff9da;
+  --purple-color: #821be3;
   --light-grey: #edf0f3;
 }
 
@@ -125,7 +126,11 @@ a {
   color: #000;
 }
 
-.text_body_title {
+.sep_typo {
+  color: var(--purple-color);
+}
+
+/* .text_body_title {
   font-size: 18px;
 }
 
@@ -148,4 +153,4 @@ a {
     background-color: var(--light-grey);
     box-shadow: 'none';
   }
-}
+} */

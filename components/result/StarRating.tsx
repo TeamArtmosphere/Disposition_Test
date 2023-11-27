@@ -26,10 +26,10 @@ export const StarRating = ({
 
   return (
     <Box sx={{ pb: 7 }}>
-      <Typography className='text_body' fontSize='18px' fontWeight={600} mb='10px'>
+      <Typography variant='h4' mb='10px'>
         테스트 유형이 잘 맞나요?
       </Typography>
-      <Typography className='text_body' variant='h5' mb='20px'>
+      <Typography variant='h5' mb='20px' fontFamily={'Pretendard-Regular'}>
         테스트 만족도 설문조사에 참여하면
         <br />
         추첨을 통해 스타벅스 커피 쿠폰을 보내드려요!

@@ -155,6 +155,7 @@ const Page = () => {
                     src={selection.view_items.images[0]}
                     layout='fill'
                     objectFit='cover'
+                    style={{ borderRadius: '8px' }}
                   />
                   {/* <Button
                     className='MuiButton'

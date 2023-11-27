@@ -33,13 +33,16 @@ const theme = createTheme({
     },
     secondary: {
       main: '#FFF9DA',
+      contrastText: '#821BE3',
     },
     grey: {
+      '600': '#232323',
       '500': '#212325',
       '400': '#333639',
       '300': '#5C6471',
       '200': '#8B93A6',
       '100': '#C9CDD6',
+      '50': '#EDF0F3',
     },
   },
   components: {
@@ -56,8 +59,8 @@ const theme = createTheme({
           backgroundColor: '#EDF0F3',
         },
         outlinedPrimary: {
-          color: '#8B93A6',
-          border: '1px solid #FFDE3B',
+          color: '#232323',
+          border: '2px solid #E1E1E1',
         },
         sizeLarge: {
           height: '48px',
@@ -108,8 +111,8 @@ const theme = createTheme({
         fontWeight: 700,
       },
       '@media (max-width:640px)': {
-        fontSize: '24px',
-        lineHeight: '38px',
+        fontSize: '20px',
+        lineHeight: '26px',
         fontWeight: 700,
       },
     },
@@ -120,8 +123,8 @@ const theme = createTheme({
         fontWeight: 700,
       },
       '@media (max-width:640px)': {
-        fontSize: '20px',
-        lineHeight: '26px',
+        fontSize: '18px',
+        lineHeight: '21px',
         fontWeight: 700,
       },
     },
@@ -132,9 +135,9 @@ const theme = createTheme({
         fontWeight: 700,
       },
       '@media (max-width:640px)': {
-        fontSize: '14px',
-        lineHeight: '16px',
-        fontWeight: 700,
+        fontSize: '16px',
+        lineHeight: '18px',
+        fontWeight: 500,
       },
     },
     h5: {
@@ -146,7 +149,7 @@ const theme = createTheme({
       '@media (max-width:640px)': {
         fontSize: '14px',
         lineHeight: '20px',
-        fontWeight: 700,
+        fontWeight: 500,
       },
     },
     h6: { fontSize: '12px', lineHeight: '18px', fontWeight: 400 },
@@ -154,12 +157,12 @@ const theme = createTheme({
       '@media (max-width:1200px)': {
         fontSize: '24px',
         lineHeight: '31px',
-        fontWeight: 700,
+        fontWeight: 500,
       },
       '@media (max-width:640px)': {
         fontSize: '14px',
-        lineHeight: '38px',
-        fontWeight: 700,
+        lineHeight: '20px',
+        fontWeight: 500,
       },
     },
     body2: {
@@ -169,7 +172,7 @@ const theme = createTheme({
       },
       '@media (max-width:640px)': {
         fontSize: '12px',
-        fontWeight: 700,
+        fontWeight: 500,
       },
     },
   },

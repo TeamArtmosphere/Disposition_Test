@@ -28,21 +28,22 @@ export default function Home() {
           mb: onDesktop ? '75px' : '29px',
         }}
       >
-        <Typography variant='h3' color={'secondary'}>
+        <Typography variant='h5' color={'primary'}>
           PABLOS
         </Typography>
-        <Typography variant='h5' fontWeight={300} fontFamily={'Pretendard-Regular'}>
+        <Typography variant='h6' fontWeight={300} fontFamily={'Pretendard-Regular'}>
           파블로스 공간 선호 테스트 알아보기
         </Typography>
       </Box>
       <Box sx={{ mb: '109px' }}>
-        <Typography variant='h1' color={'primary'} mb={3}>
+        <Typography variant='h1' color={'grey.600'} mb={3}>
           나에게 딱! 맞는
           <br />
           공간 찾기
         </Typography>
-        <Typography variant='h4' fontWeight={300} fontFamily={'Pretendard-Regular'}>
-          테스트 결과를 바탕으로 불광천 인근 가게를 추천해 드릴게요!
+        <Typography variant='h5' fontFamily={'Pretendard-Regular'}>
+          테스트 결과를 바탕으로 <span className='sep_typo'>불광천 인근 가게</span>를 추천해
+          드릴게요!
         </Typography>
       </Box>
       <Box sx={{ textAlign: 'center' }}>

@@ -60,7 +60,7 @@ const Header = () => {
     >
       {/* <Box sx={{ maxWidth: '1920px', width: '100%', m: '0 auto' }}> */}
       <Image
-        height={24}
+        height={31}
         src={logo}
         alt='아트모스피어 로고'
         onClick={handleClickToHome}
