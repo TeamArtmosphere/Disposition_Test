@@ -32,7 +32,7 @@ const SelectionButton = ({ id, title, name, size, onClick, ref, className }: But
           size === 'lg'
             ? '582px'
             : size === 'md'
-            ? '206px'
+            ? '270px'
             : size === 'sm'
             ? '175px'
             : size === 'xs'
@@ -59,6 +59,7 @@ const SelectionButton = ({ id, title, name, size, onClick, ref, className }: But
             ? '16px'
             : '16px',
         borderRadius: '8px',
+        p: 1,
         '&:hover': {
           border: '2px solid #e1e1e1',
           // bgcolor: theme.palette.grey[50],
