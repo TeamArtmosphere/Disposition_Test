@@ -86,11 +86,11 @@ const PlaceSlider = ({ viewItem, locationData, pablosCode }: MyPablosProps) => {
                     }}
                   >
                     <Image
-                      layout='fill'
-                      objectFit='cover'
+                      fill
                       sizes='100%'
                       src={location.extra_info.images[0]}
                       alt={`${location.name}의 사진`}
+                      style={{ objectFit: 'cover' }}
                     />
                   </Box>
                   <Box

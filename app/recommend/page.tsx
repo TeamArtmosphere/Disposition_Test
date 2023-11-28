@@ -82,11 +82,12 @@ const Page = () => {
                       }}
                     >
                       <Image
-                        layout='fill'
-                        objectFit='cover'
+                        // layout='fill' // next13부터 layout 사용 안함
+                        fill
                         sizes='100%'
                         src={image}
                         alt={`${image}의 사진`}
+                        style={{ objectFit: 'cover' }}
                       />
                     </Box>
                   ))}

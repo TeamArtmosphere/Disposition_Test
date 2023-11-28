@@ -18,6 +18,7 @@ import SelectionButton from '@/components/common/SelectionButton';
 import Image from 'next/image';
 import backIcon from '@/public/imgs/icon_back.png';
 import ProgressSlideBar from '@/components/layout/ProgressSlideBar';
+import DefaultButton from '@/components/common/DefaultButton';
 
 const Page = () => {
   const router = useRouter();
@@ -92,6 +93,8 @@ const Page = () => {
 
   const onClickNextQuestionTest = (e: any) => {
     setQuestionNumber((prev: number) => prev + 1);
+
+    setSelectionData([...selectionData, { selectionId: Number(e.currentTarget.id), value: null }]);
   };
 
   const onClickNextQuestion = (e: any) => {
@@ -105,23 +108,42 @@ const Page = () => {
         .catch(error => console.log(error));
     }
 
-    // if (questionNumber === 8 && UID) {
-    //   setSelectionData([
-    //     ...selectionData,
-    //     { selectionId: Number(e.currentTarget.id), value: null },
-    //   ]);
+    if (questionNumber === 8 && UID) {
+      setSelectionData([
+        ...selectionData,
+        { selectionId: Number(e.currentTarget.id), value: null },
+      ]);
 
-    //   getResult({ uid: UID, selections: selectionData })
-    //     .then(data => {
-    //       // console.log(data);
-    //       setPablosCode(data.result.pablos_code);
-    //       setViewItem(data.result.view_items);
-    //       router.push('/result');
-    //     })
-    //     .catch(error => {
-    //       console.log(error);
-    //     });
-    // }
+      getResult({ uid: UID, selections: selectionData })
+        .then(data => {
+          // console.log(data);
+          setPablosCode(data.result.pablos_code);
+          setViewItem(data.result.view_items);
+          router.push('/result');
+        })
+        .catch(error => {
+          console.log(error);
+        });
+    }
+  };
+
+  const onClickTagButton = (e: any) => {
+    setSelectionData([...selectionData, { selectionId: Number(e.currentTarget.id), value: null }]);
+  };
+
+  const onClickGetResult = () => {
+    if (questionNumber === 9 && UID && selectionData.length === 11) {
+      getResult({ uid: UID, selections: selectionData })
+        .then(data => {
+          // console.log(data);
+          setPablosCode(data.result.pablos_code);
+          setViewItem(data.result.view_items);
+          router.push('/result');
+        })
+        .catch(error => {
+          console.log(error);
+        });
+    }
   };
 
   const onClickPrevQuestion = () => {
@@ -161,10 +183,11 @@ const Page = () => {
           <Box
             sx={{
               display: 'flex',
-              justifyContent: 'center',
-              alignItems: 'center',
+              justifyContent: questionNumber === 9 ? 'flex-start' : 'center',
+              alignItems: questionNumber === 9 ? 'flex-start' : 'center',
               flexDirection: flexDirection, // 모바일에서 필요없음
-              flexWrap: questionNumber === 9 ? 'wrap' : null,
+              flexWrap: questionNumber === 9 ? 'wrap' : '',
+              width: '100%',
               height: onDesktop ? '761px' : '328px',
               gap: '12px',
               mb: onDesktop ? '140px' : '47px',
@@ -173,8 +196,8 @@ const Page = () => {
             {currentQuestion[0].selections.map((selection: any, idx: number) => {
               return selection.view_type === 'TEXT' ? (
                 <SelectionButton
-                  className='MuiButton'
                   key={idx}
+                  className='MuiButton'
                   id={selection.selection_id}
                   title={selection.content}
                   size={onDesktop ? 'lg' : 'md'}
@@ -182,132 +205,73 @@ const Page = () => {
                 />
               ) : selection.view_type === 'IMAGE' ? (
                 <Box
+                  key={idx}
                   onClick={onClickNextQuestionTest}
                   id={selection.selection_id}
                   sx={{ width: '100%', height: '100%', position: 'relative' }}
                 >
                   <Image
-                    key={idx}
                     id={selection.selection_id}
                     alt={selection.view_items.images[0]}
                     src={selection.view_items.images[0]}
-                    layout='fill'
+                    fill
                     objectFit='cover'
                     style={{ borderRadius: '8px' }}
                   />
                 </Box>
               ) : selection.view_type === 'TAG' ? (
                 <SelectionButton
-                  title={selection.content}
                   key={idx}
+                  title={selection.content}
                   id={selection.selection_id}
-                  sx={{ height: '45px', minWidth: '83px' }}
+                  onClick={onClickTagButton}
+                  sx={{ height: '45px', width: 'max-content' }}
                 />
               ) : null;
             })}
           </Box>
-          <Button
-            onClick={onClickPrevQuestion}
-            sx={
-              onDesktop
-                ? {
-                    width: '275px',
-                    height: '120px',
-                    border: '1px solid #EDF0F3',
-                    fontSize: '36px',
-                    color: 'black',
-                  }
-                : {
-                    width: '99px',
-                    height: '48px',
-                    border: '1px solid #EDF0F3',
-                    fontSize: '14px',
-                    color: 'black',
-                  }
-            }
-          >
-            {onDesktop ? (
-              <Image src={backIcon} alt='이전 아이콘' style={{ marginRight: '20px' }} />
-            ) : null}
-            이전
-          </Button>
+          <Box sx={{ display: 'flex', justifyContent: 'space-between' }}>
+            <Button
+              onClick={onClickPrevQuestion}
+              sx={
+                onDesktop
+                  ? {
+                      width: '275px',
+                      height: '120px',
+                      border: '1px solid #EDF0F3',
+                      fontSize: '36px',
+                      color: 'black',
+                    }
+                  : {
+                      width: '99px',
+                      height: '48px',
+                      border: '1px solid #EDF0F3',
+                      fontSize: '14px',
+                      color: 'black',
+                    }
+              }
+            >
+              {onDesktop ? (
+                <Image src={backIcon} alt='이전 아이콘' style={{ marginRight: '20px' }} />
+              ) : null}
+              이전
+            </Button>
+            {questionNumber === 9 && (
+              <DefaultButton
+                title='선택완료'
+                disabled={selectionData.length === 11 ? false : true}
+                onClick={onClickGetResult}
+                sx={{
+                  width: '99px',
+                  height: '48px',
+                  fontSize: '14px',
+                }}
+              />
+            )}
+          </Box>
         </Box>
       )}
       {/* 테스트 */}
-
-      {/* {questionNumber < 9 && (
-        <Box>
-          <Box
-            sx={{ height: '62px', wordBreak: 'keep-all', mt: onDesktop ? '127px' : 3, mb: '42px' }}
-          >
-            <Typography variant='h2'>{questionData[questionNumber]?.content}</Typography>
-          </Box>
-          <Box
-            sx={{
-              ...FlexContainerCol,
-              // flexDirection: flexDirection, // 모바일에서 필요없음
-              height: onDesktop ? '761px' : '328px',
-              gap: '12px',
-              mb: onDesktop ? '140px' : '47px',
-            }}
-          >
-            {questionData[questionNumber].selections.map((selection: any, idx: number) => {
-              return selection.view_type === 'TEXT' ? (
-                <SelectionButton
-                  className='MuiButton'
-                  key={idx}
-                  id={selection.selection_id}
-                  title={selection.content}
-                  size={onDesktop ? 'lg' : 'md'}
-                  onClick={onClickNextQuestion}
-                />
-              ) : selection.view_type === 'IMAGE' ? (
-                <Box
-                  onClick={onClickNextQuestion}
-                  id={selection.selection_id}
-                  sx={{ width: '100%', height: '100%', position: 'relative' }}
-                >
-                  <Image
-                    key={idx}
-                    id={selection.selection_id}
-                    alt={selection.view_items.images[0]}
-                    src={selection.view_items.images[0]}
-                    layout='fill'
-                    objectFit='cover'
-                    style={{ borderRadius: '8px' }}
-                  />
-                </Box>
-              ) : null;
-            })}
-          </Box>
-          <Button
-            onClick={onClickPrevQuestion}
-            sx={
-              onDesktop
-                ? {
-                    width: '275px',
-                    height: '120px',
-                    border: '1px solid #EDF0F3',
-                    fontSize: '36px',
-                    color: 'black',
-                  }
-                : {
-                    width: '99px',
-                    height: '48px',
-                    border: '1px solid #EDF0F3',
-                    fontSize: '14px',
-                    color: 'black',
-                    // bottom: '38px',
-                  }
-            }
-          >
-            {onDesktop ? (
-              <Image src={backIcon} alt='이전 아이콘' style={{ marginRight: '20px' }} />
-            ) : null}
-            이전
-          </Button>
-        </Box>
-      )} */}
     </Box>
   ) : null;
 };
