@@ -24,7 +24,6 @@ const Page = () => {
     if (pablosCode) {
       getRecommendLocationList(pablosCode)
         .then(data => {
-          console.log(data);
           setLocationData(data);
         })
         .catch(error => {

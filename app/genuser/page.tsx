@@ -11,6 +11,7 @@ import { useRecoilState, useSetRecoilState } from 'recoil';
 import backIcon from '@/public/imgs/icon_back.png';
 import Image from 'next/image';
 import ProgressSlideBar from '@/components/layout/ProgressSlideBar';
+import { style } from '../question/page';
 
 const genuserData = [
   {
@@ -57,7 +58,6 @@ const Page = () => {
     setSelectionData([]);
     postRegistUser(userType)
       .then(data => {
-        console.log(data);
         setUserId(data.event_user_id);
         setUID(data.uid);
         router.push('/question');
@@ -92,8 +92,6 @@ const Page = () => {
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [userType]);
 
-  console.log(userType, '유저타입');
-
   const onClickPrevQuestion = () => {
     if (questionNumber === 0) {
       router.push('/');
@@ -112,14 +110,7 @@ const Page = () => {
 
   return (
     <Box sx={{ height: '100%', p: onDesktop ? 12 : 3, pt: 7 }}>
-      <Box
-        sx={{
-          display: 'flex',
-          alignItems: 'center',
-          width: '100%',
-          height: onDesktop ? '168px' : '32px',
-        }}
-      >
+      <Box sx={{ ...style.containerBox, height: onDesktop ? '168px' : '32px' }}>
         <ProgressSlideBar progress={progress} onDesktop={onDesktop} />
       </Box>
       {genuserData && (
@@ -153,24 +144,7 @@ const Page = () => {
       )}
       <Button
         onClick={onClickPrevQuestion}
-        sx={
-          onDesktop
-            ? {
-                width: '275px',
-                height: '120px',
-                border: '1px solid #EDF0F3',
-                fontSize: '36px',
-                color: 'black',
-              }
-            : {
-                width: '99px',
-                height: '48px',
-                border: '1px solid #EDF0F3',
-                fontSize: '14px',
-                color: 'black',
-                // bottom: '38px',
-              }
-        }
+        sx={onDesktop ? style.buttonOnDesktop : style.buttonOnMobile}
       >
         {onDesktop ? (
           <Image src={backIcon} alt='이전 아이콘' style={{ marginRight: '20px' }} />

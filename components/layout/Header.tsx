@@ -44,7 +44,7 @@ const Header = () => {
     sessionStorage.removeItem('recoil-persist');
   };
 
-  console.log(onDesktop, onTablet, onMobile);
+  // console.log(onDesktop, onTablet, onMobile);
 
   return (
     <Box

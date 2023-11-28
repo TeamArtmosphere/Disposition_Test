@@ -54,6 +54,7 @@ const Page = () => {
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
+  // 질문 번호에 따른 현재 질문 렌더링
   useEffect(() => {
     if (questionData && questionNumber <= 6) {
       setCurrentQuestion(questionData.filter((item: any) => item.question_no === questionNumber));
@@ -73,6 +74,7 @@ const Page = () => {
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [interimPablosCode, questionData, questionNumber]);
 
+  // 선택지 버튼 내부 flexDirection 지정
   useEffect(() => {
     if (questionNumber === 9) {
       setflexDirection('row');
@@ -81,26 +83,18 @@ const Page = () => {
     }
   }, [questionNumber]);
 
-  console.log(interimPablosCode);
-  console.log(questionData, '질문 데이터');
-  console.log(questionNumber, '질문 번호');
-  console.log(selectionData, '고른거');
-  console.log(currentQuestion, '현재질문');
-  console.log('--------------------');
-
+  // 단일 선택 질문들 클릭 시 다음 질문
   const onClickNextQuestion = (e: any) => {
     setQuestionNumber((prev: number) => prev + 1);
 
     setSelectionData([...selectionData, { selectionId: Number(e.currentTarget.id), value: null }]);
   };
 
+  // 태그 버튼 활성화 & 비활성화 기능
   const onClickTagButton = (e: any) => {
     const isSelected = selectionData.findIndex(
       (item: any) => item.selectionId === parseInt(e.currentTarget.id),
     );
-
-    console.log(e.currentTarget.id, '이건 아이디', isSelected, '고를때 이거 있는지');
-    console.log(selectionData.length, '이게 왜 안찍힘?');
 
     if (isSelected === -1 && selectionData.length <= 10) {
       setSelectionData([
@@ -114,11 +108,11 @@ const Page = () => {
     }
   };
 
+  // 9번 태그 질문 선택 후 선택완료 버튼 동작
   const onClickGetResult = () => {
     if (questionNumber === 9 && UID && selectionData.length === 11) {
       getResult({ uid: UID, selections: selectionData })
         .then(data => {
-          // console.log(data);
           setPablosCode(data.result.pablos_code);
           setViewItem(data.result.view_items);
           router.push('/result');
@@ -144,23 +138,14 @@ const Page = () => {
 
   return questionData ? (
     <Box sx={{ height: '100%', p: onDesktop ? 12 : 3, pt: 7 }}>
-      <Box
-        sx={{
-          display: 'flex',
-          alignItems: 'center',
-          width: '100%',
-          height: onDesktop ? '168px' : '32px',
-        }}
-      >
+      <Box sx={{ ...style.containerBox, height: onDesktop ? '168px' : '32px' }}>
         <ProgressSlideBar progress={progress} onDesktop={onDesktop} />
       </Box>
 
       {/* 테스트 */}
       {currentQuestion.length > 0 && (
         <Box>
-          <Box
-            sx={{ height: '62px', wordBreak: 'keep-all', mt: onDesktop ? '127px' : 3, mb: '42px' }}
-          >
+          <Box sx={{ ...style.questionContentBox, mt: onDesktop ? '127px' : 3 }}>
             <Typography variant='h2'>{currentQuestion[0].content}</Typography>
           </Box>
           <Box
@@ -223,23 +208,7 @@ const Page = () => {
           <Box sx={{ display: 'flex', justifyContent: 'space-between' }}>
             <Button
               onClick={onClickPrevQuestion}
-              sx={
-                onDesktop
-                  ? {
-                      width: '275px',
-                      height: '120px',
-                      border: '1px solid #EDF0F3',
-                      fontSize: '36px',
-                      color: 'black',
-                    }
-                  : {
-                      width: '99px',
-                      height: '48px',
-                      border: '1px solid #EDF0F3',
-                      fontSize: '14px',
-                      color: 'black',
-                    }
-              }
+              sx={onDesktop ? style.buttonOnDesktop : style.buttonOnMobile}
             >
               {onDesktop ? (
                 <Image src={backIcon} alt='이전 아이콘' style={{ marginRight: '20px' }} />
@@ -251,11 +220,7 @@ const Page = () => {
                 title='선택완료'
                 disabled={selectionData.length === 11 ? false : true}
                 onClick={onClickGetResult}
-                sx={{
-                  width: '99px',
-                  height: '48px',
-                  fontSize: '14px',
-                }}
+                sx={style.buttonGetResult}
               />
             )}
           </Box>
@@ -267,3 +232,31 @@ const Page = () => {
 };
 
 export default Page;
+
+export const style = {
+  containerBox: {
+    display: 'flex',
+    alignItems: 'center',
+    width: '100%',
+  },
+  questionContentBox: { height: '62px', wordBreak: 'keep-all', mb: '42px' },
+  buttonOnDesktop: {
+    width: '275px',
+    height: '120px',
+    border: '1px solid #EDF0F3',
+    fontSize: '36px',
+    color: 'black',
+  },
+  buttonOnMobile: {
+    width: '99px',
+    height: '48px',
+    border: '1px solid #EDF0F3',
+    fontSize: '14px',
+    color: 'black',
+  },
+  buttonGetResult: {
+    width: '99px',
+    height: '48px',
+    fontSize: '14px',
+  },
+};

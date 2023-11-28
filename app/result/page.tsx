@@ -104,10 +104,8 @@ const Page = () => {
 
   const onClickRateStar = () => {
     if (UID && score) {
-      console.log({ uid: UID, score: score });
       postRateStar({ uid: UID, score: score })
         .then(data => {
-          console.log(data);
           setScore(null);
           setRatingMsg('답변해 주셔서 감사합니다!');
         })
@@ -119,15 +117,10 @@ const Page = () => {
     }
   };
 
-  console.log(UID);
-
-  console.log(score, '점수점수');
-
   useEffect(() => {
     if (pablosCode) {
       getRecommendLocationList(pablosCode)
         .then(data => {
-          console.log(data);
           setLocationData(data);
         })
         .catch(error => {
@@ -137,28 +130,26 @@ const Page = () => {
     setMounted(true);
   }, [pablosCode]);
 
-  const pablosInfo = [
-    { code: 'I', desc: '개인적인' },
-    { code: 'S', desc: '사교적인' },
-    { code: 'X', desc: '경험추구' },
-    { code: 'P', desc: '상품추구' },
-    { code: 'V', desc: '가치추구' },
-    { code: 'R', desc: '가성비추구' },
-  ];
+  // const pablosInfo = [
+  //   { code: 'I', desc: '개인적인' },
+  //   { code: 'S', desc: '사교적인' },
+  //   { code: 'X', desc: '경험추구' },
+  //   { code: 'P', desc: '상품추구' },
+  //   { code: 'V', desc: '가치추구' },
+  //   { code: 'R', desc: '가성비추구' },
+  // ];
 
-  const filterPablosCode = (pablosCode: any) => {
-    const code = pablosCode.split('');
-    const filter = pablosInfo.filter(
-      (item: any) => code.filter((i: string) => i === item.code).length > 0,
-    );
-    return filter;
-  };
+  // const filterPablosCode = (pablosCode: any) => {
+  //   const code = pablosCode.split('');
+  //   const filter = pablosInfo.filter(
+  //     (item: any) => code.filter((i: string) => i === item.code).length > 0,
+  //   );
+  //   return filter;
+  // };
 
-  const filteredPablosCode = pablosCode && filterPablosCode(pablosCode);
+  // const filteredPablosCode = pablosCode && filterPablosCode(pablosCode);
 
   const [mounted, setMounted] = useState(false);
-
-  console.log(onTablet);
 
   return !mounted ? (
     <Box
