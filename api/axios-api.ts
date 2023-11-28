@@ -33,7 +33,7 @@ type selectionsDataType = {
 };
 
 export const getResult = async (selectionData: selectionsDataType, id?: number) => {
-  const res = await instance.post(`/api/v1/pablos-analysis/2/complete`, selectionData);
+  const res = await instance.post(`/api/v1/pablos-analysis/3/complete`, selectionData);
   return res.data;
 };
 
@@ -48,7 +48,7 @@ type ratingUserData = {
 };
 
 export const postRateStar = async (userData: ratingUserData) => {
-  const res = await instance.post(`/api/v1/pablos-analysis/2/satisfaction`, userData);
+  const res = await instance.post(`/api/v1/pablos-analysis/3/satisfaction`, userData);
   return res;
 };
 
