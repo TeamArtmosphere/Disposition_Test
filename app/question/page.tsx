@@ -74,6 +74,7 @@ const Page = () => {
         .then(data => setInterimPablosCode(data.pablos_code))
         .catch(error => console.log(error));
     }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [interimPablosCode, questionData, questionNumber]);
 
   useEffect(() => {
@@ -128,7 +129,22 @@ const Page = () => {
   };
 
   const onClickTagButton = (e: any) => {
-    setSelectionData([...selectionData, { selectionId: Number(e.currentTarget.id), value: null }]);
+    const isSelected = selectionData.findIndex(
+      (item: any) => item.selectionId === parseInt(e.currentTarget.id),
+    );
+
+    console.log(e.currentTarget.id, '이건 아이디', isSelected, '고를때 이거 있는지');
+
+    if (isSelected === -1) {
+      setSelectionData([
+        ...selectionData,
+        { selectionId: Number(e.currentTarget.id), value: null },
+      ]);
+    } else {
+      setSelectionData(prev =>
+        prev.filter((item: any) => item.selectionId !== parseInt(e.currentTarget.id)),
+      );
+    }
   };
 
   const onClickGetResult = () => {

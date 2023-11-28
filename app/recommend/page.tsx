@@ -18,8 +18,7 @@ const Page = () => {
 
   const [locationData, setLocationData] = useState([]);
   const [mounted, setMounted] = useState(false);
-
-  const [active, setActive] = useState(false);
+  const [clicked, setClicked] = useState('');
 
   useEffect(() => {
     if (pablosCode) {
@@ -34,8 +33,6 @@ const Page = () => {
     }
     setMounted(true);
   }, [pablosCode]);
-
-  const [clicked, setClicked] = useState('');
 
   const onClickActiveBox = (name: string) => {
     if (clicked === '') {
@@ -68,13 +65,11 @@ const Page = () => {
                   borderRadius: '12px',
                 }}
               >
-                {/* <div key={idx} className={divStyle} onClick={onClickActiveBox}> */}
                 <Carousel autoPlay={false} indicators={false}>
                   {location.extra_info.images.map((image: string, idx2: number) => (
                     <Box
                       key={idx2}
                       sx={{
-                        //   width: '100%',
                         height: '204px',
                         position: 'relative',
                         overflow: 'hidden',
@@ -106,7 +101,6 @@ const Page = () => {
                   <Box
                     sx={{
                       ...FlexBox,
-                      // width: '100%',
                       height: '50px',
                       bgcolor: '#ffde3c',
                       borderRadius: '8px',
