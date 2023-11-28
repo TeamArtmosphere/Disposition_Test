@@ -4,7 +4,7 @@ import Rating from '@mui/material/Rating';
 import { useSetRecoilState } from 'recoil';
 import { scoreAtom } from '@/recoil/atom';
 import { Button, Typography } from '@mui/material';
-import { FlexBox, FlexBoxCol, FlexContainerCol } from '@/style/style';
+import { FlexBox, FlexContainerCol } from '@/style/style';
 
 interface StarRatingProps {
   score: number | null;

@@ -12,16 +12,8 @@ import {
   scoreAtom,
   selectionsAtom,
 } from '@/recoil/atom';
-import { FlexBox, FlexBoxCol, FlexContainerCol } from '@/style/style';
-import {
-  Box,
-  Button,
-  CircularProgress,
-  Divider,
-  Typography,
-  useMediaQuery,
-  useTheme,
-} from '@mui/material';
+import { FlexBoxCol } from '@/style/style';
+import { Box, CircularProgress, Typography, useMediaQuery, useTheme } from '@mui/material';
 import { useRouter } from 'next/navigation';
 import React, { useEffect, useState } from 'react';
 import { useRecoilState, useRecoilValue, useResetRecoilState } from 'recoil';

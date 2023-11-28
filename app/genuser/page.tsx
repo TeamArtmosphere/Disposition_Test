@@ -1,20 +1,10 @@
 'use client';
 
 import { postRegistUser } from '@/api/axios-api';
-import DefaultButton from '@/components/common/DefaultButton';
 import SelectionButton from '@/components/common/SelectionButton';
 import { eventUserId, eventUserType, eventUserUID, selectionsAtom } from '@/recoil/atom';
-import { ButtonBox, FlexBoxCol, FlexContainerCol, FlexContainer } from '@/style/style';
-import {
-  Box,
-  Button,
-  Icon,
-  Paper,
-  Slider,
-  Typography,
-  useMediaQuery,
-  useTheme,
-} from '@mui/material';
+import { FlexContainerCol } from '@/style/style';
+import { Box, Button, Typography, useMediaQuery, useTheme } from '@mui/material';
 import { useRouter } from 'next/navigation';
 import React, { useEffect, useState } from 'react';
 import { useRecoilState, useSetRecoilState } from 'recoil';
@@ -51,33 +41,13 @@ const genuserData = [
   },
 ];
 
-const genderData = [
-  { id: 'MAN', title: '남자', name: 'gender' },
-  { id: 'WOMAN', title: '여자', name: 'gender' },
-];
-
-const ageRangeData = [
-  { id: '10', title: '10대' },
-  { id: '20', title: '20대' },
-  { id: '30', title: '30대' },
-  { id: '40', title: '40대' },
-  { id: '50', title: '50대 이상' },
-];
-
-const addressData = [
-  { id: '수색/증산', title: '수색/증산' },
-  { id: '신사/역촌', title: '신사/역촌' },
-  { id: '응암', title: '응암' },
-  { id: '그 외 은평구', title: '그 외 은평구' },
-];
-
 const Page = () => {
   const router = useRouter();
   const theme = useTheme();
   const onDesktop = useMediaQuery(theme.breakpoints.between('laptop', 'desktop'));
 
   const [userType, setUserType] = useRecoilState(eventUserType);
-  const [renderType, setRenderType] = useState('gender');
+  // const [renderType, setRenderType] = useState('gender');
   const [questionNumber, setQuestionNumber] = useState(0);
   const setUserId = useSetRecoilState(eventUserId);
   const setUID = useSetRecoilState(eventUserUID);
@@ -100,13 +70,13 @@ const Page = () => {
   const handleUserData = (e?: any) => {
     if (e.currentTarget.name === 'gender') {
       setUserType({ ...userType, gender: e.currentTarget.id });
-      setRenderType('ageRange');
+      // setRenderType('ageRange');
       setQuestionNumber(1); // 렌더 넘버 테스트
     }
 
     if (e.currentTarget.name === 'ageRange') {
       setUserType({ ...userType, ageRange: +e.currentTarget.id });
-      setRenderType('address');
+      // setRenderType('address');
       setQuestionNumber(2); // 렌더 넘버 테스트
     }
 
@@ -125,20 +95,20 @@ const Page = () => {
   console.log(userType, '유저타입');
 
   const onClickPrevQuestion = () => {
-    if (renderType == 'gender') {
+    if (questionNumber === 0) {
       router.push('/');
-    } else if (renderType === 'ageRange') {
+    } else if (questionNumber === 1) {
       setUserType({ ...userType, ageRange: 0 });
-      setRenderType('gender');
+      // setRenderType('gender');
       setQuestionNumber(0); // 렌더 넘버 테스트
-    } else if (renderType === 'address') {
+    } else if (questionNumber === 2) {
       setUserType({ ...userType, address: '' });
-      setRenderType('ageRange');
+      // setRenderType('ageRange');
       setQuestionNumber(1); // 렌더 넘버 테스트
     }
   };
 
-  const progress: number = 10;
+  const progress: number = questionNumber * (100 / 12);
 
   return (
     <Box sx={{ height: '100%', p: onDesktop ? 12 : 3, pt: 7 }}>

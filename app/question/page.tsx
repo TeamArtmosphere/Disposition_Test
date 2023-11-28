@@ -35,7 +35,6 @@ const Page = () => {
   const setViewItem = useSetRecoilState(pablosCodeViewItemAtom);
   const [flexDirection, setflexDirection] = useState('column');
   const [currentQuestion, setCurrentQuestion] = useState<any>([]);
-  const [tagButtonClass, setTagButtonClass] = useState('tag_button');
 
   useEffect(() => {
     setSelectionData([]);
@@ -89,40 +88,10 @@ const Page = () => {
   console.log(currentQuestion, '현재질문');
   console.log('--------------------');
 
-  const onClickNextQuestionTest = (e: any) => {
-    setQuestionNumber((prev: number) => prev + 1);
-
-    setSelectionData([...selectionData, { selectionId: Number(e.currentTarget.id), value: null }]);
-  };
-
   const onClickNextQuestion = (e: any) => {
     setQuestionNumber((prev: number) => prev + 1);
 
     setSelectionData([...selectionData, { selectionId: Number(e.currentTarget.id), value: null }]);
-
-    if (questionNumber === 5 && UID) {
-      getInterimResult({ selections: selectionData })
-        .then(data => setInterimPablosCode(data.pablos_code))
-        .catch(error => console.log(error));
-    }
-
-    if (questionNumber === 8 && UID) {
-      setSelectionData([
-        ...selectionData,
-        { selectionId: Number(e.currentTarget.id), value: null },
-      ]);
-
-      getResult({ uid: UID, selections: selectionData })
-        .then(data => {
-          // console.log(data);
-          setPablosCode(data.result.pablos_code);
-          setViewItem(data.result.view_items);
-          router.push('/result');
-        })
-        .catch(error => {
-          console.log(error);
-        });
-    }
   };
 
   const onClickTagButton = (e: any) => {
@@ -165,13 +134,13 @@ const Page = () => {
     setSelectionData(prevData);
     setQuestionNumber((prev: number) => prev - 1);
 
-    if (questionNumber === 0) {
+    if (questionNumber === 1) {
       resetUserTypeState();
       router.push('/genuser');
     }
   };
 
-  const progress: number = questionData && (100 / (questionData.length - 7)) * questionNumber + 1;
+  const progress: number = (100 / 12) * (questionNumber + 3);
 
   return questionData ? (
     <Box sx={{ height: '100%', p: onDesktop ? 12 : 3, pt: 7 }}>
@@ -216,12 +185,12 @@ const Page = () => {
                   id={selection.selection_id}
                   title={selection.content}
                   size={onDesktop ? 'lg' : 'md'}
-                  onClick={onClickNextQuestionTest}
+                  onClick={onClickNextQuestion}
                 />
               ) : selection.view_type === 'IMAGE' ? (
                 <Box
                   key={idx}
-                  onClick={onClickNextQuestionTest}
+                  onClick={onClickNextQuestion}
                   id={selection.selection_id}
                   sx={{ width: '100%', height: '100%', position: 'relative' }}
                 >

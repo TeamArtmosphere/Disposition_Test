@@ -1,6 +1,6 @@
 import { Box, Button, Typography } from '@mui/material';
 import React from 'react';
-import { FlexBox, FlexBoxCol, FlexContainerCol } from '@/style/style';
+import { FlexBox, FlexBoxCol } from '@/style/style';
 import Image from 'next/image';
 import goBtn from '@/public/imgs/icon_more.png';
 import Link from 'next/link';

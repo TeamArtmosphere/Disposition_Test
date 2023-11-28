@@ -1,8 +1,8 @@
 'use client';
 
-import { Box, Paper, Typography, useMediaQuery, useTheme } from '@mui/material';
+import { Box, Typography, useMediaQuery, useTheme } from '@mui/material';
 import React, { useEffect, useState } from 'react';
-import { FlexBox, FlexBoxCol, FlexContainerCol, FlexContainer } from '@/style/style';
+import { FlexBox, FlexBoxCol } from '@/style/style';
 import { useRecoilValue } from 'recoil';
 import { pablosCodeAtom, pablosCodeViewItemAtom } from '@/recoil/atom';
 import { getRecommendLocationList } from '@/api/axios-api';
