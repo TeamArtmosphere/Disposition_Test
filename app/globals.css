@@ -130,6 +130,26 @@ a {
   color: var(--purple-color);
 }
 
+.tag_button {
+  height: 45px;
+  min-width: 83px;
+  font-size: 16px;
+  font-family: 'GmarketSansMedium';
+  color: #3a3a3a;
+  width: max-content;
+  border: 2px solid #e1e1e1;
+  border-radius: 8px;
+  background-color: white;
+  padding: 12px 20px;
+}
+
+.active {
+  color: #625d44;
+  border: 2px solid var(--primary-color);
+  background-color: var(--secondary-color);
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.15);
+}
+
 /* .text_body_title {
   font-size: 18px;
 }

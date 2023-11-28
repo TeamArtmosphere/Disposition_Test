@@ -10,9 +10,20 @@ type ButtonProps = {
   ref?: any;
   className?: string;
   sx?: any;
+  disabled?: boolean;
 };
 
-const SelectionButton = ({ id, title, name, size, onClick, ref, className, sx }: ButtonProps) => {
+const SelectionButton = ({
+  id,
+  title,
+  name,
+  size,
+  onClick,
+  ref,
+  className,
+  sx,
+  disabled,
+}: ButtonProps) => {
   const theme = useTheme();
 
   return (
@@ -28,6 +39,7 @@ const SelectionButton = ({ id, title, name, size, onClick, ref, className, sx }:
       disableTouchRipple
       disableFocusRipple
       onClick={onClick}
+      disabled={disabled}
       sx={
         sx
           ? sx
@@ -66,13 +78,15 @@ const SelectionButton = ({ id, title, name, size, onClick, ref, className, sx }:
               p: 1,
               '&:hover': {
                 border: '2px solid #e1e1e1',
-                // bgcolor: theme.palette.grey[50],
                 bgcolor: 'white',
               },
               '&:active': {
                 border: '2px solid',
                 bgcolor: theme.palette.secondary.main,
                 borderColor: theme.palette.primary.main,
+              },
+              '&:disabled': {
+                bgcolor: 'black',
               },
             }
       }

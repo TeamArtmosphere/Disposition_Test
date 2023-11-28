@@ -62,6 +62,10 @@ const theme = createTheme({
           color: '#232323',
           border: '2px solid #E1E1E1',
         },
+        outlinedSecondary: {
+          color: '#232323',
+          border: '2px solid red',
+        },
         sizeLarge: {
           height: '48px',
           width: '400px',

@@ -1,9 +1,8 @@
 'use client';
 
-import { Box, Button, Slider, Typography, useMediaQuery, useTheme } from '@mui/material';
+import { Box, Button, Typography, useMediaQuery, useTheme } from '@mui/material';
 import React, { useEffect, useState } from 'react';
 import { getAllQuestion, getInterimResult, getResult } from '@/api/axios-api';
-import { FlexBox, FlexBoxCol, FlexContainerCol, FlexContainer } from '@/style/style';
 import { useRecoilState, useResetRecoilState, useSetRecoilState } from 'recoil';
 import {
   eventUserType,
@@ -36,6 +35,7 @@ const Page = () => {
   const setViewItem = useSetRecoilState(pablosCodeViewItemAtom);
   const [flexDirection, setflexDirection] = useState('column');
   const [currentQuestion, setCurrentQuestion] = useState<any>([]);
+  const [tagButtonClass, setTagButtonClass] = useState('tag_button');
 
   useEffect(() => {
     setSelectionData([]);
@@ -54,9 +54,6 @@ const Page = () => {
       });
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
-
-  // const test =
-  //   questionData && questionData.filter((item: any) => item.question_no === questionNumber);
 
   useEffect(() => {
     if (questionData && questionNumber <= 6) {
@@ -134,13 +131,14 @@ const Page = () => {
     );
 
     console.log(e.currentTarget.id, '이건 아이디', isSelected, '고를때 이거 있는지');
+    console.log(selectionData.length, '이게 왜 안찍힘?');
 
-    if (isSelected === -1) {
+    if (isSelected === -1 && selectionData.length <= 10) {
       setSelectionData([
         ...selectionData,
         { selectionId: Number(e.currentTarget.id), value: null },
       ]);
-    } else {
+    } else if (isSelected > 0 || selectionData.length <= 11) {
       setSelectionData(prev =>
         prev.filter((item: any) => item.selectionId !== parseInt(e.currentTarget.id)),
       );
@@ -201,6 +199,7 @@ const Page = () => {
               display: 'flex',
               justifyContent: questionNumber === 9 ? 'flex-start' : 'center',
               alignItems: questionNumber === 9 ? 'flex-start' : 'center',
+              alignContent: 'flex-start',
               flexDirection: flexDirection, // 모바일에서 필요없음
               flexWrap: questionNumber === 9 ? 'wrap' : '',
               width: '100%',
@@ -231,18 +230,24 @@ const Page = () => {
                     alt={selection.view_items.images[0]}
                     src={selection.view_items.images[0]}
                     fill
-                    objectFit='cover'
-                    style={{ borderRadius: '8px' }}
+                    style={{ borderRadius: '8px', objectFit: 'cover' }}
                   />
                 </Box>
               ) : selection.view_type === 'TAG' ? (
-                <SelectionButton
+                <button
+                  className={
+                    selectionData.findIndex(
+                      (item: any) => item.selectionId === selection.selection_id,
+                    ) > 0
+                      ? 'tag_button active'
+                      : 'tag_button'
+                  }
                   key={idx}
-                  title={selection.content}
                   id={selection.selection_id}
                   onClick={onClickTagButton}
-                  sx={{ height: '45px', width: 'max-content' }}
-                />
+                >
+                  {`#${selection.content}`}
+                </button>
               ) : null;
             })}
           </Box>
