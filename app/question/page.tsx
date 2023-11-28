@@ -18,6 +18,7 @@ import Image from 'next/image';
 import backIcon from '@/public/imgs/icon_back.png';
 import ProgressSlideBar from '@/components/layout/ProgressSlideBar';
 import DefaultButton from '@/components/common/DefaultButton';
+import { questionStyle } from '@/style/style';
 
 const Page = () => {
   const router = useRouter();
@@ -138,14 +139,14 @@ const Page = () => {
 
   return questionData ? (
     <Box sx={{ height: '100%', p: onDesktop ? 12 : 3, pt: 7 }}>
-      <Box sx={{ ...style.containerBox, height: onDesktop ? '168px' : '32px' }}>
+      <Box sx={{ ...questionStyle.containerBox, height: onDesktop ? '168px' : '32px' }}>
         <ProgressSlideBar progress={progress} onDesktop={onDesktop} />
       </Box>
 
       {/* 테스트 */}
       {currentQuestion.length > 0 && (
         <Box>
-          <Box sx={{ ...style.questionContentBox, mt: onDesktop ? '127px' : 3 }}>
+          <Box sx={{ ...questionStyle.questionContentBox, mt: onDesktop ? '127px' : 3 }}>
             <Typography variant='h2'>{currentQuestion[0].content}</Typography>
           </Box>
           <Box
@@ -208,7 +209,7 @@ const Page = () => {
           <Box sx={{ display: 'flex', justifyContent: 'space-between' }}>
             <Button
               onClick={onClickPrevQuestion}
-              sx={onDesktop ? style.buttonOnDesktop : style.buttonOnMobile}
+              sx={onDesktop ? questionStyle.buttonOnDesktop : questionStyle.buttonOnMobile}
             >
               {onDesktop ? (
                 <Image src={backIcon} alt='이전 아이콘' style={{ marginRight: '20px' }} />
@@ -220,7 +221,7 @@ const Page = () => {
                 title='선택완료'
                 disabled={selectionData.length === 11 ? false : true}
                 onClick={onClickGetResult}
-                sx={style.buttonGetResult}
+                sx={questionStyle.buttonGetResult}
               />
             )}
           </Box>
@@ -232,31 +233,3 @@ const Page = () => {
 };
 
 export default Page;
-
-export const style = {
-  containerBox: {
-    display: 'flex',
-    alignItems: 'center',
-    width: '100%',
-  },
-  questionContentBox: { height: '62px', wordBreak: 'keep-all', mb: '42px' },
-  buttonOnDesktop: {
-    width: '275px',
-    height: '120px',
-    border: '1px solid #EDF0F3',
-    fontSize: '36px',
-    color: 'black',
-  },
-  buttonOnMobile: {
-    width: '99px',
-    height: '48px',
-    border: '1px solid #EDF0F3',
-    fontSize: '14px',
-    color: 'black',
-  },
-  buttonGetResult: {
-    width: '99px',
-    height: '48px',
-    fontSize: '14px',
-  },
-};

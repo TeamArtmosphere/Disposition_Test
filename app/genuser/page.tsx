@@ -3,7 +3,7 @@
 import { postRegistUser } from '@/api/axios-api';
 import SelectionButton from '@/components/common/SelectionButton';
 import { eventUserId, eventUserType, eventUserUID, selectionsAtom } from '@/recoil/atom';
-import { FlexContainerCol } from '@/style/style';
+import { FlexContainerCol, questionStyle } from '@/style/style';
 import { Box, Button, Typography, useMediaQuery, useTheme } from '@mui/material';
 import { useRouter } from 'next/navigation';
 import React, { useEffect, useState } from 'react';
@@ -11,8 +11,6 @@ import { useRecoilState, useSetRecoilState } from 'recoil';
 import backIcon from '@/public/imgs/icon_back.png';
 import Image from 'next/image';
 import ProgressSlideBar from '@/components/layout/ProgressSlideBar';
-import { style } from '../question/page';
-
 const genuserData = [
   {
     content: '성별을 선택해 주세요',
@@ -110,7 +108,7 @@ const Page = () => {
 
   return (
     <Box sx={{ height: '100%', p: onDesktop ? 12 : 3, pt: 7 }}>
-      <Box sx={{ ...style.containerBox, height: onDesktop ? '168px' : '32px' }}>
+      <Box sx={{ ...questionStyle.containerBox, height: onDesktop ? '168px' : '32px' }}>
         <ProgressSlideBar progress={progress} onDesktop={onDesktop} />
       </Box>
       {genuserData && (
@@ -144,7 +142,7 @@ const Page = () => {
       )}
       <Button
         onClick={onClickPrevQuestion}
-        sx={onDesktop ? style.buttonOnDesktop : style.buttonOnMobile}
+        sx={onDesktop ? questionStyle.buttonOnDesktop : questionStyle.buttonOnMobile}
       >
         {onDesktop ? (
           <Image src={backIcon} alt='이전 아이콘' style={{ marginRight: '20px' }} />
