@@ -63,9 +63,11 @@ export const StarRating = ({
         <Typography variant='h5'>{ratingMsg}</Typography>
         {score && (
           <Button
-            variant='outlined'
+            disableElevation
+            disableRipple
+            variant='contained'
             onClick={onClickRateStar}
-            sx={{ width: '100px', height: '30px', bgcolor: '#C0E0F0', color: '#136ea6' }}
+            sx={{ width: '90px', height: '28px', fontSize: '12px' }}
           >
             별점 주기
           </Button>
