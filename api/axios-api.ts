@@ -56,3 +56,10 @@ export const getRecommendLocationList = async (pablosCode: string) => {
   const res = await instance.get(`/api/v1/artmosphere-places?tagNames=${pablosCode}`);
   return res.data;
 };
+
+export const getPlaceDetail = async (placeId: string) => {
+  const res = await instance.get(
+    `https://api-artmosphere.com/api/v1/artmosphere-places/${placeId}`,
+  );
+  return res;
+};

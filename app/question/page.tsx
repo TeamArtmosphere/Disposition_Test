@@ -59,15 +59,20 @@ const Page = () => {
   useEffect(() => {
     if (questionData && questionNumber <= 6) {
       setCurrentQuestion(questionData.filter((item: any) => item.question_no === questionNumber));
-    } else if (questionNumber === 7 || questionNumber === 8) {
+    } else if (questionNumber === 7 || questionNumber === 8 || questionNumber === 9) {
       setCurrentQuestion(
-        questionData.filter((item: any) => item.pablos_result.pablos_code === interimPablosCode),
+        questionData.filter(
+          (item: any) =>
+            item.pablos_result.pablos_code === interimPablosCode &&
+            item.question_no === questionNumber,
+        ),
       );
-    } else if (questionNumber === 9) {
+    } else if (questionNumber === 10) {
       setCurrentQuestion(questionData.filter((item: any) => item.question_no === questionNumber));
     }
 
-    if (questionNumber === 6 && UID) {
+    if (selectionData.length === 6 && UID) {
+      console.log(selectionData, '지금까지 고른거');
       getInterimResult({ selections: selectionData })
         .then(data => setInterimPablosCode(data.pablos_code))
         .catch(error => console.log(error));
@@ -77,7 +82,7 @@ const Page = () => {
 
   // 선택지 버튼 내부 flexDirection 지정
   useEffect(() => {
-    if (questionNumber === 9) {
+    if (questionNumber === 10) {
       setflexDirection('row');
     } else {
       setflexDirection('column');
@@ -97,21 +102,21 @@ const Page = () => {
       (item: any) => item.selectionId === parseInt(e.currentTarget.id),
     );
 
-    if (isSelected === -1 && selectionData.length <= 10) {
+    if (isSelected === -1 && selectionData.length <= 11) {
       setSelectionData([
         ...selectionData,
         { selectionId: Number(e.currentTarget.id), value: null },
       ]);
-    } else if (isSelected > 0 || selectionData.length <= 11) {
+    } else if (isSelected > 0 || selectionData.length <= 12) {
       setSelectionData(prev =>
         prev.filter((item: any) => item.selectionId !== parseInt(e.currentTarget.id)),
       );
     }
   };
 
-  // 9번 태그 질문 선택 후 선택완료 버튼 동작
+  // 10번 태그 질문 선택 후 선택완료 버튼 동작
   const onClickGetResult = () => {
-    if (questionNumber === 9 && UID && selectionData.length === 11) {
+    if (questionNumber === 10 && UID && selectionData.length === 12) {
       getResult({ uid: UID, selections: selectionData })
         .then(data => {
           setPablosCode(data.result.pablos_code);
@@ -135,6 +140,16 @@ const Page = () => {
     }
   };
 
+  console.log(
+    selectionData,
+    interimPablosCode,
+    questionNumber,
+    currentQuestion,
+    '선택지, 임시코드',
+    '질문번호',
+    '현재질문',
+  );
+
   const progress: number = (100 / 12) * (questionNumber + 3);
 
   return questionData ? (
@@ -152,11 +167,11 @@ const Page = () => {
           <Box
             sx={{
               display: 'flex',
-              justifyContent: questionNumber === 9 ? 'flex-start' : 'center',
-              alignItems: questionNumber === 9 ? 'flex-start' : 'center',
+              justifyContent: questionNumber === 10 ? 'flex-start' : 'center',
+              alignItems: questionNumber === 10 ? 'flex-start' : 'center',
               alignContent: 'flex-start',
               flexDirection: flexDirection, // 모바일에서 필요없음
-              flexWrap: questionNumber === 9 ? 'wrap' : '',
+              flexWrap: questionNumber === 10 ? 'wrap' : '',
               width: '100%',
               height: onDesktop ? '761px' : '328px',
               gap: '12px',
@@ -216,10 +231,10 @@ const Page = () => {
               ) : null}
               이전
             </Button>
-            {questionNumber === 9 && (
+            {questionNumber === 10 && (
               <DefaultButton
                 title='선택완료'
-                disabled={selectionData.length === 11 ? false : true}
+                disabled={selectionData.length === 12 ? false : true}
                 onClick={onClickGetResult}
                 sx={questionStyle.buttonGetResult}
               />

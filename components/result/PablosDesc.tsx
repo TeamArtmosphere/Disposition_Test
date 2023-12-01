@@ -8,8 +8,17 @@ interface PablosDescProps {
 
 const PablosDesc = ({ viewItem }: PablosDescProps) => {
   return (
-    <Box sx={{ display: 'flex', flexDirection: 'column', mt: 10 }}>
+    <Box sx={{ display: 'flex', flexDirection: 'column', mt: 10, mb: 10 }}>
       <Typography variant='h3' mb={'24px'}>
+        {viewItem.name}유형은
+        <br />
+        <span className='sep_typo'>{`'${viewItem.intro}'`}</span>을 가장 중요하게 생각해요.
+      </Typography>
+      <Typography
+        variant='body1'
+        fontFamily={'Pretendard-Regular'}
+        sx={{ mt: '20px', mb: '105px' }}
+      >
         {viewItem.summary}
       </Typography>
       <Box>
