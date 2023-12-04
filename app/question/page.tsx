@@ -1,13 +1,13 @@
 'use client';
 
-import { Box, Button, Slider, Typography, useMediaQuery, useTheme } from '@mui/material';
+import { Box, Button, Typography, useMediaQuery, useTheme } from '@mui/material';
 import React, { useEffect, useState } from 'react';
-import { getAllQuestion, getResult } from '@/api/axios-api';
-import { FlexBox, FlexBoxCol, FlexContainerCol, FlexContainer } from '@/style/style';
+import { getAllQuestion, getInterimResult, getResult } from '@/api/axios-api';
 import { useRecoilState, useResetRecoilState, useSetRecoilState } from 'recoil';
 import {
   eventUserType,
   eventUserUID,
+  interimPablosCodeAtom,
   pablosCodeAtom,
   pablosCodeViewItemAtom,
   selectionsAtom,
@@ -17,6 +17,8 @@ import SelectionButton from '@/components/common/SelectionButton';
 import Image from 'next/image';
 import backIcon from '@/public/imgs/icon_back.png';
 import ProgressSlideBar from '@/components/layout/ProgressSlideBar';
+import DefaultButton from '@/components/common/DefaultButton';
+import { questionStyle } from '@/style/style';
 
 const Page = () => {
   const router = useRouter();
@@ -25,14 +27,15 @@ const Page = () => {
 
   // useState type 수정 필요
   const [questionData, setQuestionData] = useState<any>(null);
-  const [questionNumber, setQuestionNumber] = useState(0);
+  const [questionNumber, setQuestionNumber] = useState(1);
   const [selectionData, setSelectionData] = useRecoilState(selectionsAtom);
-  // const userId = useRecoilValue(eventUserId);
   const [UID, setUID] = useRecoilState(eventUserUID);
   const setPablosCode = useSetRecoilState(pablosCodeAtom);
+  const [interimPablosCode, setInterimPablosCode] = useRecoilState(interimPablosCodeAtom);
   const resetUserTypeState = useResetRecoilState(eventUserType);
   const setViewItem = useSetRecoilState(pablosCodeViewItemAtom);
   const [flexDirection, setflexDirection] = useState('column');
+  const [currentQuestion, setCurrentQuestion] = useState<any>([]);
 
   useEffect(() => {
     setSelectionData([]);
@@ -52,31 +55,70 @@ const Page = () => {
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
+  // 질문 번호에 따른 현재 질문 렌더링
   useEffect(() => {
-    if (questionNumber === 6 || questionNumber === 7 || questionNumber === 8) {
+    if (questionData && questionNumber <= 6) {
+      setCurrentQuestion(questionData.filter((item: any) => item.question_no === questionNumber));
+    } else if (questionNumber === 7 || questionNumber === 8 || questionNumber === 9) {
+      setCurrentQuestion(
+        questionData.filter(
+          (item: any) =>
+            item.pablos_result.pablos_code === interimPablosCode &&
+            item.question_no === questionNumber,
+        ),
+      );
+    } else if (questionNumber === 10) {
+      setCurrentQuestion(questionData.filter((item: any) => item.question_no === questionNumber));
+    }
+
+    if (selectionData.length === 6 && UID) {
+      console.log(selectionData, '지금까지 고른거');
+      getInterimResult({ selections: selectionData })
+        .then(data => setInterimPablosCode(data.pablos_code))
+        .catch(error => console.log(error));
+    }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [interimPablosCode, questionData, questionNumber]);
+
+  // 선택지 버튼 내부 flexDirection 지정
+  useEffect(() => {
+    if (questionNumber === 10) {
       setflexDirection('row');
     } else {
       setflexDirection('column');
     }
   }, [questionNumber]);
 
-  console.log(UID, 'uid');
-  console.log(questionData);
-
+  // 단일 선택 질문들 클릭 시 다음 질문
   const onClickNextQuestion = (e: any) => {
     setQuestionNumber((prev: number) => prev + 1);
 
     setSelectionData([...selectionData, { selectionId: Number(e.currentTarget.id), value: null }]);
+  };
 
-    if (questionNumber === 8 && UID) {
+  // 태그 버튼 활성화 & 비활성화 기능
+  const onClickTagButton = (e: any) => {
+    const isSelected = selectionData.findIndex(
+      (item: any) => item.selectionId === parseInt(e.currentTarget.id),
+    );
+
+    if (isSelected === -1 && selectionData.length <= 11) {
       setSelectionData([
         ...selectionData,
         { selectionId: Number(e.currentTarget.id), value: null },
       ]);
+    } else if (isSelected > 0 || selectionData.length <= 12) {
+      setSelectionData(prev =>
+        prev.filter((item: any) => item.selectionId !== parseInt(e.currentTarget.id)),
+      );
+    }
+  };
 
+  // 10번 태그 질문 선택 후 선택완료 버튼 동작
+  const onClickGetResult = () => {
+    if (questionNumber === 10 && UID && selectionData.length === 12) {
       getResult({ uid: UID, selections: selectionData })
         .then(data => {
-          console.log(data);
           setPablosCode(data.result.pablos_code);
           setViewItem(data.result.view_items);
           router.push('/result');
@@ -91,54 +133,56 @@ const Page = () => {
     const prevData = [...selectionData].slice(0, selectionData.length - 1);
     setSelectionData(prevData);
     setQuestionNumber((prev: number) => prev - 1);
+
+    if (questionNumber === 1) {
+      resetUserTypeState();
+      router.push('/genuser');
+    }
   };
 
-  const onClickGoGenUserPage = () => {
-    resetUserTypeState();
-    router.push('/genuser');
-  };
+  console.log(
+    selectionData,
+    interimPablosCode,
+    questionNumber,
+    currentQuestion,
+    '선택지, 임시코드',
+    '질문번호',
+    '현재질문',
+  );
 
-  const progress: number = questionData && (100 / questionData.length) * questionNumber + 1;
-
-  console.log(selectionData);
+  const progress: number = (100 / 13) * (questionNumber + 3);
 
   return questionData ? (
     <Box sx={{ height: '100%', p: onDesktop ? 12 : 3, pt: 7 }}>
-      <Box
-        sx={{
-          display: 'flex',
-          alignItems: 'center',
-          width: '100%',
-          height: onDesktop ? '168px' : '32px',
-        }}
-      >
+      <Box sx={{ ...questionStyle.containerBox, height: onDesktop ? '168px' : '32px' }}>
         <ProgressSlideBar progress={progress} onDesktop={onDesktop} />
       </Box>
-      {questionNumber < 9 && (
+
+      {/* 테스트 */}
+      {currentQuestion.length > 0 && (
         <Box>
-          <Box
-            sx={{ height: '62px', wordBreak: 'keep-all', mt: onDesktop ? '127px' : 3, mb: '42px' }}
-          >
-            <Typography variant='h2'>
-              {questionData[questionNumber].content.includes('사진질문')
-                ? `다음 중 어떤 공간을\n 선호하시나요?`
-                : questionData[questionNumber].content}
-            </Typography>
+          <Box sx={{ ...questionStyle.questionContentBox, mt: onDesktop ? '127px' : 3 }}>
+            <Typography variant='h2'>{currentQuestion[0].content}</Typography>
           </Box>
           <Box
             sx={{
-              ...FlexContainerCol,
-              // flexDirection: flexDirection, // 모바일에서 필요없음
+              display: 'flex',
+              justifyContent: questionNumber === 10 ? 'flex-start' : 'center',
+              alignItems: questionNumber === 10 ? 'flex-start' : 'center',
+              alignContent: 'flex-start',
+              flexDirection: flexDirection, // 모바일에서 필요없음
+              flexWrap: questionNumber === 10 ? 'wrap' : '',
+              width: '100%',
               height: onDesktop ? '761px' : '328px',
-              gap: '20px',
+              gap: '12px',
               mb: onDesktop ? '140px' : '47px',
             }}
           >
-            {questionData[questionNumber].selections.map((selection: any, idx: number) => {
+            {currentQuestion[0].selections.map((selection: any, idx: number) => {
               return selection.view_type === 'TEXT' ? (
                 <SelectionButton
-                  className='MuiButton'
                   key={idx}
+                  className='MuiButton'
                   id={selection.selection_id}
                   title={selection.content}
                   size={onDesktop ? 'lg' : 'md'}
@@ -146,69 +190,60 @@ const Page = () => {
                 />
               ) : selection.view_type === 'IMAGE' ? (
                 <Box
+                  key={idx}
                   onClick={onClickNextQuestion}
                   id={selection.selection_id}
                   sx={{ width: '100%', height: '100%', position: 'relative' }}
                 >
                   <Image
-                    key={idx}
                     id={selection.selection_id}
                     alt={selection.view_items.images[0]}
                     src={selection.view_items.images[0]}
-                    layout='fill'
-                    objectFit='cover'
-                    style={{ borderRadius: '8px' }}
+                    fill
+                    sizes='100%'
+                    style={{ borderRadius: '8px', objectFit: 'cover' }}
                   />
-                  {/* <Button
-                    className='MuiButton'
-                    disableElevation
-                    sx={{
-                      width: '100%',
-                      height: '136px',
-                      position: 'absolute',
-                      bottom: '0',
-                      fontSize: '32px',
-                      fontFamily: 'Pretendard-Regular',
-                      bgcolor: '#EDF0F3',
-                      border: 'none',
-                      borderRadius: 0,
-                      color: 'black',
-                    }}
-                  >
-                    #태그 #사용 #여부
-                  </Button> */}
                 </Box>
+              ) : selection.view_type === 'TAG' ? (
+                <button
+                  className={
+                    selectionData.findIndex(
+                      (item: any) => item.selectionId === selection.selection_id,
+                    ) > 0
+                      ? 'tag_button active'
+                      : 'tag_button'
+                  }
+                  key={idx}
+                  id={selection.selection_id}
+                  onClick={onClickTagButton}
+                >
+                  {`#${selection.content}`}
+                </button>
               ) : null;
             })}
           </Box>
-          <Button
-            onClick={onClickPrevQuestion}
-            sx={
-              onDesktop
-                ? {
-                    width: '275px',
-                    height: '120px',
-                    border: '1px solid #EDF0F3',
-                    fontSize: '36px',
-                    color: 'black',
-                  }
-                : {
-                    width: '99px',
-                    height: '48px',
-                    border: '1px solid #EDF0F3',
-                    fontSize: '14px',
-                    color: 'black',
-                    // bottom: '38px',
-                  }
-            }
-          >
-            {onDesktop ? (
-              <Image src={backIcon} alt='이전 아이콘' style={{ marginRight: '20px' }} />
-            ) : null}
-            이전
-          </Button>
+          <Box sx={{ display: 'flex', justifyContent: 'space-between' }}>
+            <Button
+              onClick={onClickPrevQuestion}
+              sx={onDesktop ? questionStyle.buttonOnDesktop : questionStyle.buttonOnMobile}
+            >
+              {onDesktop ? (
+                <Image src={backIcon} alt='이전 아이콘' style={{ marginRight: '20px' }} />
+              ) : null}
+              이전
+            </Button>
+            {questionNumber === 10 && (
+              <DefaultButton
+                title='선택완료'
+                disabled={selectionData.length === 12 ? false : true}
+                onClick={onClickGetResult}
+                sx={questionStyle.buttonGetResult}
+              />
+            )}
+          </Box>
         </Box>
       )}
+      {/* 테스트 */}
     </Box>
   ) : null;
 };

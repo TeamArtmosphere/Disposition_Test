@@ -1,6 +1,6 @@
 import { Box, Button, Typography } from '@mui/material';
 import React from 'react';
-import { FlexBox, FlexBoxCol, FlexContainerCol } from '@/style/style';
+import { FlexBox, FlexBoxCol } from '@/style/style';
 import Image from 'next/image';
 import goBtn from '@/public/imgs/icon_more.png';
 import Link from 'next/link';
@@ -20,13 +20,7 @@ const PlaceSlider = ({ viewItem, locationData, pablosCode }: MyPablosProps) => {
   };
 
   return (
-    <Box
-      sx={
-        {
-          // height: '100%',
-        }
-      }
-    >
+    <Box>
       <Box sx={{ display: 'flex', justifyContent: 'space-between' }}>
         <Typography variant='h5' mb='20px' fontFamily={'Pretendard-Regular'}>
           불광천에 이런 공간이?
@@ -52,7 +46,9 @@ const PlaceSlider = ({ viewItem, locationData, pablosCode }: MyPablosProps) => {
       <Box
         sx={{
           display: 'flex',
-          width: '100%',
+          // width: '100%',
+          // width: 'calc(100% + 24*2)',
+          mr: '-24px',
           justifyContent: 'center',
           alignItems: 'center',
         }}
@@ -86,11 +82,11 @@ const PlaceSlider = ({ viewItem, locationData, pablosCode }: MyPablosProps) => {
                     }}
                   >
                     <Image
-                      layout='fill'
-                      objectFit='cover'
+                      fill
                       sizes='100%'
                       src={location.extra_info.images[0]}
                       alt={`${location.name}의 사진`}
+                      style={{ objectFit: 'cover' }}
                     />
                   </Box>
                   <Box

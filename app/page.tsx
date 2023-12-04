@@ -1,11 +1,11 @@
 'use client';
 
 import DefaultButton from '@/components/common/DefaultButton';
-import { Box, Button, Typography, useMediaQuery, useTheme } from '@mui/material';
+import { Box, Typography, useMediaQuery, useTheme } from '@mui/material';
 import Image from 'next/image';
 import mainImg from '@/public/imgs/main_img.png';
 import { useRouter } from 'next/navigation';
-import { FlexBox, FlexContainerCol, FlexBoxCol } from '@/style/style';
+import { FlexBox } from '@/style/style';
 
 export default function Home() {
   const router2 = useRouter();

@@ -1,41 +1,39 @@
 'use client';
 
-import { Box, Paper, Typography, useMediaQuery, useTheme } from '@mui/material';
+import { Box, Typography, useMediaQuery, useTheme } from '@mui/material';
 import React, { useEffect, useState } from 'react';
-import { FlexBox, FlexBoxCol, FlexContainerCol, FlexContainer } from '@/style/style';
+import { FlexBox, FlexBoxCol } from '@/style/style';
 import { useRecoilValue } from 'recoil';
 import { pablosCodeAtom, pablosCodeViewItemAtom } from '@/recoil/atom';
-import { getRecommendLocationList } from '@/api/axios-api';
+import { getPlace, getPlaceDetail, getRecommendLocationList } from '@/api/axios-api';
 import Image from 'next/image';
 import Link from 'next/link';
 import Carousel from 'react-material-ui-carousel';
+import { useParams, useRouter } from 'next/navigation';
 
 const Page = () => {
   const theme = useTheme();
+  const router = useRouter();
   const onTablet = useMediaQuery(theme.breakpoints.down('desktop'));
   const pablosCode = useRecoilValue(pablosCodeAtom);
   const viewItem = useRecoilValue(pablosCodeViewItemAtom);
 
   const [locationData, setLocationData] = useState([]);
   const [mounted, setMounted] = useState(false);
-
-  const [active, setActive] = useState(false);
+  const [clicked, setClicked] = useState('');
 
   useEffect(() => {
     if (pablosCode) {
       getRecommendLocationList(pablosCode)
-        .then(data => {
-          console.log(data);
+        .then((data) => {
           setLocationData(data);
         })
-        .catch(error => {
+        .catch((error) => {
           console.log(error);
         });
     }
     setMounted(true);
   }, [pablosCode]);
-
-  const [clicked, setClicked] = useState('');
 
   const onClickActiveBox = (name: string) => {
     if (clicked === '') {
@@ -43,6 +41,16 @@ const Page = () => {
     } else {
       setClicked('');
     }
+  };
+
+  const onClickToPlaceDetail = (id: string) => {
+    getPlace()
+      .then((data) => console.log(data))
+      .catch((error) => console.log(error));
+    // getPlaceDetail(id)
+    //   .then(data => console.log(data))
+    //   .catch(error => console.log(error));
+    // router.push(`/placedetail/${id}`);
   };
 
   return (
@@ -68,13 +76,11 @@ const Page = () => {
                   borderRadius: '12px',
                 }}
               >
-                {/* <div key={idx} className={divStyle} onClick={onClickActiveBox}> */}
-                <Carousel autoPlay={false} indicators={false}>
+                <Carousel autoPlay={false} indicators={false} animation='slide' duration={500} height={204}>
                   {location.extra_info.images.map((image: string, idx2: number) => (
                     <Box
                       key={idx2}
                       sx={{
-                        //   width: '100%',
                         height: '204px',
                         position: 'relative',
                         overflow: 'hidden',
@@ -82,30 +88,28 @@ const Page = () => {
                       }}
                     >
                       <Image
-                        layout='fill'
-                        objectFit='cover'
+                        // layout='fill' // next13부터 layout 사용 안함
+                        fill
                         sizes='100%'
                         src={image}
                         alt={`${image}의 사진`}
+                        style={{ objectFit: 'cover' }}
                       />
                     </Box>
                   ))}
                 </Carousel>
-                <Typography
-                  variant='h3'
-                  fontFamily={'Pretendard-Regular'}
-                  sx={{ mt: '12px', mb: '6px' }}
-                >
+                <Typography variant='h3' fontFamily={'Pretendard-Regular'} sx={{ mt: '12px', mb: '6px' }}>
                   {location?.name}
                 </Typography>
-                <Typography variant='h6' fontFamily={'Pretendard-Regular'}>
+                <Typography variant='body1' fontFamily={'Pretendard-Regular'}>
                   {location?.descriptions?.introduction}
                 </Typography>
-                <Link target='_blank' href={location.extra_info.links.naver_map}>
+                <Link href={`/placedetail/${location.id}`}>
+                  {/* <Link target='_blank' href={location.extra_info.links.naver_map}> */}
                   <Box
+                    // onClick={() => onClickToPlaceDetail(location.id)}
                     sx={{
                       ...FlexBox,
-                      // width: '100%',
                       height: '50px',
                       bgcolor: '#ffde3c',
                       borderRadius: '8px',

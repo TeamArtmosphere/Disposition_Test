@@ -77,7 +77,13 @@ const MyPablos = ({ viewItem, onDesktop }: MyPablosProps) => {
           </Box>
         </Box>
         <Box sx={{ flex: 1, position: 'relative' }}>
-          <Image src={capybara} alt={viewItem.slide_images[0]} layout='fill' objectFit='contain' />
+          <Image
+            src={capybara}
+            alt={viewItem.slide_images[0]}
+            fill
+            sizes='100%'
+            style={{ objectFit: 'contain' }}
+          />
         </Box>
       </Box>
     </Box>
