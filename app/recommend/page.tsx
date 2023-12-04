@@ -25,10 +25,10 @@ const Page = () => {
   useEffect(() => {
     if (pablosCode) {
       getRecommendLocationList(pablosCode)
-        .then(data => {
+        .then((data) => {
           setLocationData(data);
         })
-        .catch(error => {
+        .catch((error) => {
           console.log(error);
         });
     }
@@ -45,8 +45,8 @@ const Page = () => {
 
   const onClickToPlaceDetail = (id: string) => {
     getPlace()
-      .then(data => console.log(data))
-      .catch(error => console.log(error));
+      .then((data) => console.log(data))
+      .catch((error) => console.log(error));
     // getPlaceDetail(id)
     //   .then(data => console.log(data))
     //   .catch(error => console.log(error));
@@ -76,13 +76,7 @@ const Page = () => {
                   borderRadius: '12px',
                 }}
               >
-                <Carousel
-                  autoPlay={false}
-                  indicators={false}
-                  animation='slide'
-                  duration={500}
-                  height={204}
-                >
+                <Carousel autoPlay={false} indicators={false} animation='slide' duration={500} height={204}>
                   {location.extra_info.images.map((image: string, idx2: number) => (
                     <Box
                       key={idx2}
@@ -104,14 +98,10 @@ const Page = () => {
                     </Box>
                   ))}
                 </Carousel>
-                <Typography
-                  variant='h3'
-                  fontFamily={'Pretendard-Regular'}
-                  sx={{ mt: '12px', mb: '6px' }}
-                >
+                <Typography variant='h3' fontFamily={'Pretendard-Regular'} sx={{ mt: '12px', mb: '6px' }}>
                   {location?.name}
                 </Typography>
-                <Typography variant='h6' fontFamily={'Pretendard-Regular'}>
+                <Typography variant='body1' fontFamily={'Pretendard-Regular'}>
                   {location?.descriptions?.introduction}
                 </Typography>
                 <Link href={`/placedetail/${location.id}`}>

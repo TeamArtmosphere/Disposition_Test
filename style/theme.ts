@@ -98,69 +98,80 @@ const theme = createTheme({
     fontFamily: '"GmarketSansMedium", sans-serif',
     h1: {
       '@media (max-width:1200px)': {
-        fontSize: '72px',
-        lineHeight: '94px',
+        fontSize: '48px',
+        lineHeight: '64px',
         fontWeight: 700,
       },
       '@media (max-width:640px)': {
         fontSize: '24px',
-        lineHeight: '38px',
+        lineHeight: '32px',
         fontWeight: 700,
       },
     },
     h2: {
       '@media (max-width:1200px)': {
-        fontSize: '64px',
-        lineHeight: '90px',
+        fontSize: '36px',
+        lineHeight: '48px',
         fontWeight: 700,
       },
       '@media (max-width:640px)': {
         fontSize: '20px',
-        lineHeight: '26px',
+        lineHeight: '28px',
         fontWeight: 700,
       },
     },
     h3: {
       '@media (max-width:1200px)': {
-        fontSize: '48px',
-        lineHeight: '62px',
+        fontSize: '32px',
+        lineHeight: '48px',
         fontWeight: 700,
       },
       '@media (max-width:640px)': {
         fontSize: '18px',
-        lineHeight: '21px',
+        lineHeight: '24px',
         fontWeight: 700,
       },
     },
     h4: {
       '@media (max-width:1200px)': {
-        fontSize: '36px',
-        lineHeight: '47px',
+        fontSize: '24px',
+        lineHeight: '32px',
         fontWeight: 700,
       },
       '@media (max-width:640px)': {
         fontSize: '16px',
-        lineHeight: '18px',
+        lineHeight: '20px',
         fontWeight: 500,
       },
     },
     h5: {
       '@media (max-width:1200px)': {
         fontSize: '24px',
-        lineHeight: '31px',
-        fontWeight: 700,
+        lineHeight: '32px',
+        fontWeight: 500,
       },
       '@media (max-width:640px)': {
         fontSize: '14px',
-        lineHeight: '20px',
+        lineHeight: '16px',
         fontWeight: 500,
       },
     },
-    h6: { fontSize: '12px', lineHeight: '18px', fontWeight: 400 },
+    h6: {
+      '@media (max-width:1200px)': {
+        fontSize: '20px',
+        lineHeight: '28px',
+        fontWeight: 500,
+      },
+      '@media (max-width:640px)': {
+        fontSize: '14px',
+        lineHeight: '28px',
+        fontWeight: 500,
+      },
+    },
     body1: {
       '@media (max-width:1200px)': {
-        fontSize: '24px',
-        lineHeight: '31px',
+        fontSize: '20px',
+        lineHeight: '32px',
         fontWeight: 500,
       },
       '@media (max-width:640px)': {
@@ -171,11 +182,13 @@ const theme = createTheme({
     },
     body2: {
       '@media (max-width:1200px)': {
-        fontSize: '24px',
-        fontWeight: 700,
+        fontSize: '16px',
+        lineHeight: '24px',
+        fontWeight: 500,
       },
       '@media (max-width:640px)': {
         fontSize: '12px',
+        lineHeight: '16px',
         fontWeight: 500,
       },
     },

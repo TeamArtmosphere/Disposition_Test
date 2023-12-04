@@ -1,3 +1,4 @@
+import { useKoreanAffix } from '@/hooks/useKoreanAffix';
 import { Box, Typography, useTheme } from '@mui/material';
 import React from 'react';
 
@@ -7,10 +8,12 @@ interface VisitReasonProps {
 
 const VisitReason = ({ placeData }: VisitReasonProps) => {
   const theme = useTheme();
+  const koreanAffix = useKoreanAffix(placeData.name, '을를');
+
   return (
     <Box sx={{ mb: '36px' }}>
       <Typography variant='h2' mb={'38px'} mt={'80px'} color={'grey.500'}>
-        이럴 때 {placeData.name}를 방문하면 좋아요
+        이럴 때 {placeData.name + koreanAffix} 방문하면 좋아요
       </Typography>
       <Typography
         variant='h5'
