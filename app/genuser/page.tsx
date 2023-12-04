@@ -104,7 +104,7 @@ const Page = () => {
     }
   };
 
-  const progress: number = questionNumber * (100 / 12);
+  const progress: number = questionNumber * (100 / 13);
 
   return (
     <Box sx={{ height: '100%', p: onDesktop ? 12 : 3, pt: 7 }}>

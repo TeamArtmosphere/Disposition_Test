@@ -76,7 +76,13 @@ const Page = () => {
                   borderRadius: '12px',
                 }}
               >
-                <Carousel autoPlay={false} indicators={false}>
+                <Carousel
+                  autoPlay={false}
+                  indicators={false}
+                  animation='slide'
+                  duration={500}
+                  height={204}
+                >
                   {location.extra_info.images.map((image: string, idx2: number) => (
                     <Box
                       key={idx2}

@@ -150,7 +150,7 @@ const Page = () => {
     '현재질문',
   );
 
-  const progress: number = (100 / 12) * (questionNumber + 3);
+  const progress: number = (100 / 13) * (questionNumber + 3);
 
   return questionData ? (
     <Box sx={{ height: '100%', p: onDesktop ? 12 : 3, pt: 7 }}>
