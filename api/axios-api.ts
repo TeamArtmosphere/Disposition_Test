@@ -8,6 +8,10 @@ export const instance = axios.create({
   // withCredentials: true,
   headers: {
     'Content-Type': 'application/json;charset=UTF-8',
+    'Access-Allow-Control-Origin': '*',
+    'Access-Control-Allow-Methods': 'GET,DELETE, PATCH, POST, PUT',
+    'Access-Control-Allow-Headers':
+      'X-CSRF-Token, X-Requested-With, Accept, Accept-Version, Content-Length, Content-MD5, Content-Type, Date, X-Api-Version',
   },
 });
 
