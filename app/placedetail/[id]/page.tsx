@@ -30,15 +30,15 @@ const Page = ({ params }: { params: { id: string } }) => {
 
   useEffect(() => {
     getPlaceDetail(id)
-      .then(data => {
+      .then((data) => {
         setPlaceData(data);
       })
-      .catch(error => {
+      .catch((error) => {
         console.log(error);
       });
   }, []);
 
-  console.log(placeData);
+  // console.log(placeData);
 
   return (
     placeData && (

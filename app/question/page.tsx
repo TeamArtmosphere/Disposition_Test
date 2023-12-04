@@ -46,10 +46,10 @@ const Page = () => {
     }
 
     getAllQuestion()
-      .then(data => {
+      .then((data) => {
         setQuestionData(data.questions);
       })
-      .catch(error => {
+      .catch((error) => {
         console.log(error);
       });
     // eslint-disable-next-line react-hooks/exhaustive-deps
@@ -62,20 +62,17 @@ const Page = () => {
     } else if (questionNumber === 7 || questionNumber === 8 || questionNumber === 9) {
       setCurrentQuestion(
         questionData.filter(
-          (item: any) =>
-            item.pablos_result.pablos_code === interimPablosCode &&
-            item.question_no === questionNumber,
-        ),
+          (item: any) => item.pablos_result.pablos_code === interimPablosCode && item.question_no === questionNumber
+        )
       );
     } else if (questionNumber === 10) {
       setCurrentQuestion(questionData.filter((item: any) => item.question_no === questionNumber));
     }
 
     if (selectionData.length === 6 && UID) {
-      console.log(selectionData, '지금까지 고른거');
       getInterimResult({ selections: selectionData })
-        .then(data => setInterimPablosCode(data.pablos_code))
-        .catch(error => console.log(error));
+        .then((data) => setInterimPablosCode(data.pablos_code))
+        .catch((error) => console.log(error));
     }
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [interimPablosCode, questionData, questionNumber]);
@@ -98,19 +95,12 @@ const Page = () => {
 
   // 태그 버튼 활성화 & 비활성화 기능
   const onClickTagButton = (e: any) => {
-    const isSelected = selectionData.findIndex(
-      (item: any) => item.selectionId === parseInt(e.currentTarget.id),
-    );
+    const isSelected = selectionData.findIndex((item: any) => item.selectionId === parseInt(e.currentTarget.id));
 
     if (isSelected === -1 && selectionData.length <= 11) {
-      setSelectionData([
-        ...selectionData,
-        { selectionId: Number(e.currentTarget.id), value: null },
-      ]);
+      setSelectionData([...selectionData, { selectionId: Number(e.currentTarget.id), value: null }]);
     } else if (isSelected > 0 || selectionData.length <= 12) {
-      setSelectionData(prev =>
-        prev.filter((item: any) => item.selectionId !== parseInt(e.currentTarget.id)),
-      );
+      setSelectionData((prev) => prev.filter((item: any) => item.selectionId !== parseInt(e.currentTarget.id)));
     }
   };
 
@@ -118,12 +108,12 @@ const Page = () => {
   const onClickGetResult = () => {
     if (questionNumber === 10 && UID && selectionData.length === 12) {
       getResult({ uid: UID, selections: selectionData })
-        .then(data => {
+        .then((data) => {
           setPablosCode(data.result.pablos_code);
           setViewItem(data.result.view_items);
           router.push('/result');
         })
-        .catch(error => {
+        .catch((error) => {
           console.log(error);
         });
     }
@@ -140,15 +130,15 @@ const Page = () => {
     }
   };
 
-  console.log(
-    selectionData,
-    interimPablosCode,
-    questionNumber,
-    currentQuestion,
-    '선택지, 임시코드',
-    '질문번호',
-    '현재질문',
-  );
+  // console.log(
+  //   selectionData,
+  //   interimPablosCode,
+  //   questionNumber,
+  //   currentQuestion,
+  //   '선택지, 임시코드',
+  //   '질문번호',
+  //   '현재질문',
+  // );
 
   const progress: number = (100 / 13) * (questionNumber + 3);
 
@@ -207,9 +197,7 @@ const Page = () => {
               ) : selection.view_type === 'TAG' ? (
                 <button
                   className={
-                    selectionData.findIndex(
-                      (item: any) => item.selectionId === selection.selection_id,
-                    ) > 0
+                    selectionData.findIndex((item: any) => item.selectionId === selection.selection_id) > 0
                       ? 'tag_button active'
                       : 'tag_button'
                   }
@@ -227,9 +215,7 @@ const Page = () => {
               onClick={onClickPrevQuestion}
               sx={onDesktop ? questionStyle.buttonOnDesktop : questionStyle.buttonOnMobile}
             >
-              {onDesktop ? (
-                <Image src={backIcon} alt='이전 아이콘' style={{ marginRight: '20px' }} />
-              ) : null}
+              {onDesktop ? <Image src={backIcon} alt='이전 아이콘' style={{ marginRight: '20px' }} /> : null}
               이전
             </Button>
             {questionNumber === 10 && (
