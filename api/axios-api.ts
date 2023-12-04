@@ -1,13 +1,13 @@
 import { selectionsType } from '@/recoil/atom';
 import axios, { AxiosRequestConfig } from 'axios';
 
-axios.defaults.withCredentials = true;
+// axios.defaults.withCredentials = true;
 
 export const instance = axios.create({
+  baseURL: process.env.NEXT_PUBLIC_BASE_URL,
+  // withCredentials: true,
   headers: {
     'Content-Type': 'application/json;charset=UTF-8',
-    'ngrok-skip-browser-warning': 'abc',
-    // 'Access-Control-Allow-Origin': '*',
   },
 });
 
@@ -58,8 +58,11 @@ export const getRecommendLocationList = async (pablosCode: string) => {
 };
 
 export const getPlaceDetail = async (placeId: string) => {
-  const res = await instance.get(
-    `https://api-artmosphere.com/api/v1/artmosphere-places/${placeId}`,
-  );
+  const res = await instance.get(`/api/v1/artmosphere-places/${placeId}`);
   return res;
+};
+
+export const getPlace = async () => {
+  const res = await instance.get(`/api/v1/artmosphere-places`);
+  return res.data;
 };

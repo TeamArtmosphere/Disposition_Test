@@ -5,7 +5,7 @@ import React, { useEffect, useState } from 'react';
 import { FlexBox, FlexBoxCol } from '@/style/style';
 import { useRecoilValue } from 'recoil';
 import { pablosCodeAtom, pablosCodeViewItemAtom } from '@/recoil/atom';
-import { getRecommendLocationList } from '@/api/axios-api';
+import { getPlace, getPlaceDetail, getRecommendLocationList } from '@/api/axios-api';
 import Image from 'next/image';
 import Link from 'next/link';
 import Carousel from 'react-material-ui-carousel';
@@ -44,12 +44,14 @@ const Page = () => {
   };
 
   const onClickToPlaceDetail = (id: string) => {
-    router.push(`/placedetail/${id}`);
+    getPlace()
+      .then(data => console.log(data))
+      .catch(error => console.log(error));
+    // getPlaceDetail(id)
+    //   .then(data => console.log(data))
+    //   .catch(error => console.log(error));
+    // router.push(`/placedetail/${id}`);
   };
-
-  const params = useParams();
-
-  console.log(params);
 
   return (
     viewItem && (
@@ -106,22 +108,22 @@ const Page = () => {
                 <Typography variant='h6' fontFamily={'Pretendard-Regular'}>
                   {location?.descriptions?.introduction}
                 </Typography>
-                {/* <Link target='_self' href={`/placedetail/${location.id}`}> */}
-                {/* <Link target='_blank' href={location.extra_info.links.naver_map}> */}
-                <Box
-                  onClick={() => onClickToPlaceDetail(location.id)}
-                  sx={{
-                    ...FlexBox,
-                    height: '50px',
-                    bgcolor: '#ffde3c',
-                    borderRadius: '8px',
-                    mt: '12px',
-                    display: clicked === location.name ? 'flex' : 'none',
-                  }}
-                >
-                  <Typography variant='h5'>{location?.name} 정보 더 보기</Typography>
-                </Box>
-                {/* </Link> */}
+                <Link href={`/placedetail/${location.id}`}>
+                  {/* <Link target='_blank' href={location.extra_info.links.naver_map}> */}
+                  <Box
+                    // onClick={() => onClickToPlaceDetail(location.id)}
+                    sx={{
+                      ...FlexBox,
+                      height: '50px',
+                      bgcolor: '#ffde3c',
+                      borderRadius: '8px',
+                      mt: '12px',
+                      display: clicked === location.name ? 'flex' : 'none',
+                    }}
+                  >
+                    <Typography variant='h5'>{location?.name} 정보 더 보기</Typography>
+                  </Box>
+                </Link>
               </Box>
               // </div>
             );

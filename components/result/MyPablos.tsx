@@ -81,6 +81,7 @@ const MyPablos = ({ viewItem, onDesktop }: MyPablosProps) => {
             src={capybara}
             alt={viewItem.slide_images[0]}
             fill
+            sizes='100%'
             style={{ objectFit: 'contain' }}
           />
         </Box>

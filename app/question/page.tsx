@@ -200,6 +200,7 @@ const Page = () => {
                     alt={selection.view_items.images[0]}
                     src={selection.view_items.images[0]}
                     fill
+                    sizes='100%'
                     style={{ borderRadius: '8px', objectFit: 'cover' }}
                   />
                 </Box>
