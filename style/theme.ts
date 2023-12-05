@@ -88,10 +88,11 @@ const theme = createTheme({
         },
       },
     },
-    MuiIconButton: {
+    MuiSlider: {
       styleOverrides: {
-        colorPrimary: '#fff',
-        colorSecondary: '#fff',
+        root: {
+          padding: 0,
+        },
       },
     },
   },

@@ -15,10 +15,7 @@ import {
 import { useRouter } from 'next/navigation';
 import SelectionButton from '@/components/common/SelectionButton';
 import Image from 'next/image';
-import backIcon from '@/public/imgs/icon_back.png';
-import ProgressSlideBar from '@/components/layout/ProgressSlideBar';
-import DefaultButton from '@/components/common/DefaultButton';
-import { questionStyle } from '@/style/style';
+import ProgressBar from '@/components/layout/ProgressBar';
 
 const Page = () => {
   const router = useRouter();
@@ -166,15 +163,13 @@ const Page = () => {
           m: '0 auto',
         }}
       >
-        <Box sx={{ ...questionStyle.containerBox, height: { mobile: '32px', laptop: '48px' } }}>
-          <ProgressSlideBar progress={progress} />
-        </Box>
+        <ProgressBar progress={progress} questionNumber={questionNumber + 3} />
 
         {currentQuestion.length > 0 && (
           <Box sx={{ position: 'relative' }}>
             <Box
               sx={{
-                mb: 4.5,
+                mb: 3,
                 mt: { mobile: 6, laptop: 3 },
                 height: { mobile: '64px', laptop: '96px' },
               }}
@@ -185,7 +180,6 @@ const Page = () => {
               sx={{
                 display: 'flex',
                 justifyContent: 'flex-start',
-                // justifyContent: questionNumber === 10 ? 'flex-start' : 'center',
                 alignItems: questionNumber === 10 ? 'flex-start' : 'center',
                 alignContent: 'flex-start',
                 flexDirection: flexDirection, // 모바일에서 필요없음
@@ -193,7 +187,7 @@ const Page = () => {
                 width: '100%',
                 height: { mobile: '328px', laptop: '504px' },
                 gap: '12px',
-                mb: { mobile: '140px', laptop: '0px' },
+                mb: { mobile: 3, laptop: '0px' },
               }}
             >
               {currentQuestion[0].selections.map((selection: any, idx: number) => {

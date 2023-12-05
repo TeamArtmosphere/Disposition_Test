@@ -8,9 +8,7 @@ import { Box, Button, Typography, useMediaQuery, useTheme } from '@mui/material'
 import { useRouter } from 'next/navigation';
 import React, { useEffect, useState } from 'react';
 import { useRecoilState, useSetRecoilState } from 'recoil';
-import backIcon from '@/public/imgs/icon_back.png';
-import Image from 'next/image';
-import ProgressSlideBar from '@/components/layout/ProgressSlideBar';
+import ProgressBar from '@/components/layout/ProgressBar';
 const genuserData = [
   {
     content: '성별을 선택해 주세요',
@@ -121,14 +119,13 @@ const Page = () => {
           m: '0 auto',
         }}
       >
-        <Box sx={{ ...questionStyle.containerBox, height: { mobile: '32px', laptop: '48px' } }}>
-          <ProgressSlideBar progress={progress} />
-        </Box>
+        <ProgressBar progress={progress} questionNumber={questionNumber + 1} />
+
         {genuserData && (
           <Box sx={{ position: 'relative' }}>
             <Box
               sx={{
-                mb: 4.5,
+                mb: 3,
                 mt: { mobile: 6, laptop: 3 },
                 height: { mobile: '64px', laptop: '96px' },
               }}
@@ -141,7 +138,7 @@ const Page = () => {
                 justifyContent: 'flex-start',
                 height: { mobile: '328px', laptop: '504px' },
                 gap: '12px',
-                mb: { mobile: '140px', laptop: '0px' },
+                mb: { mobile: 3, laptop: '0px' },
               }}
             >
               {genuserData[questionNumber].selections.map((data, idx) => {
