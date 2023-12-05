@@ -16,32 +16,39 @@ const WorkInfo = ({ placeData }: WorkInfoProps) => {
   const theme = useTheme();
 
   return (
-    <Box sx={{ pb: '36px' }}>
-      <Typography variant='h2' mb={'38px'} mt={'80px'} color={'grey.500'}>
+    <Box>
+      <Typography
+        variant='h2'
+        sx={{
+          mt: { mobile: '29px', laptop: '44px' },
+          mb: { mobile: '11px', laptop: '32px' },
+          color: 'grey.500',
+        }}
+      >
         가게정보
       </Typography>
       <Box sx={{ display: 'flex', flexDirection: 'column', gap: '12px' }}>
         <Box sx={{ ...flexBox }}>
           <Image src={iconPin} alt='위치 아이콘' width={24} height={24} />
-          <Typography variant='h5' color={'grey.500'} fontFamily={'Pretendard-Regular'}>
+          <Typography variant='body1' color={'grey.500'}>
             {placeData.address}
           </Typography>
         </Box>
         <Box sx={{ ...flexBox }}>
           <Image src={iconTime} alt='위치 아이콘' width={24} height={24} />
-          <Typography variant='h5' color={'grey.500'} fontFamily={'Pretendard-Regular'}>
+          <Typography variant='body1' color={'grey.500'}>
             {placeData.extra_info.working_hours?.summary}
           </Typography>
         </Box>
         <Box sx={{ ...flexBox }}>
           <Image src={iconCall} alt='위치 아이콘' width={24} height={24} />
-          <Typography variant='h5' color={'grey.500'} fontFamily={'Pretendard-Regular'}>
+          <Typography variant='body1' color={'grey.500'}>
             {placeData.extra_info.contact_number}
           </Typography>
         </Box>
         <Box sx={{ ...flexBox }}>
           <Image src={iconHouse} alt='위치 아이콘' width={24} height={24} />
-          <Typography variant='h5' color={'grey.500'} fontFamily={'Pretendard-Regular'}>
+          <Typography variant='body1' color={'grey.500'}>
             블로그
           </Typography>
         </Box>

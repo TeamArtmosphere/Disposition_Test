@@ -34,16 +34,15 @@ const MyPablos = ({ viewItem, onDesktop }: MyPablosProps) => {
       >
         <Box sx={{ flex: 3 }}>
           {/* 12px mobile */}
-          <Typography variant='h6' mb={onDesktop ? '24px' : '4px'} color={'primary'}>
+          <Typography
+            variant='h6'
+            sx={{ mb: { mobile: '4px', laptop: '8px' }, color: 'primary.main', fontWeight: '700' }}
+          >
             나의 PABLOS는?
           </Typography>
-          {/* 20px mobile */}
           <Typography
             variant='h2'
-            fontSize={'20px'}
-            fontWeight={700}
-            mb={onDesktop ? '24px' : '16px'}
-            color={'grey.400'}
+            sx={{ mb: { mobile: '16px', laptop: '30px' }, color: 'grey.400', fontWeight: '700' }}
           >
             {viewItem.name}
           </Typography>
@@ -58,7 +57,7 @@ const MyPablos = ({ viewItem, onDesktop }: MyPablosProps) => {
                     // minWidth: { mobile: '53px', laptop: '95px' },
                     minWidth: 'fit-content',
                     height: { mobile: '30px', laptop: '56px' },
-                    p: onDesktop ? '12px 24px' : '6px 12px',
+                    p: { mobile: '6px 12px', laptop: '12px 24px' },
                     bgcolor: '#fff',
                     border: '2px solid #e1e1e1',
                     borderRadius: { mobile: '4px', laptop: '12px' },

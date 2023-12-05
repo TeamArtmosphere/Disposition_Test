@@ -24,26 +24,33 @@ import Carousel from 'react-material-ui-carousel';
 
 const Page = ({ params }: { params: { id: string } }) => {
   const { id } = params;
-  const theme = useTheme();
-  const onDesktop = useMediaQuery(theme.breakpoints.between('laptop', 'desktop'));
   const [placeData, setPlaceData] = useState<any>();
 
   useEffect(() => {
     getPlaceDetail(id)
-      .then((data) => {
+      .then(data => {
         setPlaceData(data);
       })
-      .catch((error) => {
+      .catch(error => {
         console.log(error);
       });
   }, []);
 
-  // console.log(placeData);
-
   return (
     placeData && (
-      <Box sx={{ height: '100%', p: onDesktop ? 12 : 3, pt: 7 }}>
-        <MainInfo placeData={placeData} onDesktop={onDesktop} />
+      <Box
+        sx={{
+          display: 'flex',
+          flexDirection: 'column',
+          gap: { mobile: 5, laptop: 8 },
+          maxWidth: { mobile: '100%', laptop: '640px' },
+          p: { mobile: 3, laptop: 0 },
+          pb: { mobile: 5, laptop: 10 },
+          pt: { mobile: 7, laptop: '100px' },
+          m: '0 auto',
+        }}
+      >
+        <MainInfo placeData={placeData} />
         <VisitReason placeData={placeData} />
         <WorkInfo placeData={placeData} />
       </Box>

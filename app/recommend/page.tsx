@@ -63,11 +63,12 @@ const Page = () => {
           gap: { mobile: 5, laptop: 8 },
           maxWidth: { mobile: '100%', laptop: '640px' },
           p: { mobile: 3, laptop: 0 },
+          pb: { mobile: 5, laptop: 10 },
           pt: { mobile: 7, laptop: '100px' },
           m: '0 auto',
         }}
       >
-        <Typography variant='h2' sx={{ mt: { mobile: '30px', laptop: '130px' } }}>
+        <Typography variant='h2' sx={{ mt: { mobile: '30px', laptop: '100px' } }}>
           <span className='sep_typo'>{viewItem?.name}</span>유형을 위한
           <br />
           불광천 인근 가게를 추천드려요!
@@ -120,7 +121,7 @@ const Page = () => {
                   sx={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}
                 >
                   <Typography
-                    variant='h3'
+                    variant='h2'
                     fontFamily={'Pretendard-Regular'}
                     sx={{ mt: '12px', mb: '6px' }}
                   >

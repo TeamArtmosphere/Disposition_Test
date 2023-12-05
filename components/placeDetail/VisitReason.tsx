@@ -11,14 +11,20 @@ const VisitReason = ({ placeData }: VisitReasonProps) => {
   const koreanAffix = useKoreanAffix(placeData.name, '을를');
 
   return (
-    <Box sx={{ mb: '36px' }}>
-      <Typography variant='h2' mb={'38px'} mt={'80px'} color={'grey.500'}>
+    <Box>
+      <Typography
+        variant='h2'
+        sx={{
+          mt: { mobile: '29px', laptop: '44px' },
+          mb: { mobile: '11px', laptop: '32px' },
+          color: 'grey.500',
+        }}
+      >
         이럴 때 {placeData.name + koreanAffix} 방문하면 좋아요
       </Typography>
       <Typography
-        variant='h5'
+        variant='body1'
         color={'grey.500'}
-        fontFamily={'Pretendard-Regular'}
         sx={{
           display: 'inline',
           lineHeight: '32px',
@@ -33,7 +39,7 @@ const VisitReason = ({ placeData }: VisitReasonProps) => {
       >
         {placeData.name}
       </Typography>
-      <Typography variant='body1' color={'grey.500'} fontFamily={'Pretendard-Regular'} mt={'12px'}>
+      <Typography variant='body1' color={'grey.500'} mt={'12px'}>
         {placeData.descriptions.introduction}
       </Typography>
     </Box>

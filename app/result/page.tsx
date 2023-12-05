@@ -151,12 +151,18 @@ const Page = () => {
         gap: { mobile: 5, laptop: 8 },
         maxWidth: { mobile: '100%', laptop: '640px' },
         p: { mobile: 3, laptop: 0 },
+        pb: { mobile: 5, laptop: 10 },
         pt: { mobile: 7, laptop: '100px' },
         m: '0 auto',
       }}
     >
       <MyPablos viewItem={viewItem} onDesktop={onDesktop} />
-      <PlaceSlider viewItem={viewItem} locationData={locationData} pablosCode={pablosCode} />
+      <PlaceSlider
+        viewItem={viewItem}
+        locationData={locationData}
+        pablosCode={pablosCode}
+        onDesktop={onDesktop}
+      />
       <PablosDesc viewItem={viewItem} />
       <StarRating
         ratingMsg={ratingMsg}

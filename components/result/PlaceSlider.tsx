@@ -10,9 +10,10 @@ interface MyPablosProps {
   viewItem: any;
   locationData: any;
   pablosCode: string;
+  onDesktop?: boolean;
 }
 
-const PlaceSlider = ({ viewItem, locationData, pablosCode }: MyPablosProps) => {
+const PlaceSlider = ({ viewItem, locationData, pablosCode, onDesktop }: MyPablosProps) => {
   const router = useRouter();
 
   const handleClickToRecommend = () => {
@@ -64,10 +65,9 @@ const PlaceSlider = ({ viewItem, locationData, pablosCode }: MyPablosProps) => {
             ...FlexBox,
             alignItems: 'flex-start',
             justifyContent: 'flex-start',
-            gap: '10px',
+            gap: { mobile: '12px', laptop: '24px' },
             overflowX: 'scroll',
             width: '100%',
-            // m: '0 auto',
             pr: '22px',
           }}
         >
@@ -79,8 +79,8 @@ const PlaceSlider = ({ viewItem, locationData, pablosCode }: MyPablosProps) => {
                     sx={{
                       ...FlexBoxCol,
                       flexShrink: 0,
-                      width: '259px',
-                      height: '148px',
+                      width: { mobile: '259px', laptop: '360px' },
+                      height: { mobile: '148px', laptop: '200px' },
                       position: 'relative',
                       overflow: 'hidden',
                       borderRadius: '8px',
@@ -102,7 +102,7 @@ const PlaceSlider = ({ viewItem, locationData, pablosCode }: MyPablosProps) => {
                       justifyContent: 'space-between',
                     }}
                   >
-                    <Typography variant='h3' fontWeight={700}>
+                    <Typography variant={onDesktop ? 'h4' : 'h3'} fontWeight={700}>
                       {location.name}
                     </Typography>
                     <Image
@@ -112,7 +112,7 @@ const PlaceSlider = ({ viewItem, locationData, pablosCode }: MyPablosProps) => {
                       style={{ paddingBottom: 4 }}
                     />
                   </Box>
-                  <Typography variant='body2' fontWeight={500}>
+                  <Typography variant='body2' fontWeight={500} sx={{ color: 'grey.200' }}>
                     {location.address}
                   </Typography>
                 </Link>
