@@ -8,8 +8,8 @@ interface PablosDescProps {
 
 const PablosDesc = ({ viewItem }: PablosDescProps) => {
   return (
-    <Box sx={{ display: 'flex', flexDirection: 'column', mt: 10, mb: 10 }}>
-      <Typography variant='h3' mb={'24px'}>
+    <Box sx={{ display: 'flex', flexDirection: 'column' }}>
+      <Typography variant='h3' sx={{ mb: { mobile: '22px', laptop: '32px' } }}>
         {viewItem.name}유형은
         <br />
         <span className='sep_typo'>{`'${viewItem.intro}'`}</span>을 가장 중요하게 생각해요.
@@ -17,7 +17,7 @@ const PablosDesc = ({ viewItem }: PablosDescProps) => {
       <Typography
         variant='body1'
         fontFamily={'Pretendard-Regular'}
-        sx={{ mt: '20px', mb: '105px' }}
+        sx={{ mb: { mobile: '105px', laptop: '160px' } }}
       >
         {viewItem.summary}
       </Typography>
@@ -25,7 +25,7 @@ const PablosDesc = ({ viewItem }: PablosDescProps) => {
         {viewItem &&
           viewItem.descriptions.map((desc: any, idx: number) => {
             return (
-              <Box key={idx} sx={{ mb: '36px' }}>
+              <Box key={idx} sx={{ mb: { mobile: '44px', laptop: '48px' } }}>
                 <Typography
                   variant='h5'
                   color={'grey.500'}

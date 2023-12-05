@@ -14,8 +14,8 @@ const MyPablos = ({ viewItem, onDesktop }: MyPablosProps) => {
     <Box
       sx={{
         width: '100%',
-        mt: onDesktop ? '154px' : '39px',
-        mb: onDesktop ? '58px' : '55px',
+        mt: { mobile: '39px', laptop: '124px' },
+        // mb: { mobile: '55px', laptop: '167px' }, // 여기
       }}
     >
       <Box
@@ -27,27 +27,26 @@ const MyPablos = ({ viewItem, onDesktop }: MyPablosProps) => {
           borderRadius: '12px',
           border: '2px solid',
           borderColor: theme.palette.primary.main,
-          p: '20px',
+          p: { mobile: '20px', laptop: '37px' },
           color: '#fff',
           wordBreak: 'keep-all',
         }}
       >
         <Box sx={{ flex: 3 }}>
           {/* 12px mobile */}
-          <Typography variant='h6' mb={onDesktop ? '24px' : '4px'} color={'primary'}>
+          <Typography
+            variant='h6'
+            sx={{ mb: { mobile: '4px', laptop: '8px' }, color: 'primary.main', fontWeight: '700' }}
+          >
             나의 PABLOS는?
           </Typography>
-          {/* 20px mobile */}
           <Typography
             variant='h2'
-            fontSize={'20px'}
-            fontWeight={700}
-            mb={onDesktop ? '24px' : '16px'}
-            color={'grey.400'}
+            sx={{ mb: { mobile: '16px', laptop: '30px' }, color: 'grey.400', fontWeight: '700' }}
           >
             {viewItem.name}
           </Typography>
-          <Box sx={{ display: 'flex', gap: onDesktop ? 3 : 1, flexWrap: 'wrap' }}>
+          <Box sx={{ display: 'flex', gap: { mobile: '6px', laptop: '8px' }, flexWrap: 'wrap' }}>
             {viewItem.tag.map((tag: string[], idx: number) => {
               return (
                 <Box
@@ -55,20 +54,17 @@ const MyPablos = ({ viewItem, onDesktop }: MyPablosProps) => {
                   sx={{
                     display: 'flex',
                     alignItems: 'center',
-                    minWidth: onDesktop ? '123px' : '53px',
-                    height: onDesktop ? '72px' : '30px',
-                    p: onDesktop ? '12px 24px' : '6px 12px',
+                    // minWidth: { mobile: '53px', laptop: '95px' },
+                    minWidth: 'fit-content',
+                    height: { mobile: '30px', laptop: '56px' },
+                    p: { mobile: '6px 12px', laptop: '12px 24px' },
                     bgcolor: '#fff',
-                    border: '1px solid #e1e1e1',
-                    borderRadius: '4px',
+                    border: '2px solid #e1e1e1',
+                    borderRadius: { mobile: '4px', laptop: '12px' },
                     color: theme.palette.grey[500],
                   }}
                 >
-                  <Typography
-                    variant='body2'
-                    fontFamily={'Pretendard_Regular'}
-                    sx={{ fontSize: onDesktop ? '32px' : '12px' }}
-                  >
+                  <Typography variant='body2' sx={{ fontSize: { mobile: '12px', laptop: '20px' } }}>
                     {tag}
                   </Typography>
                 </Box>

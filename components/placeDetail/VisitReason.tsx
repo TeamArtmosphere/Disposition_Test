@@ -11,31 +11,47 @@ const VisitReason = ({ placeData }: VisitReasonProps) => {
   const koreanAffix = useKoreanAffix(placeData.name, '을를');
 
   return (
-    <Box sx={{ mb: '36px' }}>
-      <Typography variant='h2' mb={'38px'} mt={'80px'} color={'grey.500'}>
-        이럴 때 {placeData.name + koreanAffix} 방문하면 좋아요
-      </Typography>
+    <Box sx={{ display: 'flex', flexDirection: 'column', gap: { mobile: '38px', laptop: '48px' } }}>
       <Typography
-        variant='h5'
-        color={'grey.500'}
-        fontFamily={'Pretendard-Regular'}
+        variant='h2'
         sx={{
-          display: 'inline',
-          lineHeight: '32px',
-          minWidth: '154px',
-          height: '32px',
-          bgcolor: theme.palette.secondary.main,
-          border: '1px solid',
-          borderColor: theme.palette.primary.main,
-          borderRadius: '4px',
-          p: '4px 12px',
+          // mb: { mobile: '38px', laptop: '32px' },
+          color: 'grey.500',
         }}
       >
-        {placeData.name}
+        이럴 때 {placeData.name + koreanAffix} 방문하면 좋아요
       </Typography>
-      <Typography variant='body1' color={'grey.500'} fontFamily={'Pretendard-Regular'} mt={'12px'}>
-        {placeData.descriptions.introduction}
-      </Typography>
+      {placeData.descriptions.reasons.map((reason: any, idx: number) => (
+        <Box key={idx}>
+          <Typography
+            variant='body1'
+            color={'grey.500'}
+            sx={{
+              display: 'inline',
+              lineHeight: '32px',
+              minWidth: '154px',
+              height: '32px',
+              bgcolor: theme.palette.secondary.main,
+              border: '1px solid',
+              borderColor: theme.palette.primary.main,
+              borderRadius: '4px',
+              p: '4px 12px',
+            }}
+          >
+            {reason.title}
+          </Typography>
+          <Typography
+            variant='body1'
+            sx={{
+              mt: { mobile: '16px', laptop: '24px' },
+              // mb: { mobile: '38px', laptop: '48px' },
+              color: 'grey.500',
+            }}
+          >
+            {reason.content}
+          </Typography>
+        </Box>
+      ))}
     </Box>
   );
 };

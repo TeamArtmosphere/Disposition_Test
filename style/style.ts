@@ -13,7 +13,7 @@ export const ButtonBox = { ...FlexContainerCol, gap: '10px', width: '100%' };
 export const questionStyle = {
   containerBox: {
     display: 'flex',
-    alignItems: 'center',
+    alignItems: 'flex-start',
     width: '100%',
   },
   questionContentBox: { height: '62px', wordBreak: 'keep-all', mb: '42px' },

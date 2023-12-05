@@ -10,9 +10,10 @@ interface MyPablosProps {
   viewItem: any;
   locationData: any;
   pablosCode: string;
+  onDesktop?: boolean;
 }
 
-const PlaceSlider = ({ viewItem, locationData, pablosCode }: MyPablosProps) => {
+const PlaceSlider = ({ viewItem, locationData, pablosCode, onDesktop }: MyPablosProps) => {
   const router = useRouter();
 
   const handleClickToRecommend = () => {
@@ -21,8 +22,15 @@ const PlaceSlider = ({ viewItem, locationData, pablosCode }: MyPablosProps) => {
 
   return (
     <Box>
-      <Box sx={{ display: 'flex', justifyContent: 'space-between' }}>
-        <Typography variant='h5' mb='20px' fontFamily={'Pretendard-Regular'}>
+      <Box
+        sx={{
+          display: 'flex',
+          justifyContent: 'space-between',
+          alignItems: 'flex-end',
+          mb: { mobile: '15px', laptop: '30px' },
+        }}
+      >
+        <Typography variant='body1'>
           불광천에 이런 공간이?
           <br />
           {viewItem.name}들을 위한 추천 장소에요!
@@ -32,12 +40,11 @@ const PlaceSlider = ({ viewItem, locationData, pablosCode }: MyPablosProps) => {
           disableElevation
           onClick={handleClickToRecommend}
           sx={{
-            width: '64px',
-            height: '32px',
+            width: 'fit-content',
             bgcolor: 'grey.50',
             color: 'grey.500',
-            fontSize: '12px',
-            p: 0,
+            fontSize: { mobile: '12px', laptop: '16px' },
+            p: { mobile: '8px 16px', laptop: '12px 43px' },
           }}
         >
           더보기
@@ -48,7 +55,7 @@ const PlaceSlider = ({ viewItem, locationData, pablosCode }: MyPablosProps) => {
           display: 'flex',
           // width: '100%',
           // width: 'calc(100% + 24*2)',
-          mr: '-24px',
+          mr: { mobile: '-24px', laptop: '0' },
           justifyContent: 'center',
           alignItems: 'center',
         }}
@@ -58,11 +65,9 @@ const PlaceSlider = ({ viewItem, locationData, pablosCode }: MyPablosProps) => {
             ...FlexBox,
             alignItems: 'flex-start',
             justifyContent: 'flex-start',
-            gap: '10px',
+            gap: { mobile: '12px', laptop: '24px' },
             overflowX: 'scroll',
-            mb: '23px',
             width: '100%',
-            // m: '0 auto',
             pr: '22px',
           }}
         >
@@ -74,11 +79,12 @@ const PlaceSlider = ({ viewItem, locationData, pablosCode }: MyPablosProps) => {
                     sx={{
                       ...FlexBoxCol,
                       flexShrink: 0,
-                      width: '259px',
-                      height: '148px',
+                      width: { mobile: '259px', laptop: '360px' },
+                      height: { mobile: '148px', laptop: '200px' },
                       position: 'relative',
                       overflow: 'hidden',
                       borderRadius: '8px',
+                      mb: { mobile: 1, laptop: 1.5 },
                     }}
                   >
                     <Image
@@ -94,10 +100,9 @@ const PlaceSlider = ({ viewItem, locationData, pablosCode }: MyPablosProps) => {
                       ...FlexBox,
                       width: '100%',
                       justifyContent: 'space-between',
-                      m: '4px 0',
                     }}
                   >
-                    <Typography variant='h3' fontWeight={700}>
+                    <Typography variant={onDesktop ? 'h4' : 'h3'} fontWeight={700}>
                       {location.name}
                     </Typography>
                     <Image
@@ -107,7 +112,7 @@ const PlaceSlider = ({ viewItem, locationData, pablosCode }: MyPablosProps) => {
                       style={{ paddingBottom: 4 }}
                     />
                   </Box>
-                  <Typography variant='h6' fontWeight={500}>
+                  <Typography variant='body2' fontWeight={500} sx={{ color: 'grey.200' }}>
                     {location.address}
                   </Typography>
                 </Link>

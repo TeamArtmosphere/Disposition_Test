@@ -3,7 +3,7 @@
 import DefaultButton from '@/components/common/DefaultButton';
 import { Box, Typography, useMediaQuery, useTheme } from '@mui/material';
 import Image from 'next/image';
-import mainImg from '@/public/imgs/main_img.png';
+import mainImg from '@/public/imgs/bbomi.png';
 import { useRouter } from 'next/navigation';
 import { FlexBox } from '@/style/style';
 
@@ -19,48 +19,52 @@ export default function Home() {
   };
 
   return (
-    <Box sx={{ p: onDesktop ? 12 : 3, pt: 7 }}>
+    <Box
+      sx={{
+        maxWidth: { mobile: '100%', tablet: '100%', laptop: '1440px' },
+        // height: '100%',
+        p: { mobile: 3, laptop: 8 },
+        pt: { mobile: 7, laptop: '100px' },
+        m: '0 auto',
+      }}
+    >
       <Box
         sx={{
-          ...FlexBox,
-          justifyContent: 'space-between',
-          mt: onDesktop ? '154px' : '48px',
-          mb: onDesktop ? '75px' : '29px',
+          width: { mobile: '100%', laptop: '640px' },
+          m: '0 auto',
         }}
       >
-        <Typography variant='h5' color={'primary'}>
-          PABLOS
-        </Typography>
-        <Typography variant='h6' fontWeight={300} fontFamily={'Pretendard-Regular'}>
-          파블로스 공간 선호 테스트 알아보기
-        </Typography>
-      </Box>
-      <Box sx={{ mb: '109px' }}>
-        <Typography variant='h1' color={'grey.600'} mb={3}>
-          나에게 딱! 맞는
-          <br />
-          공간 찾기
-        </Typography>
-        <Typography variant='h5' fontFamily={'Pretendard-Regular'}>
-          테스트 결과를 바탕으로 <span className='sep_typo'>불광천 인근 가게</span>를 추천해
-          드릴게요!
-        </Typography>
-      </Box>
-      <Box sx={{ textAlign: 'center' }}>
-        <Image
-          src={mainImg}
-          alt='컴퓨터 앞에 앉아있는 남자 이미지'
-          width={onDesktop ? 888 : 312}
-          style={{ marginBottom: '100px' }}
-        />
+        <Box sx={{ mt: { mobile: '78px', laptop: '92px' }, mb: '44px' }}>
+          <Typography variant='h1' color={'grey.600'} mb={3}>
+            나에게 딱! 맞는
+            <br />
+            공간 찾기
+          </Typography>
+        </Box>
+        <Box
+          sx={{
+            m: '0 auto',
+            mb: 10,
+            width: { mobile: '142px', laptop: '192px' },
+            height: { mobile: '194px', laptop: '243px' },
+            position: 'relative',
+          }}
+        >
+          <Image
+            src={mainImg}
+            alt='포메라니안 캐릭터 뽀미'
+            fill
+            sizes='100%'
+            style={{ objectFit: 'cover' }}
+          />
+        </Box>
         <DefaultButton
           title='테스트 시작하기'
           onClick={onClickStartTest}
           sx={{
             width: '100%',
-            height: onDesktop ? '160px' : '52px',
-            fontSize: onDesktop ? '48px' : '18px',
-            fontWeight: '700',
+            height: { mobile: '52px', laptop: '64px' },
+            fontSize: { mobile: '16px', laptop: '24px' },
           }}
         />
       </Box>

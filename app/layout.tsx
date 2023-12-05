@@ -1,6 +1,6 @@
 'use client';
 
-import { Box, CircularProgress, ThemeProvider, Typography } from '@mui/material';
+import { Box, CircularProgress, ThemeProvider, Typography, useMediaQuery } from '@mui/material';
 import './globals.css';
 import { Inter } from 'next/font/google';
 import theme from '@/style/theme';
@@ -35,6 +35,12 @@ declare global {
 export default function RootLayout({ children }: { children: React.ReactNode }) {
   const vh = useVh();
   // const router = useRouter();
+
+  const onMobile = useMediaQuery(theme.breakpoints.between('mobile', 'tablet'));
+  const onTablet = useMediaQuery(theme.breakpoints.between('tablet', 'laptop'));
+  const onDesktop = useMediaQuery(theme.breakpoints.up('laptop'));
+
+  console.log(onMobile, onTablet, onDesktop, 'onMobile, onTablet, onDesktop');
 
   const kakaoInit = () => {
     // 페이지가 로드시 실행
@@ -93,9 +99,6 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
             property='og:description'
             content='ARTMOSPHERE 사용자의 PABLOS 유형을 검사합니다.'
           />
-          <meta property='og:image' content='/public/imgs/og_image.png' />
-          <meta property='og:image:width' content='1200' />
-          <meta property='og:image:height' content='630' />
         </head>
         <body
           className={inter.className}
@@ -107,17 +110,10 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
           }}
         >
           <RecoilProvider>
-            {loading ? (
-              <Box sx={{ ...FlexBoxCol, gap: '40px', marginTop: '200px' }}>
-                <CircularProgress />
-                <Typography variant='h4'>페이지 로드 중입니다.</Typography>
-              </Box>
-            ) : (
-              <>
-                <Header />
-                {children}
-              </>
-            )}
+            <>
+              <Header />
+              {children}
+            </>
           </RecoilProvider>
         </body>
         {/* <Script src='https://t1.kakaocdn.net/kakao_js_sdk/2.4.0/kakao.min.js' onLoad={kakaoInit} /> */}
