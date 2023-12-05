@@ -20,7 +20,6 @@ const WorkInfo = ({ placeData }: WorkInfoProps) => {
       <Typography
         variant='h2'
         sx={{
-          mt: { mobile: '29px', laptop: '44px' },
           mb: { mobile: '11px', laptop: '32px' },
           color: 'grey.500',
         }}

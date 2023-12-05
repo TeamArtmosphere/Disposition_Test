@@ -42,7 +42,7 @@ const Page = ({ params }: { params: { id: string } }) => {
         sx={{
           display: 'flex',
           flexDirection: 'column',
-          gap: { mobile: 5, laptop: 8 },
+          gap: { mobile: 10, laptop: 20 },
           maxWidth: { mobile: '100%', laptop: '640px' },
           p: { mobile: 3, laptop: 0 },
           pb: { mobile: 5, laptop: 10 },
