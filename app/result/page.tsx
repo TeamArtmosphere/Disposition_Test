@@ -44,7 +44,7 @@ const Page = () => {
   const resetViewItemState = useResetRecoilState(pablosCodeViewItemAtom);
 
   // const [mounted, setMounted] = useState(false);
-  const [ratingMsg, setRatingMsg] = useState('마음에 들어요!');
+  const [ratingMsg, setRatingMsg] = useState('추천 만족도를 별점으로 평가해주세요');
   const [locationData, setLocationData] = useState([]);
 
   const handleClickToHome = () => {
@@ -130,25 +130,6 @@ const Page = () => {
     setMounted(true);
   }, [pablosCode]);
 
-  // const pablosInfo = [
-  //   { code: 'I', desc: '개인적인' },
-  //   { code: 'S', desc: '사교적인' },
-  //   { code: 'X', desc: '경험추구' },
-  //   { code: 'P', desc: '상품추구' },
-  //   { code: 'V', desc: '가치추구' },
-  //   { code: 'R', desc: '가성비추구' },
-  // ];
-
-  // const filterPablosCode = (pablosCode: any) => {
-  //   const code = pablosCode.split('');
-  //   const filter = pablosInfo.filter(
-  //     (item: any) => code.filter((i: string) => i === item.code).length > 0,
-  //   );
-  //   return filter;
-  // };
-
-  // const filteredPablosCode = pablosCode && filterPablosCode(pablosCode);
-
   const [mounted, setMounted] = useState(false);
 
   return !mounted ? (
@@ -163,7 +144,17 @@ const Page = () => {
       <Typography variant='h4'>페이지 로드 중입니다.</Typography>
     </Box>
   ) : pablosCode && viewItem ? (
-    <Box sx={{ height: '100%', p: onDesktop ? 12 : 3, pt: 7 }}>
+    <Box
+      sx={{
+        display: 'flex',
+        flexDirection: 'column',
+        gap: { mobile: 5, laptop: 8 },
+        maxWidth: { mobile: '100%', laptop: '640px' },
+        p: { mobile: 3, laptop: 0 },
+        pt: { mobile: 7, laptop: '100px' },
+        m: '0 auto',
+      }}
+    >
       <MyPablos viewItem={viewItem} onDesktop={onDesktop} />
       <PlaceSlider viewItem={viewItem} locationData={locationData} pablosCode={pablosCode} />
       <PablosDesc viewItem={viewItem} />

@@ -25,11 +25,12 @@ export const StarRating = ({
   const setScore = useSetRecoilState(scoreAtom);
 
   return (
-    <Box sx={{ pb: 7 }}>
+    <Box>
+      {/* <Box sx={{ pb: 7 }}> */}
       <Typography variant='h4' mb='10px'>
         테스트 유형이 잘 맞나요?
       </Typography>
-      <Typography variant='h5' mb='20px' fontFamily={'Pretendard-Regular'}>
+      <Typography variant='body1' mb='20px' fontFamily={'Pretendard-Regular'}>
         테스트 만족도 설문조사에 참여하면
         <br />
         추첨을 통해 스타벅스 커피 쿠폰을 보내드려요!
@@ -41,7 +42,7 @@ export const StarRating = ({
           gap: 1,
           bgcolor: 'grey.50',
           borderRadius: '8px',
-          mb: '20px',
+          mb: { mobile: '20px', laptop: '36px' },
           p: 2,
         }}
       >
@@ -60,7 +61,7 @@ export const StarRating = ({
             }}
           />
         </Box>
-        <Typography variant='h5'>{ratingMsg}</Typography>
+        <Typography variant='body2'>{ratingMsg}</Typography>
         {score && (
           <Button
             disableElevation
@@ -74,10 +75,28 @@ export const StarRating = ({
         )}
       </Box>
       <Box sx={{ ...FlexBox, width: '100%', mb: '50px', gap: '10px' }}>
-        <Button variant='outlined' onClick={handleClickToHome}>
+        <Button
+          variant='outlined'
+          onClick={handleClickToHome}
+          sx={{
+            height: { mobile: '40px', laptop: '56px ' },
+            fontSize: { mobile: '14px', laptop: '20px ' },
+            borderRadius: '8px',
+            borderColor: 'primary.main',
+            color: 'grey.200',
+          }}
+        >
           다시 테스트하기
         </Button>
-        <Button variant='contained' onClick={onClickShareKakao}>
+        <Button
+          variant='contained'
+          onClick={onClickShareKakao}
+          sx={{
+            height: { mobile: '40px', laptop: '56px ' },
+            fontSize: { mobile: '14px', laptop: '20px ' },
+            borderRadius: '8px',
+          }}
+        >
           공유하기
         </Button>
       </Box>

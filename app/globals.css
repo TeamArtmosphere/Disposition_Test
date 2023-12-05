@@ -150,6 +150,14 @@ a {
   box-shadow: 0 4px 8px rgba(0, 0, 0, 0.15);
 }
 
+@media screen and (min-width: 1024px) {
+  .tag_button {
+    height: 80px;
+    font-size: 24px;
+    padding: 24px 48px;
+  }
+}
+
 /* .text_body_title {
   font-size: 18px;
 }

@@ -53,7 +53,7 @@ const Header = () => {
         alignItems: 'center',
         justifyContent: 'center',
         width: '100%',
-        height: onDesktop ? '96px' : '56px',
+        height: { mobile: '56px', laptop: '100px' },
         p: '16px',
         bgcolor: '#fff',
         position: 'absolute',
@@ -61,15 +61,22 @@ const Header = () => {
         // borderBottom: '1px solid #efefef',
       }}
     >
-      {/* <Box sx={{ maxWidth: '1920px', width: '100%', m: '0 auto' }}> */}
-      <Image
-        height={31}
-        src={logo}
-        alt='아트모스피어 로고'
-        onClick={handleClickToHome}
-        style={{ cursor: 'pointer' }}
-      />
-      {/* </Box> */}
+      <Box
+        sx={{
+          width: { mobile: '116px', laptop: '180px' },
+          height: { mobile: '31px', laptop: '48px' },
+          position: 'relative',
+        }}
+      >
+        <Image
+          src={logo}
+          alt='아트모스피어 로고'
+          fill
+          sizes='100%'
+          onClick={handleClickToHome}
+          style={{ cursor: 'pointer', objectFit: 'cover' }}
+        />
+      </Box>
     </Box>
   );
 };

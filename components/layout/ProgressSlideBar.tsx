@@ -3,21 +3,20 @@ import React from 'react';
 
 type ProgressSlideBarProps = {
   progress: number;
-  onDesktop: boolean;
 };
 
-const ProgressSlideBar = ({ progress, onDesktop }: ProgressSlideBarProps) => {
+const ProgressSlideBar = ({ progress }: ProgressSlideBarProps) => {
   return (
     <Slider
       // disabled
       value={progress}
       sx={{
-        height: onDesktop ? '20px' : '8px',
-        borderRadius: onDesktop ? '20px' : '8px',
+        height: '8px',
+        borderRadius: '8px',
 
         '& .MuiSlider-track': {
-          borderRadius: onDesktop ? '20px' : '8px',
-          height: onDesktop ? '20px' : '8px',
+          borderRadius: '8px',
+          height: '8px',
           backgroundColor: '#464646',
           border: 'none',
         },

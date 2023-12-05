@@ -48,6 +48,7 @@ const theme = createTheme({
   components: {
     MuiButton: {
       styleOverrides: {
+        disableElevation: true,
         containedPrimary: {
           boxShadow: 'none',
           color: '#625D44',
@@ -95,107 +96,160 @@ const theme = createTheme({
     },
   },
   typography: {
-    fontFamily: '"GmarketSansMedium", sans-serif',
+    fontFamily: ['"GmarketSansMedium", sans-serif', 'Pretendard-Regular'].join(','),
     h1: {
-      '@media (max-width:1200px)': {
+      '@media (min-width:1024px)': {
         fontSize: '48px',
         lineHeight: '64px',
         fontWeight: 700,
       },
-      '@media (max-width:640px)': {
+      '@media (min-width: 768px) and (max-width:1023px)': {
+        fontSize: '24px',
+        lineHeight: '32px',
+        fontWeight: 700,
+      },
+      '@media (max-width:767px)': {
         fontSize: '24px',
         lineHeight: '32px',
         fontWeight: 700,
       },
     },
     h2: {
-      '@media (max-width:1200px)': {
+      '@media (min-width:1024px)': {
         fontSize: '36px',
         lineHeight: '48px',
         fontWeight: 700,
       },
-      '@media (max-width:640px)': {
+      '@media (min-width: 768px) and (max-width:1023px)': {
+        fontSize: '20px',
+        lineHeight: '28px',
+        fontWeight: 700,
+      },
+      '@media (max-width:767px)': {
         fontSize: '20px',
         lineHeight: '28px',
         fontWeight: 700,
       },
     },
     h3: {
-      '@media (max-width:1200px)': {
+      '@media (min-width:1024px)': {
         fontSize: '32px',
         lineHeight: '48px',
         fontWeight: 700,
       },
-      '@media (max-width:640px)': {
+      '@media (min-width: 768px) and (max-width:1023px)': {
+        fontSize: '18px',
+        lineHeight: '24px',
+        fontWeight: 700,
+      },
+      '@media (max-width:767px)': {
         fontSize: '18px',
         lineHeight: '24px',
         fontWeight: 700,
       },
     },
     h4: {
-      '@media (max-width:1200px)': {
+      '@media (min-width:1024px)': {
         fontSize: '24px',
         lineHeight: '32px',
         fontWeight: 700,
       },
-      '@media (max-width:640px)': {
+      '@media (min-width: 768px) and (max-width:1023px)': {
+        fontSize: '16px',
+        lineHeight: '20px',
+        fontWeight: 500,
+      },
+      '@media (max-width:767px)': {
         fontSize: '16px',
         lineHeight: '20px',
         fontWeight: 500,
       },
     },
     h5: {
-      '@media (max-width:1200px)': {
+      '@media (min-width:1024px)': {
         fontSize: '24px',
         lineHeight: '32px',
         fontWeight: 500,
       },
-      '@media (max-width:640px)': {
+      '@media (min-width: 768px) and (max-width:1023px)': {
+        fontSize: '14px',
+        lineHeight: '16px',
+        fontWeight: 500,
+      },
+      '@media (max-width:767px)': {
         fontSize: '14px',
         lineHeight: '16px',
         fontWeight: 500,
       },
     },
     h6: {
-      '@media (max-width:1200px)': {
+      '@media (min-width:1024px)': {
         fontSize: '20px',
         lineHeight: '28px',
         fontWeight: 500,
       },
-      '@media (max-width:640px)': {
+      '@media (min-width: 768px) and (max-width:1023px)': {
+        fontSize: '14px',
+        lineHeight: '28px',
+        fontWeight: 500,
+      },
+      '@media (max-width:767px)': {
         fontSize: '14px',
         lineHeight: '28px',
         fontWeight: 500,
       },
     },
     body1: {
-      '@media (max-width:1200px)': {
+      '@media (min-width:1024px)': {
         fontSize: '20px',
         lineHeight: '32px',
         fontWeight: 500,
+        fontFamily: 'Pretendard-Regular',
       },
-      '@media (max-width:640px)': {
+      '@media (min-width: 768px) and (max-width:1023px)': {
         fontSize: '14px',
         lineHeight: '20px',
         fontWeight: 500,
+        fontFamily: 'Pretendard-Regular',
+      },
+      '@media (max-width:767px)': {
+        fontSize: '14px',
+        lineHeight: '20px',
+        fontWeight: 500,
+        fontFamily: 'Pretendard-Regular',
       },
     },
     body2: {
-      '@media (max-width:1200px)': {
+      '@media (min-width:1024px)': {
         fontSize: '16px',
         lineHeight: '24px',
         fontWeight: 500,
+        fontFamily: 'Pretendard-Regular',
       },
-      '@media (max-width:640px)': {
+      '@media (min-width: 768px) and (max-width:1023px)': {
         fontSize: '12px',
         lineHeight: '16px',
         fontWeight: 500,
+        fontFamily: 'Pretendard-Regular',
+      },
+      '@media (max-width:767px)': {
+        fontSize: '12px',
+        lineHeight: '16px',
+        fontWeight: 500,
+        fontFamily: 'Pretendard-Regular',
       },
     },
   },
 });
 
 export default theme;
+
+// theme.typography.h1 = {
+//   [theme.breakpoints.down('sm')]: {
+//     fontSize: '24px',
+//     fontWeight: '500',
+//   }
+// };
 
 export const lightTheme = createTheme({
   palette: {
