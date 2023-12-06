@@ -69,8 +69,7 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
           <RecoilProvider>
             <>
               <Header />
-              {/* <Suspense fallback={<Loading />}> {children}</Suspense> */}
-              {children}
+              <Suspense fallback={<Loading />}> {children}</Suspense>
             </>
           </RecoilProvider>
         </body>

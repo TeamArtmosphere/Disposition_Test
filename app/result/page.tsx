@@ -16,7 +16,7 @@ import {
 import { FlexBoxCol } from '@/style/style';
 import { Box, CircularProgress, Typography, useMediaQuery, useTheme } from '@mui/material';
 import { useRouter } from 'next/navigation';
-import React, { Suspense, useEffect, useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import { useRecoilState, useRecoilValue, useResetRecoilState } from 'recoil';
 
 import MyPablos from '@/components/result/MyPablos';
