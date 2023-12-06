@@ -121,7 +121,7 @@ const Page = () => {
                   sx={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}
                 >
                   <Typography
-                    variant='h2'
+                    variant='h3' // h3로 변경
                     fontFamily={'Pretendard-Regular'}
                     sx={{ mt: '12px', mb: '6px' }}
                   >
@@ -136,9 +136,7 @@ const Page = () => {
                     />
                   )}
                 </Box>
-                <Typography variant='body1' fontFamily={'Pretendard-Regular'}>
-                  {location?.descriptions?.introduction}
-                </Typography>
+                <Typography variant='body1'>{location?.descriptions?.introduction}</Typography>
                 <Link href={`/placedetail/${location.id}`}>
                   {/* <Link target='_blank' href={location.extra_info.links.naver_map}> */}
                   <Box

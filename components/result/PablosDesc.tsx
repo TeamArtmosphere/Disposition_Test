@@ -14,11 +14,7 @@ const PablosDesc = ({ viewItem }: PablosDescProps) => {
         <br />
         <span className='sep_typo'>{`'${viewItem.intro}'`}</span>을 가장 중요하게 생각해요.
       </Typography>
-      <Typography
-        variant='body1'
-        fontFamily={'Pretendard-Regular'}
-        sx={{ mb: { mobile: '105px', laptop: '160px' } }}
-      >
+      <Typography variant='body1' sx={{ mb: { mobile: '105px', laptop: '160px' } }}>
         {viewItem.summary}
       </Typography>
       <Box>
