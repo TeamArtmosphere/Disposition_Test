@@ -8,8 +8,9 @@ import RecoilProvider from './RecoilProvider';
 import Header from '@/components/layout/Header';
 import { Suspense, useState } from 'react';
 import { useVh } from '@/hooks/useVh';
-import Loading from './loading';
+// import Loading from './loading';
 import { usePathname } from 'next/navigation';
+import Loading from './loading';
 
 const inter = Inter({ subsets: ['latin'] });
 
@@ -68,7 +69,8 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
           <RecoilProvider>
             <>
               <Header />
-              <Suspense fallback={<Loading />}> {children}</Suspense>
+              {/* <Suspense fallback={<Loading />}> {children}</Suspense> */}
+              {children}
             </>
           </RecoilProvider>
         </body>
