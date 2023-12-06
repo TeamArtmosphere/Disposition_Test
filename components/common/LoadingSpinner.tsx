@@ -1,3 +1,5 @@
+'use client';
+
 import { Box, Typography } from '@mui/material';
 import React from 'react';
 import spinner from '@/public/imgs/icon_loading.png';
