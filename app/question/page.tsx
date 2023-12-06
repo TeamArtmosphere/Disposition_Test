@@ -10,6 +10,7 @@ import {
   interimPablosCodeAtom,
   pablosCodeAtom,
   pablosCodeViewItemAtom,
+  selectedTagsAtom,
   selectionsAtom,
 } from '@/recoil/atom';
 import { useRouter } from 'next/navigation';
@@ -26,6 +27,8 @@ const Page = () => {
   const [questionData, setQuestionData] = useState<any>(null);
   const [questionNumber, setQuestionNumber] = useState(1);
   const [selectionData, setSelectionData] = useRecoilState(selectionsAtom);
+  const [selectedTagList, setSelectedTagList] = useRecoilState(selectedTagsAtom);
+
   const [UID, setUID] = useRecoilState(eventUserUID);
   const setPablosCode = useSetRecoilState(pablosCodeAtom);
   const [interimPablosCode, setInterimPablosCode] = useRecoilState(interimPablosCodeAtom);
@@ -94,26 +97,40 @@ const Page = () => {
 
   // 태그 버튼 활성화 & 비활성화 기능
   const onClickTagButton = (e: any) => {
-    const isSelected = selectionData.findIndex(
+    const isSelected = selectedTagList.findIndex(
       (item: any) => item.selectionId === parseInt(e.currentTarget.id),
     );
+    // const isSelected = selectionData.findIndex(
+    //   (item: any) => item.selectionId === parseInt(e.currentTarget.id),
+    // );
 
-    if (isSelected === -1 && selectionData.length <= 11) {
-      setSelectionData([
-        ...selectionData,
+    if (isSelected === -1 && [...selectionData, ...selectedTagList].length <= 11) {
+      // setSelectionData([
+      //   ...selectionData,
+      //   { selectionId: Number(e.currentTarget.id), value: null },
+      // ]);
+      setSelectedTagList([
+        ...selectedTagList,
         { selectionId: Number(e.currentTarget.id), value: null },
       ]);
-    } else if (isSelected > 0 || selectionData.length <= 12) {
-      setSelectionData(prev =>
+    } else if (isSelected > 0 || [...selectionData, ...selectedTagList].length <= 12) {
+      // setSelectionData(prev =>
+      //   prev.filter((item: any) => item.selectionId !== parseInt(e.currentTarget.id)),
+      // );
+      setSelectedTagList(prev =>
         prev.filter((item: any) => item.selectionId !== parseInt(e.currentTarget.id)),
       );
     }
   };
 
+  // useEffect(() => {
+
+  // }, [selectedTagList]);
+
   // 10번 태그 질문 선택 후 선택완료 버튼 동작
   const onClickGetResult = () => {
-    if (questionNumber === 10 && UID && selectionData.length === 12) {
-      getResult({ uid: UID, selections: selectionData })
+    if (questionNumber === 10 && UID && [...selectionData, ...selectedTagList].length === 12) {
+      getResult({ uid: UID, selections: [...selectionData, ...selectedTagList] })
         .then(data => {
           setPablosCode(data.result.pablos_code);
           setViewItem(data.result.view_items);
@@ -125,26 +142,34 @@ const Page = () => {
     }
   };
 
+  // 이전질문으로 이동
   const onClickPrevQuestion = () => {
     const prevData = [...selectionData].slice(0, selectionData.length - 1);
     setSelectionData(prevData);
+
     setQuestionNumber((prev: number) => prev - 1);
 
     if (questionNumber === 1) {
       resetUserTypeState();
       router.push('/genuser');
+    } else if (questionNumber === 10) {
+      setSelectedTagList([]);
     }
   };
 
-  // console.log(
-  //   selectionData,
-  //   interimPablosCode,
-  //   questionNumber,
-  //   currentQuestion,
-  //   '선택지, 임시코드',
-  //   '질문번호',
-  //   '현재질문',
-  // );
+  console.log(
+    selectionData,
+    interimPablosCode,
+    questionNumber,
+    currentQuestion,
+    selectedTagList,
+    '선택지, 임시코드',
+    '질문번호',
+    '현재질문',
+    '선택 태그',
+  );
+
+  console.log([...selectionData, ...selectedTagList], '합쳐보낼것');
 
   const progress: number = (100 / 13) * (questionNumber + 3);
 
@@ -218,7 +243,7 @@ const Page = () => {
                 ) : selection.view_type === 'TAG' ? (
                   <button
                     className={
-                      selectionData.findIndex(
+                      [...selectionData, ...selectedTagList].findIndex(
                         (item: any) => item.selectionId === selection.selection_id,
                       ) > 0
                         ? 'tag_button active'
@@ -250,7 +275,7 @@ const Page = () => {
             </Button>
             {questionNumber === 10 && (
               <Button
-                disabled={selectionData.length === 12 ? false : true}
+                disabled={[...selectionData, ...selectedTagList].length === 12 ? false : true}
                 onClick={onClickGetResult}
                 variant='contained'
                 disableElevation

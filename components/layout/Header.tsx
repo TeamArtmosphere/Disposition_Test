@@ -11,6 +11,7 @@ import {
   pablosCodeAtom,
   pablosCodeViewItemAtom,
   scoreAtom,
+  selectedTagsAtom,
   selectionsAtom,
 } from '@/recoil/atom';
 import { useRouter } from 'next/navigation';
@@ -21,6 +22,7 @@ const Header = () => {
   const resetInterimPablosCodeState = useResetRecoilState(interimPablosCodeAtom);
   const resetScoreState = useResetRecoilState(scoreAtom);
   const resetSelectionsState = useResetRecoilState(selectionsAtom);
+  const resetSelectedTagList = useResetRecoilState(selectedTagsAtom);
   const resetUserIdState = useResetRecoilState(eventUserId);
   const resetUIDState = useResetRecoilState(eventUserUID);
   const resetUserTypeState = useResetRecoilState(eventUserType);
@@ -40,6 +42,7 @@ const Header = () => {
     resetUserTypeState();
     resetViewItemState();
     resetScoreState();
+    resetSelectedTagList();
     router.push('/');
     sessionStorage.removeItem('recoil-persist');
   };
