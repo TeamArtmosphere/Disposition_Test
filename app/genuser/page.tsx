@@ -6,9 +6,10 @@ import { eventUserId, eventUserType, eventUserUID, selectionsAtom } from '@/reco
 import { FlexContainerCol, questionStyle } from '@/style/style';
 import { Box, Button, Typography, useMediaQuery, useTheme } from '@mui/material';
 import { useRouter } from 'next/navigation';
-import React, { useEffect, useState } from 'react';
+import React, { Suspense, useEffect, useState } from 'react';
 import { useRecoilState, useSetRecoilState } from 'recoil';
 import ProgressBar from '@/components/layout/ProgressBar';
+import LoadingGenuser from './loading';
 const genuserData = [
   {
     content: '성별을 선택해 주세요',
@@ -105,74 +106,76 @@ const Page = () => {
   const progress: number = questionNumber * (100 / 13);
 
   return (
-    <Box
-      sx={{
-        maxWidth: { mobile: '100%', laptop: '1440px' },
-        p: { mobile: 3, laptop: 8 },
-        pt: { mobile: 7, laptop: '100px' },
-        m: '0 auto',
-      }}
-    >
+    <Suspense fallback={<LoadingGenuser />}>
       <Box
         sx={{
-          width: { mobile: '100%', laptop: '640px' },
+          maxWidth: { mobile: '100%', laptop: '1440px' },
+          p: { mobile: 3, laptop: 8 },
+          pt: { mobile: 7, laptop: '100px' },
           m: '0 auto',
         }}
       >
-        <ProgressBar progress={progress} questionNumber={questionNumber + 1} />
+        <Box
+          sx={{
+            width: { mobile: '100%', laptop: '640px' },
+            m: '0 auto',
+          }}
+        >
+          <ProgressBar progress={progress} questionNumber={questionNumber + 1} />
 
-        {genuserData && (
-          <Box sx={{ position: 'relative' }}>
-            <Box
-              sx={{
-                mb: 3,
-                mt: { mobile: 6, laptop: 3 },
-                height: { mobile: '64px', laptop: '96px' },
-              }}
-            >
-              <Typography variant='h2'>{genuserData[questionNumber].content}</Typography>
+          {genuserData && (
+            <Box sx={{ position: 'relative' }}>
+              <Box
+                sx={{
+                  mb: 3,
+                  mt: { mobile: 6, laptop: 3 },
+                  height: { mobile: '64px', laptop: '96px' },
+                }}
+              >
+                <Typography variant='h2'>{genuserData[questionNumber].content}</Typography>
+              </Box>
+              <Box
+                sx={{
+                  ...FlexContainerCol,
+                  justifyContent: 'flex-start',
+                  height: { mobile: '328px', laptop: '504px' },
+                  gap: '12px',
+                  mb: { mobile: 3, laptop: '0px' },
+                }}
+              >
+                {genuserData[questionNumber].selections.map((data, idx) => {
+                  return (
+                    <SelectionButton
+                      className='MuiButton'
+                      key={idx}
+                      title={data.title}
+                      id={data.id}
+                      name={data.name}
+                      onClick={handleUserData}
+                    />
+                  );
+                })}
+              </Box>
+              <Button
+                onClick={onClickPrevQuestion}
+                sx={{
+                  color: 'grey.500',
+                  border: '1px solid #EDF0F3',
+                  fontSize: { mobile: '14px', laptop: '20px' },
+                  width: { mobile: '99px', laptop: '128px' },
+                  height: { mobile: '48px', laptop: '64px' },
+                  position: { laptop: 'absolute' },
+                  bottom: { laptop: '0px' },
+                  left: { tablet: '0px', laptop: '-224px' },
+                }}
+              >
+                이전
+              </Button>
             </Box>
-            <Box
-              sx={{
-                ...FlexContainerCol,
-                justifyContent: 'flex-start',
-                height: { mobile: '328px', laptop: '504px' },
-                gap: '12px',
-                mb: { mobile: 3, laptop: '0px' },
-              }}
-            >
-              {genuserData[questionNumber].selections.map((data, idx) => {
-                return (
-                  <SelectionButton
-                    className='MuiButton'
-                    key={idx}
-                    title={data.title}
-                    id={data.id}
-                    name={data.name}
-                    onClick={handleUserData}
-                  />
-                );
-              })}
-            </Box>
-            <Button
-              onClick={onClickPrevQuestion}
-              sx={{
-                color: 'grey.500',
-                border: '1px solid #EDF0F3',
-                fontSize: { mobile: '14px', laptop: '20px' },
-                width: { mobile: '99px', laptop: '128px' },
-                height: { mobile: '48px', laptop: '64px' },
-                position: { laptop: 'absolute' },
-                bottom: { laptop: '0px' },
-                left: { tablet: '0px', laptop: '-224px' },
-              }}
-            >
-              이전
-            </Button>
-          </Box>
-        )}
+          )}
+        </Box>
       </Box>
-    </Box>
+    </Suspense>
   );
 };
 

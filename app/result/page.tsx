@@ -16,12 +16,13 @@ import {
 import { FlexBoxCol } from '@/style/style';
 import { Box, CircularProgress, Typography, useMediaQuery, useTheme } from '@mui/material';
 import { useRouter } from 'next/navigation';
-import React, { useEffect, useState } from 'react';
+import React, { Suspense, useEffect, useState } from 'react';
 import { useRecoilState, useRecoilValue, useResetRecoilState } from 'recoil';
 
 import MyPablos from '@/components/result/MyPablos';
 import PlaceSlider from '@/components/result/PlaceSlider';
 import PablosDesc from '@/components/result/PablosDesc';
+import LoadingPablos from './loading';
 
 const Page = () => {
   const theme = useTheme();
@@ -147,34 +148,36 @@ const Page = () => {
       <Typography variant='h4'>페이지 로드 중입니다.</Typography>
     </Box>
   ) : pablosCode && viewItem ? (
-    <Box
-      sx={{
-        display: 'flex',
-        flexDirection: 'column',
-        gap: { mobile: 5, laptop: 8 },
-        maxWidth: { mobile: '100%', laptop: '640px' },
-        p: { mobile: 3, laptop: 0 },
-        pb: { mobile: 5, laptop: 10 },
-        pt: { mobile: 7, laptop: '100px' },
-        m: '0 auto',
-      }}
-    >
-      <MyPablos viewItem={viewItem} onDesktop={onDesktop} />
-      <PlaceSlider
-        viewItem={viewItem}
-        locationData={locationData}
-        pablosCode={pablosCode}
-        onDesktop={onDesktop}
-      />
-      <PablosDesc viewItem={viewItem} />
-      <StarRating
-        ratingMsg={ratingMsg}
-        score={score}
-        onClickShareKakao={onClickShareKakao}
-        onClickRateStar={onClickRateStar}
-        handleClickToHome={handleClickToHome}
-      />
-    </Box>
+    <Suspense fallback={<LoadingPablos />}>
+      <Box
+        sx={{
+          display: 'flex',
+          flexDirection: 'column',
+          gap: { mobile: 5, laptop: 8 },
+          maxWidth: { mobile: '100%', laptop: '640px' },
+          p: { mobile: 3, laptop: 0 },
+          pb: { mobile: 5, laptop: 10 },
+          pt: { mobile: 7, laptop: '100px' },
+          m: '0 auto',
+        }}
+      >
+        <MyPablos viewItem={viewItem} onDesktop={onDesktop} />
+        <PlaceSlider
+          viewItem={viewItem}
+          locationData={locationData}
+          pablosCode={pablosCode}
+          onDesktop={onDesktop}
+        />
+        <PablosDesc viewItem={viewItem} />
+        <StarRating
+          ratingMsg={ratingMsg}
+          score={score}
+          onClickShareKakao={onClickShareKakao}
+          onClickRateStar={onClickRateStar}
+          handleClickToHome={handleClickToHome}
+        />
+      </Box>
+    </Suspense>
   ) : null;
 };
 

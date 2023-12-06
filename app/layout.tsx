@@ -6,11 +6,12 @@ import { Inter } from 'next/font/google';
 import theme from '@/style/theme';
 import RecoilProvider from './RecoilProvider';
 import Header from '@/components/layout/Header';
-import { useEffect, useState } from 'react';
+import { Suspense, useEffect, useState } from 'react';
 import { useVh } from '@/hooks/useVh';
 import router from 'next/router';
 import { FlexBoxCol } from '@/style/style';
 import Script from 'next/script';
+// import Loading from './loading';
 
 const inter = Inter({ subsets: ['latin'] });
 
@@ -112,6 +113,7 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
           <RecoilProvider>
             <>
               <Header />
+              {/* <Suspense fallback={<Loading />}> {children}</Suspense> */}
               {children}
             </>
           </RecoilProvider>

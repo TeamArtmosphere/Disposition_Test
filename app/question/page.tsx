@@ -1,7 +1,7 @@
 'use client';
 
 import { Box, Button, Typography, useMediaQuery, useTheme } from '@mui/material';
-import React, { useEffect, useState } from 'react';
+import React, { Suspense, useEffect, useState } from 'react';
 import { getAllQuestion, getInterimResult, getResult } from '@/api/axios-api';
 import { useRecoilState, useResetRecoilState, useSetRecoilState } from 'recoil';
 import {
@@ -17,6 +17,7 @@ import { useRouter } from 'next/navigation';
 import SelectionButton from '@/components/common/SelectionButton';
 import Image from 'next/image';
 import ProgressBar from '@/components/layout/ProgressBar';
+import LoadingQuestion from './loading';
 
 const Page = () => {
   const router = useRouter();
@@ -174,132 +175,134 @@ const Page = () => {
   const progress: number = (100 / 13) * (questionNumber + 3);
 
   return questionData ? (
-    <Box
-      sx={{
-        maxWidth: { mobile: '100%', laptop: '1440px' },
-        p: { mobile: 3, laptop: 8 },
-        pt: { mobile: 7, laptop: '100px' },
-        m: '0 auto',
-      }}
-    >
+    <Suspense fallback={<LoadingQuestion />}>
       <Box
         sx={{
-          width: { mobile: '100%', laptop: '640px' },
+          maxWidth: { mobile: '100%', laptop: '1440px' },
+          p: { mobile: 3, laptop: 8 },
+          pt: { mobile: 7, laptop: '100px' },
           m: '0 auto',
         }}
       >
-        <ProgressBar progress={progress} questionNumber={questionNumber + 3} />
+        <Box
+          sx={{
+            width: { mobile: '100%', laptop: '640px' },
+            m: '0 auto',
+          }}
+        >
+          <ProgressBar progress={progress} questionNumber={questionNumber + 3} />
 
-        {currentQuestion.length > 0 && (
-          <Box sx={{ position: 'relative' }}>
-            <Box
-              sx={{
-                mb: 3,
-                mt: { mobile: 6, laptop: 3 },
-                height: { mobile: '64px', laptop: '96px' },
-              }}
-            >
-              <Typography variant='h2'>{currentQuestion[0].content}</Typography>
-            </Box>
-            <Box
-              sx={{
-                display: 'flex',
-                justifyContent: 'flex-start',
-                alignItems: questionNumber === 10 ? 'flex-start' : 'center',
-                alignContent: 'flex-start',
-                flexDirection: flexDirection, // 모바일에서 필요없음
-                flexWrap: questionNumber === 10 ? 'wrap' : '',
-                width: '100%',
-                height: { mobile: '328px', laptop: '504px' },
-                gap: '12px',
-                mb: { mobile: 3, laptop: '0px' },
-              }}
-            >
-              {currentQuestion[0].selections.map((selection: any, idx: number) => {
-                return selection.view_type === 'TEXT' ? (
-                  <SelectionButton
-                    key={idx}
-                    className='MuiButton'
-                    id={selection.selection_id}
-                    title={selection.content}
-                    onClick={onClickNextQuestion}
-                  />
-                ) : selection.view_type === 'IMAGE' ? (
-                  <Box
-                    key={idx}
-                    onClick={onClickNextQuestion}
-                    id={selection.selection_id}
-                    sx={{ width: '100%', height: '100%', position: 'relative' }}
-                  >
-                    <Image
+          {currentQuestion.length > 0 && (
+            <Box sx={{ position: 'relative' }}>
+              <Box
+                sx={{
+                  mb: 3,
+                  mt: { mobile: 6, laptop: 3 },
+                  height: { mobile: '64px', laptop: '96px' },
+                }}
+              >
+                <Typography variant='h2'>{currentQuestion[0].content}</Typography>
+              </Box>
+              <Box
+                sx={{
+                  display: 'flex',
+                  justifyContent: 'flex-start',
+                  alignItems: questionNumber === 10 ? 'flex-start' : 'center',
+                  alignContent: 'flex-start',
+                  flexDirection: flexDirection, // 모바일에서 필요없음
+                  flexWrap: questionNumber === 10 ? 'wrap' : '',
+                  width: '100%',
+                  height: { mobile: '328px', laptop: '504px' },
+                  gap: '12px',
+                  mb: { mobile: 3, laptop: '0px' },
+                }}
+              >
+                {currentQuestion[0].selections.map((selection: any, idx: number) => {
+                  return selection.view_type === 'TEXT' ? (
+                    <SelectionButton
+                      key={idx}
+                      className='MuiButton'
                       id={selection.selection_id}
-                      alt={selection.view_items.images[0]}
-                      src={selection.view_items.images[0]}
-                      fill
-                      sizes='100%'
-                      style={{ borderRadius: '8px', objectFit: 'cover' }}
+                      title={selection.content}
+                      onClick={onClickNextQuestion}
                     />
-                  </Box>
-                ) : selection.view_type === 'TAG' ? (
-                  <button
-                    className={
-                      [...selectionData, ...selectedTagList].findIndex(
-                        (item: any) => item.selectionId === selection.selection_id,
-                      ) > 0
-                        ? 'tag_button active'
-                        : 'tag_button'
-                    }
-                    key={idx}
-                    id={selection.selection_id}
-                    onClick={onClickTagButton}
-                  >
-                    {`#${selection.content}`}
-                  </button>
-                ) : null;
-              })}
-            </Box>
-            <Button
-              onClick={onClickPrevQuestion}
-              sx={{
-                color: 'grey.500',
-                border: '1px solid #EDF0F3',
-                fontSize: { mobile: '14px', laptop: '20px' },
-                width: { mobile: '99px', laptop: '128px' },
-                height: { mobile: '48px', laptop: '64px' },
-                position: { laptop: 'absolute' },
-                bottom: { laptop: '0px' },
-                left: { tablet: '0px', laptop: '-224px' },
-              }}
-            >
-              이전
-            </Button>
-            {questionNumber === 10 && (
+                  ) : selection.view_type === 'IMAGE' ? (
+                    <Box
+                      key={idx}
+                      onClick={onClickNextQuestion}
+                      id={selection.selection_id}
+                      sx={{ width: '100%', height: '100%', position: 'relative' }}
+                    >
+                      <Image
+                        id={selection.selection_id}
+                        alt={selection.view_items.images[0]}
+                        src={selection.view_items.images[0]}
+                        fill
+                        sizes='100%'
+                        style={{ borderRadius: '8px', objectFit: 'cover' }}
+                      />
+                    </Box>
+                  ) : selection.view_type === 'TAG' ? (
+                    <button
+                      className={
+                        [...selectionData, ...selectedTagList].findIndex(
+                          (item: any) => item.selectionId === selection.selection_id,
+                        ) > 0
+                          ? 'tag_button active'
+                          : 'tag_button'
+                      }
+                      key={idx}
+                      id={selection.selection_id}
+                      onClick={onClickTagButton}
+                    >
+                      {`#${selection.content}`}
+                    </button>
+                  ) : null;
+                })}
+              </Box>
               <Button
-                disabled={[...selectionData, ...selectedTagList].length === 12 ? false : true}
-                onClick={onClickGetResult}
-                variant='contained'
-                disableElevation
+                onClick={onClickPrevQuestion}
                 sx={{
                   color: 'grey.500',
                   border: '1px solid #EDF0F3',
                   fontSize: { mobile: '14px', laptop: '20px' },
                   width: { mobile: '99px', laptop: '128px' },
                   height: { mobile: '48px', laptop: '64px' },
-                  position: { mobile: 'absolute', laptop: 'absolute' },
+                  position: { laptop: 'absolute' },
                   bottom: { laptop: '0px' },
-                  right: { mobile: '0px', tablet: '0px', laptop: '-224px' },
-                  '&. active': {
-                    color: 'red',
-                  },
+                  left: { tablet: '0px', laptop: '-224px' },
                 }}
               >
-                선택완료
+                이전
               </Button>
-            )}
-          </Box>
-        )}
+              {questionNumber === 10 && (
+                <Button
+                  disabled={[...selectionData, ...selectedTagList].length === 12 ? false : true}
+                  onClick={onClickGetResult}
+                  variant='contained'
+                  disableElevation
+                  sx={{
+                    color: 'grey.500',
+                    border: '1px solid #EDF0F3',
+                    fontSize: { mobile: '14px', laptop: '20px' },
+                    width: { mobile: '99px', laptop: '128px' },
+                    height: { mobile: '48px', laptop: '64px' },
+                    position: { mobile: 'absolute', laptop: 'absolute' },
+                    bottom: { laptop: '0px' },
+                    right: { mobile: '0px', tablet: '0px', laptop: '-224px' },
+                    '&. active': {
+                      color: 'red',
+                    },
+                  }}
+                >
+                  선택완료
+                </Button>
+              )}
+            </Box>
+          )}
+        </Box>
       </Box>
-    </Box>
+    </Suspense>
   ) : null;
 };
 
