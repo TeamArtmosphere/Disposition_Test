@@ -10,6 +10,7 @@ import {
   pablosCodeAtom,
   pablosCodeViewItemAtom,
   scoreAtom,
+  selectedTagsAtom,
   selectionsAtom,
 } from '@/recoil/atom';
 import { FlexBoxCol } from '@/style/style';
@@ -38,6 +39,7 @@ const Page = () => {
   const resetPablosCodeState = useResetRecoilState(pablosCodeAtom);
   const resetInterimPablosCodeState = useResetRecoilState(interimPablosCodeAtom);
   const resetSelectionsState = useResetRecoilState(selectionsAtom);
+  const resetSelectedTagList = useResetRecoilState(selectedTagsAtom);
   const resetUserIdState = useResetRecoilState(eventUserId);
   const resetUIDState = useResetRecoilState(eventUserUID);
   const resetUserTypeState = useResetRecoilState(eventUserType);
@@ -51,6 +53,7 @@ const Page = () => {
     resetPablosCodeState();
     resetInterimPablosCodeState();
     resetSelectionsState();
+    resetSelectedTagList();
     resetUserIdState();
     resetUIDState();
     resetUserTypeState();

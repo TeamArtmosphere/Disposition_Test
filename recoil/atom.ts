@@ -48,6 +48,11 @@ export const selectionsAtom = atom<selectionsType[]>({
   default: [],
 });
 
+export const selectedTagsAtom = atom<selectionsType[]>({
+  key: 'selected_tags',
+  default: [],
+});
+
 export const pablosCodeAtom = atom<string | null>({
   key: 'pablos_code',
   default: null,

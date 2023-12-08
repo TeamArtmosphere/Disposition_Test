@@ -6,9 +6,10 @@ import { eventUserId, eventUserType, eventUserUID, selectionsAtom } from '@/reco
 import { FlexContainerCol, questionStyle } from '@/style/style';
 import { Box, Button, Typography, useMediaQuery, useTheme } from '@mui/material';
 import { useRouter } from 'next/navigation';
-import React, { useEffect, useState } from 'react';
+import React, { Suspense, useEffect, useState } from 'react';
 import { useRecoilState, useSetRecoilState } from 'recoil';
 import ProgressBar from '@/components/layout/ProgressBar';
+
 const genuserData = [
   {
     content: '성별을 선택해 주세요',

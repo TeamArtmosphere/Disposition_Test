@@ -1,16 +1,16 @@
 'use client';
 
-import { Box, CircularProgress, ThemeProvider, Typography, useMediaQuery } from '@mui/material';
+import { ThemeProvider, useMediaQuery } from '@mui/material';
 import './globals.css';
 import { Inter } from 'next/font/google';
 import theme from '@/style/theme';
 import RecoilProvider from './RecoilProvider';
 import Header from '@/components/layout/Header';
-import { useEffect, useState } from 'react';
+import { Suspense, useState } from 'react';
 import { useVh } from '@/hooks/useVh';
-import router from 'next/router';
-import { FlexBoxCol } from '@/style/style';
-import Script from 'next/script';
+// import Loading from './loading';
+import { usePathname } from 'next/navigation';
+import Loading from './loading';
 
 const inter = Inter({ subsets: ['latin'] });
 
@@ -34,8 +34,6 @@ declare global {
 
 export default function RootLayout({ children }: { children: React.ReactNode }) {
   const vh = useVh();
-  // const router = useRouter();
-
   const onMobile = useMediaQuery(theme.breakpoints.between('mobile', 'tablet'));
   const onTablet = useMediaQuery(theme.breakpoints.between('tablet', 'laptop'));
   const onDesktop = useMediaQuery(theme.breakpoints.up('laptop'));
@@ -48,47 +46,6 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
       // 선언되지 않았을 때만 실행하도록 if문 추가
       window.Kakao.init(process.env.NEXT_PUBLIC_JAVASCRIPT_KEY);
   };
-
-  // useEffect(() => {
-  //   (() => {
-  //     window.addEventListener('beforeunload', preventRefresh);
-  //   })();
-
-  //   return () => {
-  //     window.removeEventListener('beforeunload', preventRefresh);
-  //   };
-  // }, []);
-
-  // useEffect(() => {
-  //   history.pushState(null, '', location.href);
-  //   window.addEventListener('popstate', preventBack);
-  //   return () => {
-  //     window.removeEventListener('popstate', preventBack);
-  //   };
-  // }, []);
-
-  const [loading, setLoading] = useState(false);
-
-  // useEffect(() => {
-  //   const startLoading = () => setLoading(true);
-  //   const stopLoading = () => setLoading(false);
-
-  //   // Register event listeners to show/hide the loading component
-  //   // addEventListener : documen의 특정 요소 (id, class, tag ... ) event(클릭하면 함수를 실행하라.)
-  //   window.addEventListener('beforeunload', startLoading);
-  //   router.events.on('routeChangeStart', startLoading);
-  //   router.events.on('routeChangeComplete', stopLoading);
-  //   router.events.on('routeChangeError', stopLoading);
-
-  //   // Unregister event listeners during cleanup
-  //   // window.removeEventListener 이벤트 제거할 경우
-  //   return () => {
-  //     window.removeEventListener('beforeunload', startLoading);
-  //     router.events.off('routeChangeStart', startLoading);
-  //     router.events.off('routeChangeComplete', stopLoading);
-  //     router.events.off('routeChangeError', stopLoading);
-  //   };
-  // }, []);
 
   return (
     <html lang='ko'>
@@ -112,7 +69,7 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
           <RecoilProvider>
             <>
               <Header />
-              {children}
+              <Suspense fallback={<Loading />}> {children}</Suspense>
             </>
           </RecoilProvider>
         </body>
