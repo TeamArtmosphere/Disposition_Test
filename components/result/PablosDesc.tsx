@@ -10,12 +10,12 @@ const PablosDesc = ({ viewItem }: PablosDescProps) => {
   return (
     <Box sx={{ display: 'flex', flexDirection: 'column' }}>
       <Typography variant='h3' sx={{ mb: { mobile: '22px', laptop: '32px' } }}>
-        {viewItem.name}유형은
+        {viewItem?.name}유형은
         <br />
-        <span className='sep_typo'>{`'${viewItem.intro}'`}</span>을 가장 중요하게 생각해요.
+        <span className='sep_typo'>{`'${viewItem?.intro}'`}</span>을 가장 중요하게 생각해요.
       </Typography>
       <Typography variant='body1' sx={{ mb: { mobile: '105px', laptop: '160px' } }}>
-        {viewItem.summary}
+        {viewItem?.summary}
       </Typography>
       <Box>
         {viewItem &&
@@ -40,12 +40,7 @@ const PablosDesc = ({ viewItem }: PablosDescProps) => {
                 >
                   {desc.title}
                 </Typography>
-                <Typography
-                  variant='body1'
-                  color={'grey.500'}
-                  fontFamily={'Pretendard-Regular'}
-                  mt={'12px'}
-                >
+                <Typography variant='body1' color={'grey.500'} fontFamily={'Pretendard-Regular'} mt={'12px'}>
                   {desc.content}
                 </Typography>
               </Box>

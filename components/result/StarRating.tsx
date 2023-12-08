@@ -10,7 +10,7 @@ interface StarRatingProps {
   score: number | null;
   ratingMsg: string;
   onClickRateStar: () => void;
-  onClickShareKakao: () => void;
+  onClickShareKakao?: () => void;
   handleClickToHome: () => void;
 }
 

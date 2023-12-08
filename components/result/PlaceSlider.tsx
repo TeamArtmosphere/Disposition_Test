@@ -9,16 +9,12 @@ import { useRouter } from 'next/navigation';
 interface MyPablosProps {
   viewItem: any;
   locationData: any;
-  pablosCode: string;
   onDesktop?: boolean;
+  handleClickToRecommend?: () => void;
 }
 
-const PlaceSlider = ({ viewItem, locationData, pablosCode, onDesktop }: MyPablosProps) => {
+const PlaceSlider = ({ viewItem, locationData, onDesktop, handleClickToRecommend }: MyPablosProps) => {
   const router = useRouter();
-
-  const handleClickToRecommend = () => {
-    router.push('/recommend');
-  };
 
   return (
     <Box>
@@ -33,7 +29,7 @@ const PlaceSlider = ({ viewItem, locationData, pablosCode, onDesktop }: MyPablos
         <Typography variant='body1'>
           불광천에 이런 공간이?
           <br />
-          {viewItem.name}들을 위한 추천 장소에요!
+          {viewItem?.name}들을 위한 추천 장소에요!
         </Typography>
         <Button
           variant='contained'
@@ -109,6 +105,7 @@ const PlaceSlider = ({ viewItem, locationData, pablosCode, onDesktop }: MyPablos
                       src={goBtn}
                       alt={`${location.name}정보로 이동`}
                       width={24}
+                      height={24}
                       style={{ paddingBottom: 4 }}
                     />
                   </Box>

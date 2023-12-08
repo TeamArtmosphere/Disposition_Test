@@ -29,7 +29,7 @@ const LoadingSpinner = ({ text }: LoadingProps) => {
           animation: 'spin 1s linear infinite',
         }}
       >
-        <Image src={spinner} alt='로딩 스피너' fill style={{ objectFit: 'cover' }} />
+        <Image src={spinner} sizes='100%' alt='로딩 스피너' fill style={{ objectFit: 'cover' }} />
       </Box>
       {text && <Typography variant='h2'>{text}</Typography>}
     </Box>

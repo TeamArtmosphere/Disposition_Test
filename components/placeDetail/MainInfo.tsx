@@ -14,36 +14,39 @@ const MainInfo = ({ placeData }: MainInfoProps) => {
   return (
     placeData && (
       <Box sx={{ mt: { mobile: '30px', laptop: '100px' } }}>
-        <Typography
-          variant='h2'
-          sx={{ mb: { mobile: '4px', laptop: '7px' }, color: 'secondary.contrastText' }}
-        >
+        <Typography variant='h2' sx={{ mb: { mobile: '4px', laptop: '7px' }, color: 'secondary.contrastText' }}>
           {placeData.name}
         </Typography>
-        <Typography
-          variant='body1'
-          sx={{ mb: { mobile: '21px', laptop: '52px' }, color: 'grey.300' }}
-        >
+        <Typography variant='body1' sx={{ mb: { mobile: '21px', laptop: '52px' }, color: 'grey.300' }}>
           {placeData.address}
         </Typography>
 
-        {placeData.tags.map((tag: any, idx: number) => (
-          <Typography
-            key={idx}
-            variant='body1'
-            sx={{
-              width: 'fit-content',
-              mb: { mobile: '9px', laptop: '20px' },
-              color: '#625d44',
-              p: { mobile: '6px 12px', laptop: '12px 24px' },
-              border: '2px solid',
-              borderColor: 'primary.main',
-              borderRadius: '8px',
-            }}
-          >
-            {tag.display_name}
-          </Typography>
-        ))}
+        <Box
+          sx={{
+            display: 'flex',
+            flexWrap: 'wrap',
+            mb: { mobile: '9px', laptop: '20px' },
+            gap: { mobile: '8px', laptop: '12px' },
+          }}
+        >
+          {placeData.tags.map((tag: any, idx: number) => (
+            <Typography
+              key={idx}
+              variant='body1'
+              sx={{
+                width: 'fit-content',
+                height: { mobile: '32px', laptop: '56px' },
+                color: '#625d44',
+                p: { mobile: '4px 12px', laptop: '10px 24px' },
+                border: '2px solid',
+                borderColor: 'primary.main',
+                borderRadius: '8px',
+              }}
+            >
+              {tag.display_name}
+            </Typography>
+          ))}
+        </Box>
 
         <Carousel autoPlay={false} indicators={false} animation={'slide'} height={240}>
           {placeData.extra_info.images.map((image: string, idx2: number) => (
