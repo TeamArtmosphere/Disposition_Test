@@ -2,7 +2,7 @@
 
 import { Box, Typography, useMediaQuery, useTheme } from '@mui/material';
 import React, { useEffect, useState } from 'react';
-import { FlexBox, FlexBoxCol } from '@/style/style';
+import { FlexBox, FlexBoxCol, FlexContainer } from '@/style/style';
 import { useRecoilValue } from 'recoil';
 import { pablosCodeAtom, pablosCodeViewItemAtom } from '@/recoil/atom';
 import { getPlace, getPlaceDetail, getRecommendLocationList } from '@/api/axios-api';
@@ -11,6 +11,7 @@ import Link from 'next/link';
 import Carousel from 'react-material-ui-carousel';
 import { useRouter } from 'next/navigation';
 import goBtn from '@/public/imgs/icon_more.png';
+import LoadingSpinner from '@/components/common/LoadingSpinner';
 
 const Page = () => {
   const theme = useTheme();
@@ -26,14 +27,16 @@ const Page = () => {
   useEffect(() => {
     if (pablosCode) {
       getRecommendLocationList(pablosCode)
-        .then(data => {
+        .then((data) => {
           setLocationData(data);
+          setMounted(true);
         })
-        .catch(error => {
+        .catch((error) => {
           console.log(error);
         });
     }
-    setMounted(true);
+    // setTimeout(() => {
+    // }, 1000);
   }, [pablosCode]);
 
   const onClickActiveBox = (name: string) => {
@@ -46,120 +49,109 @@ const Page = () => {
 
   const onClickToPlaceDetail = (id: string) => {
     getPlace()
-      .then(data => console.log(data))
-      .catch(error => console.log(error));
+      .then((data) => console.log(data))
+      .catch((error) => console.log(error));
     // getPlaceDetail(id)
     //   .then(data => console.log(data))
     //   .catch(error => console.log(error));
     // router.push(`/placedetail/${id}`);
   };
 
-  return (
-    viewItem && (
-      <Box
-        sx={{
-          display: 'flex',
-          flexDirection: 'column',
-          gap: { mobile: 5, laptop: 8 },
-          maxWidth: { mobile: '100%', laptop: '640px' },
-          p: { mobile: 3, laptop: 0 },
-          pb: { mobile: 5, laptop: 10 },
-          pt: { mobile: 7, laptop: '100px' },
-          m: '0 auto',
-        }}
-      >
-        <Typography variant='h2' sx={{ mt: { mobile: '30px', laptop: '100px' } }}>
-          <span className='sep_typo'>{viewItem?.name}</span>유형을 위한
-          <br />
-          불광천 인근 가게를 추천드려요!
-        </Typography>
-        <Box>
-          {locationData.map((location: any, idx: number) => {
-            return (
-              <Box
-                key={idx}
-                onClick={() => onClickActiveBox(location.name)}
-                sx={{
-                  display: 'flex',
-                  flexDirection: 'column',
-                  mb: 3,
-                  p: { mobile: '12px', laptop: '20px' },
-                  border: clicked === location.name ? '2px solid #ffde3c' : '2px solid #e1e1e1',
-                  borderRadius: '12px',
-                  boxShadow: clicked === location.name ? '0px 4px 8px rgba(0, 0, 0, 0.15)' : null,
-                }}
-              >
-                <Carousel
-                  autoPlay={false}
-                  indicators={false}
-                  animation='slide'
-                  duration={500}
-                  height={204}
-                >
-                  {location.extra_info.images.map((image: string, idx2: number) => (
-                    <Box
-                      key={idx2}
-                      sx={{
-                        height: '204px',
-                        position: 'relative',
-                        overflow: 'hidden',
-                        borderRadius: '8px',
-                      }}
-                    >
-                      <Image
-                        // layout='fill' // next13부터 layout 사용 안함
-                        fill
-                        sizes='100%'
-                        src={image}
-                        alt={`${image}의 사진`}
-                        style={{ objectFit: 'cover' }}
-                      />
-                    </Box>
-                  ))}
-                </Carousel>
-                <Box
-                  sx={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}
-                >
-                  <Typography
-                    variant='h3' // h3로 변경
-                    fontFamily={'Pretendard-Regular'}
-                    sx={{ mt: '12px', mb: '6px' }}
-                  >
-                    {location?.name}
-                  </Typography>
-                  {onDesktop && (
-                    <Image
-                      src={goBtn}
-                      alt={`${location.name}정보로 이동`}
-                      width={36}
-                      style={{ paddingBottom: 4 }}
-                    />
-                  )}
-                </Box>
-                <Typography variant='body1'>{location?.descriptions?.introduction}</Typography>
-                <Link href={`/placedetail/${location.id}`}>
-                  {/* <Link target='_blank' href={location.extra_info.links.naver_map}> */}
+  return !mounted ? (
+    <Box sx={{ width: '100%', height: '100%', display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
+      <LoadingSpinner />
+    </Box>
+  ) : (
+    <Box
+      sx={{
+        display: 'flex',
+        flexDirection: 'column',
+        gap: { mobile: 5, laptop: 8 },
+        maxWidth: { mobile: '100%', laptop: '640px' },
+        p: { mobile: 3, laptop: 0 },
+        pb: { mobile: 5, laptop: 10 },
+        pt: { mobile: 7, laptop: '100px' },
+        m: '0 auto',
+      }}
+    >
+      <Typography variant='h2' sx={{ mt: { mobile: '30px', laptop: '100px' } }}>
+        <span className='sep_typo'>{viewItem?.name}</span>유형을 위한
+        <br />
+        불광천 인근 가게를 추천드려요!
+      </Typography>
+      <Box>
+        {locationData.map((location: any, idx: number) => {
+          return (
+            <Box
+              key={idx}
+              onClick={() => onClickActiveBox(location.name)}
+              sx={{
+                display: 'flex',
+                flexDirection: 'column',
+                mb: 3,
+                p: { mobile: '12px', laptop: '20px' },
+                border: clicked === location.name ? '2px solid #ffde3c' : '2px solid #e1e1e1',
+                borderRadius: '12px',
+                boxShadow: clicked === location.name ? '0px 4px 8px rgba(0, 0, 0, 0.15)' : null,
+              }}
+            >
+              <Carousel autoPlay={false} indicators={false} animation='slide' duration={500} height={204}>
+                {location.extra_info.images.map((image: string, idx2: number) => (
                   <Box
-                    // onClick={() => onClickToPlaceDetail(location.id)}
+                    key={idx2}
                     sx={{
-                      ...FlexBox,
-                      height: { mobile: '44px', laptop: '64px' },
-                      bgcolor: '#ffde3c',
+                      height: '204px',
+                      position: 'relative',
+                      overflow: 'hidden',
                       borderRadius: '8px',
-                      mt: '12px',
-                      display: clicked === location.name ? 'flex' : 'none',
                     }}
                   >
-                    <Typography variant='h6'>{location?.name} 정보 더 보기</Typography>
+                    <Image
+                      // layout='fill' // next13부터 layout 사용 안함
+                      fill
+                      sizes='100%'
+                      src={image}
+                      alt={`${image}의 사진`}
+                      style={{ objectFit: 'cover' }}
+                    />
                   </Box>
-                </Link>
+                ))}
+              </Carousel>
+              <Box sx={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
+                <Typography
+                  variant='h3' // h3로 변경
+                  fontFamily={'Pretendard-Regular'}
+                  sx={{ mt: '12px', mb: '6px' }}
+                >
+                  {location?.name}
+                </Typography>
+                {onDesktop && (
+                  <Image src={goBtn} alt={`${location.name}정보로 이동`} width={36} style={{ paddingBottom: 4 }} />
+                )}
               </Box>
-              // </div>
-            );
-          })}
-        </Box>
+              <Typography variant='body1'>{location?.descriptions?.introduction}</Typography>
+              <Link href={`/placedetail/${location.id}`}>
+                {/* <Link target='_blank' href={location.extra_info.links.naver_map}> */}
+                <Box
+                  // onClick={() => onClickToPlaceDetail(location.id)}
+                  sx={{
+                    ...FlexBox,
+                    height: { mobile: '44px', laptop: '64px' },
+                    bgcolor: '#ffde3c',
+                    borderRadius: '8px',
+                    mt: '12px',
+                    display: clicked === location.name ? 'flex' : 'none',
+                  }}
+                >
+                  <Typography variant='h6'>{location?.name} 정보 더 보기</Typography>
+                </Box>
+              </Link>
+            </Box>
+            // </div>
+          );
+        })}
       </Box>
-    )
+    </Box>
   );
 };
 
