@@ -50,13 +50,7 @@ export default function Home() {
             position: 'relative',
           }}
         >
-          <Image
-            src={mainImg}
-            alt='포메라니안 캐릭터 뽀미'
-            fill
-            sizes='100%'
-            style={{ objectFit: 'cover' }}
-          />
+          <Image src={mainImg} alt='포메라니안 캐릭터 뽀미' fill priority sizes='100%' style={{ objectFit: 'cover' }} />
         </Box>
         <DefaultButton
           title='테스트 시작하기'

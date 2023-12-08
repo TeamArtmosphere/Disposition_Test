@@ -13,15 +13,18 @@ import {
   selectedTagsAtom,
   selectionsAtom,
 } from '@/recoil/atom';
-import { FlexBoxCol } from '@/style/style';
-import { Box, CircularProgress, Typography, useMediaQuery, useTheme } from '@mui/material';
+import { Box, useMediaQuery, useTheme } from '@mui/material';
 import { useRouter } from 'next/navigation';
-import React, { useEffect, useState } from 'react';
+import React, { Suspense, useEffect, useState } from 'react';
 import { useRecoilState, useRecoilValue, useResetRecoilState } from 'recoil';
 
-import MyPablos from '@/components/result/MyPablos';
+// import MyPablos from '@/components/result/MyPablos';
 import PlaceSlider from '@/components/result/PlaceSlider';
 import PablosDesc from '@/components/result/PablosDesc';
+import LoadingSpinner from '@/components/common/LoadingSpinner';
+import { FlexContainer } from '@/style/style';
+
+const MyPablos = React.lazy(() => import('@/components/result/MyPablos'));
 
 const Page = () => {
   const theme = useTheme();
@@ -67,52 +70,15 @@ const Page = () => {
     router.push('/recommend');
   };
 
-  const onClickShareKakao = async () => {
-    await window.Kakao.Share.sendDefault({
-      objectType: 'feed',
-      content: {
-        title: '딸기 치즈 케익',
-        description: '#케익 #딸기 #삼평동 #카페 #분위기 #소개팅',
-        imageUrl:
-          'http://k.kakaocdn.net/dn/Q2iNx/btqgeRgV54P/VLdBs9cvyn8BJXB3o7N8UK/kakaolink40_original.png',
-        link: {
-          // [내 애플리케이션] > [플랫폼] 에서 등록한 사이트 도메인과 일치해야 함
-          mobileWebUrl: 'http://localhost:3000',
-          webUrl: 'http://localhost:3000',
-        },
-      },
-      social: {
-        likeCount: 286,
-        commentCount: 45,
-        sharedCount: 845,
-      },
-      buttons: [
-        {
-          title: '웹으로 보기',
-          link: {
-            mobileWebUrl: 'http://localhost:3000',
-            webUrl: 'http://localhost:3000',
-          },
-        },
-        {
-          title: '앱으로 보기',
-          link: {
-            mobileWebUrl: 'http://localhost:3000',
-            webUrl: 'http://localhost:3000',
-          },
-        },
-      ],
-    });
-  };
-
+  // 별점 주기
   const onClickRateStar = () => {
     if (UID && score) {
       postRateStar({ uid: UID, score: score })
-        .then(data => {
+        .then((data) => {
           setScore(null);
           setRatingMsg('답변해 주셔서 감사합니다!');
         })
-        .catch(error => {
+        .catch((error) => {
           console.log(error);
         });
     } else {
@@ -121,32 +87,42 @@ const Page = () => {
   };
 
   useEffect(() => {
-    if (pablosCode) {
-      getRecommendLocationList(pablosCode)
-        .then(data => {
-          setLocationData(data);
-        })
-        .catch(error => {
-          console.log(error);
-        });
-    }
-    setMounted(true);
+    setTimeout(() => {
+      if (pablosCode) {
+        getRecommendLocationList(pablosCode)
+          .then((data) => {
+            setLocationData(data);
+          })
+          .catch((error) => {
+            console.log(error);
+          });
+      }
+      setMounted(true);
+    }, 1500);
   }, [pablosCode]);
 
   const [mounted, setMounted] = useState(false);
 
+  // !mounted ? (
+  //   <Box
+  //     sx={{
+  //       ...FlexBoxCol,
+  //       gap: '40px',
+  //       marginTop: '200px',
+  //     }}
+  //   >
+  //     <CircularProgress />
+  //     <Typography variant='h4'>페이지 로드 중입니다.</Typography>
+  //   </Box>
+  // ) : pablosCode && viewItem ? (
+
+  console.log(viewItem, pablosCode, locationData);
+
   return !mounted ? (
-    <Box
-      sx={{
-        ...FlexBoxCol,
-        gap: '40px',
-        marginTop: '200px',
-      }}
-    >
-      <CircularProgress />
-      <Typography variant='h4'>페이지 로드 중입니다.</Typography>
+    <Box sx={{ width: '100%', height: '100%', display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
+      <LoadingSpinner text={`공간 취향을\n\n분석 중입니다...`} />
     </Box>
-  ) : pablosCode && viewItem ? (
+  ) : (
     <Box
       sx={{
         display: 'flex',
@@ -160,22 +136,22 @@ const Page = () => {
       }}
     >
       <MyPablos viewItem={viewItem} onDesktop={onDesktop} />
+      {/* <MyPablos viewItem={viewItem} onDesktop={onDesktop} /> */}
       <PlaceSlider
         viewItem={viewItem}
         locationData={locationData}
-        pablosCode={pablosCode}
         onDesktop={onDesktop}
+        handleClickToRecommend={handleClickToRecommend}
       />
       <PablosDesc viewItem={viewItem} />
       <StarRating
         ratingMsg={ratingMsg}
         score={score}
-        onClickShareKakao={onClickShareKakao}
         onClickRateStar={onClickRateStar}
         handleClickToHome={handleClickToHome}
       />
     </Box>
-  ) : null;
+  );
 };
 
 export default Page;

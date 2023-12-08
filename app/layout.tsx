@@ -8,9 +8,6 @@ import RecoilProvider from './RecoilProvider';
 import Header from '@/components/layout/Header';
 import { Suspense, useState } from 'react';
 import { useVh } from '@/hooks/useVh';
-// import Loading from './loading';
-import { usePathname } from 'next/navigation';
-import Loading from './loading';
 
 const inter = Inter({ subsets: ['latin'] });
 
@@ -52,10 +49,7 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
       <ThemeProvider theme={theme}>
         <head>
           <title>PABLOS 테스트</title>
-          <meta
-            property='og:description'
-            content='ARTMOSPHERE 사용자의 PABLOS 유형을 검사합니다.'
-          />
+          <meta property='og:description' content='ARTMOSPHERE 사용자의 PABLOS 유형을 검사합니다.' />
         </head>
         <body
           className={inter.className}
@@ -69,7 +63,7 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
           <RecoilProvider>
             <>
               <Header />
-              <Suspense fallback={<Loading />}> {children}</Suspense>
+              {children}
             </>
           </RecoilProvider>
         </body>

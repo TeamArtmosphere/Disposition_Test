@@ -17,6 +17,8 @@ import { useRouter } from 'next/navigation';
 import SelectionButton from '@/components/common/SelectionButton';
 import Image from 'next/image';
 import ProgressBar from '@/components/layout/ProgressBar';
+import { FlexContainer } from '@/style/style';
+import LoadingSpinner from '@/components/common/LoadingSpinner';
 
 const Page = () => {
   const router = useRouter();
@@ -45,13 +47,16 @@ const Page = () => {
       router.push('/genuser');
     }
 
-    getAllQuestion()
-      .then(data => {
-        setQuestionData(data.questions);
-      })
-      .catch(error => {
-        console.log(error);
-      });
+    setTimeout(() => {
+      getAllQuestion()
+        .then((data) => {
+          setQuestionData(data.questions);
+        })
+        .catch((error) => {
+          console.log(error);
+        });
+    }, 1000);
+
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
@@ -62,10 +67,8 @@ const Page = () => {
     } else if (questionNumber === 7 || questionNumber === 8 || questionNumber === 9) {
       setCurrentQuestion(
         questionData.filter(
-          (item: any) =>
-            item.pablos_result.pablos_code === interimPablosCode &&
-            item.question_no === questionNumber,
-        ),
+          (item: any) => item.pablos_result.pablos_code === interimPablosCode && item.question_no === questionNumber
+        )
       );
     } else if (questionNumber === 10) {
       setCurrentQuestion(questionData.filter((item: any) => item.question_no === questionNumber));
@@ -73,8 +76,8 @@ const Page = () => {
 
     if (selectionData.length === 6 && UID) {
       getInterimResult({ selections: selectionData })
-        .then(data => setInterimPablosCode(data.pablos_code))
-        .catch(error => console.log(error));
+        .then((data) => setInterimPablosCode(data.pablos_code))
+        .catch((error) => console.log(error));
     }
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [interimPablosCode, questionData, questionNumber]);
@@ -97,9 +100,7 @@ const Page = () => {
 
   // 태그 버튼 활성화 & 비활성화 기능
   const onClickTagButton = (e: any) => {
-    const isSelected = selectedTagList.findIndex(
-      (item: any) => item.selectionId === parseInt(e.currentTarget.id),
-    );
+    const isSelected = selectedTagList.findIndex((item: any) => item.selectionId === parseInt(e.currentTarget.id));
     // const isSelected = selectionData.findIndex(
     //   (item: any) => item.selectionId === parseInt(e.currentTarget.id),
     // );
@@ -109,34 +110,25 @@ const Page = () => {
       //   ...selectionData,
       //   { selectionId: Number(e.currentTarget.id), value: null },
       // ]);
-      setSelectedTagList([
-        ...selectedTagList,
-        { selectionId: Number(e.currentTarget.id), value: null },
-      ]);
+      setSelectedTagList([...selectedTagList, { selectionId: Number(e.currentTarget.id), value: null }]);
     } else if (isSelected > 0 || [...selectionData, ...selectedTagList].length <= 12) {
       // setSelectionData(prev =>
       //   prev.filter((item: any) => item.selectionId !== parseInt(e.currentTarget.id)),
       // );
-      setSelectedTagList(prev =>
-        prev.filter((item: any) => item.selectionId !== parseInt(e.currentTarget.id)),
-      );
+      setSelectedTagList((prev) => prev.filter((item: any) => item.selectionId !== parseInt(e.currentTarget.id)));
     }
   };
-
-  // useEffect(() => {
-
-  // }, [selectedTagList]);
 
   // 10번 태그 질문 선택 후 선택완료 버튼 동작
   const onClickGetResult = () => {
     if (questionNumber === 10 && UID && [...selectionData, ...selectedTagList].length === 12) {
       getResult({ uid: UID, selections: [...selectionData, ...selectedTagList] })
-        .then(data => {
+        .then((data) => {
           setPablosCode(data.result.pablos_code);
           setViewItem(data.result.view_items);
           router.push('/result');
         })
-        .catch(error => {
+        .catch((error) => {
           console.log(error);
         });
     }
@@ -166,14 +158,18 @@ const Page = () => {
     '선택지, 임시코드',
     '질문번호',
     '현재질문',
-    '선택 태그',
+    '선택 태그'
   );
 
   console.log([...selectionData, ...selectedTagList], '합쳐보낼것');
 
   const progress: number = (100 / 13) * (questionNumber + 3);
 
-  return questionData ? (
+  return !questionData ? (
+    <Box sx={FlexContainer}>
+      <LoadingSpinner text='질문을 불러오는 중입니다...' />
+    </Box>
+  ) : (
     <Box
       sx={{
         maxWidth: { mobile: '100%', laptop: '1440px' },
@@ -244,7 +240,7 @@ const Page = () => {
                   <button
                     className={
                       [...selectionData, ...selectedTagList].findIndex(
-                        (item: any) => item.selectionId === selection.selection_id,
+                        (item: any) => item.selectionId === selection.selection_id
                       ) > 0
                         ? 'tag_button active'
                         : 'tag_button'
@@ -300,7 +296,7 @@ const Page = () => {
         )}
       </Box>
     </Box>
-  ) : null;
+  );
 };
 
 export default Page;
